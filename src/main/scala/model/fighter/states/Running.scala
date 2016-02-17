@@ -9,10 +9,13 @@ case class Running(f:Fighter) extends FighterState(f) with AnimateMe{
 
   override def hit = f.state = Aggressive(RUNNING_HIT, f)
 
-  override def moveUp =   { super.moveUp; f.images.set(RUNNING) }
-  override def moveDown = { super.moveDown; f.images.set(RUNNING) }
   override def moveLeft = { super.moveLeft; if(!f.looksLeft){f.looksLeft = true;f.images.set(RUNNING)}}
   override def moveRight ={ super.moveRight;if(f.looksLeft) {f.looksLeft = false; f.images.set(RUNNING)}}
+
+  override def stopUp =   {super.stopUp; if(!f.moving)f.state = Normal(f)}
+  override def stopDown = {super.stopDown; if(!f.moving)f.state = Normal(f)}
+  override def stopLeft = {super.stopLeft; if(!f.moving)f.state = Normal(f)}
+  override def stopRight ={super.stopRight; if(!f.moving)f.state = Normal(f)}
 
   override def stop = {
     f.x_velocity = 0

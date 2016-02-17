@@ -12,14 +12,17 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
                   jump:Char = 'e'){
   private var up_set, down_set, left_set, right_set, attack_set, defense_set, jump_set = false
   private def ifNotMoving(f: => Unit) = if(!(up_set || down_set || left_set || right_set))f
+  private def updateMovement(f:Fighter)={
+
+  }
 
   def released(key: Char, f: Fighter) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
     key match {
-      case this.up => up_set = false; ifNotMoving{f.state.stop}
-      case this.down => down_set = false; ifNotMoving{f.state.stop}
-      case this.left => left_set = false; ifNotMoving{f.state.stop}
-      case this.right => right_set = false; ifNotMoving{f.state.stop}
+      case this.up => up_set = false; fighter_state.stopUp
+      case this.down => down_set = false; fighter_state.stopDown
+      case this.left => left_set = false; fighter_state.stopLeft
+      case this.right => right_set = false; fighter_state.stopRight
       case this.attack => attack_set = false
       case this.defense => defense_set = false
       case this.jump => jump_set = false; //fighter_state.jump

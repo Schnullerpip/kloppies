@@ -11,6 +11,10 @@ trait Moveable extends Position{
    * Is for example turned off during animations
    * */
   var moveable = true
+  def moving = {
+    val ret = x_velocity != 0 || y_velocity != 0
+    ret
+  }
   def move{
     x += x_velocity
     y += y_velocity

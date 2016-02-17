@@ -1,11 +1,8 @@
 package main.scala.model.fighter
 
-import java.awt.image.BufferedImage
-
-import main.scala.model.ImageMatrix.ImageCoordinate
 import main.scala.model.attributes.{Mana, Speed, LivePoints}
 import main.scala.model.fighter.animations.Struggle
-import main.scala.model.fighter.states.{FighterState, Normal}
+import main.scala.model.fighter.states.Normal
 import main.scala.model.fighter.techniques.Technique
 import main.scala.model._
 import main.scala.model.states.State

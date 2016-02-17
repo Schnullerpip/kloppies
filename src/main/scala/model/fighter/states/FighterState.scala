@@ -34,6 +34,11 @@ abstract class FighterState(f:Fighter) extends State(f){
   def moveLeft = f.x_velocity = -1 * f.speed
   def moveRight =f.x_velocity = f.speed
 
+  def stopUp = f.y_velocity = 0
+  def stopDown = stopUp
+  def stopLeft = f.x_velocity = 0
+  def stopRight = stopLeft
+
   def defend = f.state = Defending(f)
   def jump = f.state = Jumping(f)
 }

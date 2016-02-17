@@ -16,18 +16,18 @@ import scala.swing.Swing
  * Main
  */
 object Main {
-  val FPS = 1000/20
-
+  val GAME_SPEED = 1000/40
 
   def main(args:Array[String]): Unit ={
-    val fighters = Seq(Fighter("julian", "images/fighter_stickfigure.png", speed = 10))
+    val fighters = Seq(Fighter("julian", "images/fighter_stickfigure.png", speed = 1))
     val players = Seq(Player(fighters.head))
     val map = new GameMap("images/backround_white.png", Seq())
     val controller = new Controller(players, map)
-    lazy val timer = new Timer(200, Swing.ActionListener{ _ =>
+    lazy val timer = new Timer(GAME_SPEED, Swing.ActionListener{ _ =>
       controller.cycle()
     })
-    val view = new Arena(controller, timer)
+
+    new Arena(controller, timer)
 
     timer.start()
   }
