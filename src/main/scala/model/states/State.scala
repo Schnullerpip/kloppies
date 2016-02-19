@@ -1,7 +1,5 @@
 package main.scala.model.states
 
-import java.awt.image.BufferedImage
-
 import main.scala.model.GameObject
 
 /**
@@ -10,6 +8,5 @@ import main.scala.model.GameObject
  */
 abstract class State(val go:GameObject) {
   def actOnCollision(go:GameObject)
-  def currentImage:BufferedImage
   def stop
 }

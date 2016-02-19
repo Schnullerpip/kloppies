@@ -1,11 +1,12 @@
 package main.scala.model.fighter
 
+import java.awt.image.BufferedImage
+
 import main.scala.model.attributes.{Mana, Speed, LivePoints}
-import main.scala.model.fighter.animations.Struggle
 import main.scala.model.fighter.states.Normal
 import main.scala.model.fighter.techniques.Technique
 import main.scala.model._
-import main.scala.model.states.State
+import main.scala.model.states.{MidAir, State}
 
 /**
  * Created by julian on 14.02.16.
@@ -20,12 +21,12 @@ import main.scala.model.states.State
  */
 case class Fighter (var name:String,
                imagePath:String,
-               rows: Int = 17,
+               rows: Int = 19,
                cols: Int = 7,
                override var hp:Int = 100,
-               override var strength:Int = 1,
-               override var speed:Int = 1,
-               override var mana:Int = 1,
+               override var strength:Int = 10,
+               override var speed:Int = 10,
+               override var mana:Int = 10,
                var techniques:Map[String, Technique] = Map(),
                override var mass:Int = 1,
                override var x:Int = 1,
@@ -36,6 +37,17 @@ case class Fighter (var name:String,
   override var state:State = Normal(this)
   override def takeDamage(go:GameObject) = {
     hp -= go.strength
-    Struggle(this, go)
+  }
+
+  override def image: BufferedImage = images.currentImage
+
+  override def gravity_affect(pace:Int) = state match {
+    case m:MidAir =>
+      if(gravity_affected)z_velocity -= pace
+      if(z <= 0) {
+        z_velocity = 0
+        state = Normal(this)
+      }
+    case _ =>
   }
 }

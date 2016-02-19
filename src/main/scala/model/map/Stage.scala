@@ -6,4 +6,6 @@ import main.scala.model.Position
  * Created by julian on 14.02.16.
  * Describes the plane that a stage spans. as long as the fighter is on said stage
  */
-case class Stage (length:Int, width:Int, height:Int, override var x:Int, override var y:Int, override var z:Int) extends Position
+case class Stage ( override var x:Int = -1000,
+                  override var y:Int = 0,
+                  override var z:Int = 0) extends Position

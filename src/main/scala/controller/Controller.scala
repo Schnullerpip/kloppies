@@ -12,16 +12,23 @@ import main.scala.util.Observable
  *
  */
 case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable{
+  var animators = Seq[QueueAnimator]()
   players.foreach{p => {
     gameMap(p.fighter)
-    QueueAnimator(p.fighter, gameMap.elements)
+    animators = QueueAnimator(p.fighter, gameMap.elements) +: animators
   }}
 
   def cycle() = {
     introduceView()
     gravityEffect(moveElements)
     hitDetection()
+    notifyObservers()
   }
+
+  def shutDown(): Unit ={
+    gameMap.elements = Seq()
+  }
+
   private def introduceView() = {
     gameMap.elements.foreach{go => rainDownObservers(go.images)}
   }
@@ -42,7 +49,8 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable{
     if(elements nonEmpty) {
       elements.tail.foreach { e => if (e.colliding(elements.head)) e.state.actOnCollision(elements.head) }
       hitDetection(elements.tail)
-    }
+
+}
   }
 
 }

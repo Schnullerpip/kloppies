@@ -5,6 +5,6 @@ package main.scala
  */
 package object controller {
   /*game speed is actually the time in milliseconds, the gamecycles will sleep*/
-  val GAME_SPEED = 125
+  val GAME_SPEED = 1000/25
 
 }

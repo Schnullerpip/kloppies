@@ -1,6 +1,5 @@
 package main.scala.controller
 
-import main.scala.Main
 import main.scala.model.GameObject
 import main.scala.model.attributes.Speed
 import main.scala.model.states.AnimateMe
@@ -12,11 +11,12 @@ import scala.swing.Swing
  * An animator
  */
 case class QueueAnimator (go:GameObject, pool:Seq[GameObject], sleep:Int = 250) {
-  val sleepTime = go match {
+  def sleepTime = go match {
     case s: Speed =>
       val animationFPS = 1000 / s.speed
-      if(animationFPS > GAME_SPEED) GAME_SPEED
-      else animationFPS
+     // if(animationFPS > GAME_SPEED) GAME_SPEED
+     // else animationFPS
+      animationFPS
     case _ => sleep
   }
 
@@ -26,7 +26,7 @@ case class QueueAnimator (go:GameObject, pool:Seq[GameObject], sleep:Int = 250) 
     if(pool.contains(go)){
       if(go.state.isInstanceOf[AnimateMe]){
         go.images.next
-        println(s"images running at $sleepTime FPS")
+        //println(s"$go's images running at ${1000/sleepTime} FPS -> sleeptime $sleepTime")
       }
     }else stopTimer()
   })

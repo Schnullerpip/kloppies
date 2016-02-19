@@ -3,11 +3,11 @@ package main.scala
 import javax.swing.Timer
 
 import main.scala.controller.Controller
-import main.scala.model.map.GameMap
-import main.scala.model.{Size, ImageMatrix}
+import main.scala.model.map.{Stage, GameMap}
 import main.scala.model.fighter.Fighter
-import main.scala.model.player.{KeySet, Player}
+import main.scala.model.player.Player
 import main.scala.view.gui.Arena
+import main.scala.controller.GAME_SPEED
 
 import scala.swing.Swing
 
@@ -16,12 +16,11 @@ import scala.swing.Swing
  * Main
  */
 object Main {
-  val GAME_SPEED = 1000/40
 
   def main(args:Array[String]): Unit ={
-    val fighters = Seq(Fighter("julian", "images/fighter_stickfigure.png", speed = 1))
+    val fighters = Seq(Fighter("julian", "images/fighter_stickfigure.png", speed = 6))
     val players = Seq(Player(fighters.head))
-    val map = new GameMap("images/backround_white.png", Seq())
+    val map = GameMap("images/backround_white.png", Seq(new Stage()))
     val controller = new Controller(players, map)
     lazy val timer = new Timer(GAME_SPEED, Swing.ActionListener{ _ =>
       controller.cycle()

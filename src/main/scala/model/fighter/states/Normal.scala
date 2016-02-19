@@ -1,6 +1,7 @@
 package main.scala.model.fighter.states
 
 import main.scala.model.fighter.Fighter
+import main.scala.model.fighter.states.aggressive.StandardAttack
 import main.scala.model.states.AnimateMe
 import main.scala.model.ImageMatrix.{STANDING, STANDING_HIT}
 
@@ -11,7 +12,7 @@ import main.scala.model.ImageMatrix.{STANDING, STANDING_HIT}
  */
 case class Normal(f:Fighter) extends FighterState(f) with AnimateMe{
   f.images.set(STANDING)
-  override def hit = f.state = Aggressive(STANDING_HIT, f)
+  override def hit = f.state = StandardAttack(f)
 
   override def moveUp =   { super.moveUp;   f.state = Running(f)}
   override def moveDown = { super.moveDown; f.state = Running(f)}
