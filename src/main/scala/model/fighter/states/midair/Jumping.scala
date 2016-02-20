@@ -13,8 +13,6 @@ case class Jumping(f:Fighter) extends FighterState(f){
   new Thread(new Runnable {
     override def run(): Unit = {
       f.moveable = false
-      f.x_velocity = 0
-      f.y_velocity = 0
       ifStillJumping{
         f.images.next
         ifStillJumping{

@@ -9,7 +9,7 @@ import main.scala.model.states.Harmful
  * Created by julian on 15.02.16.
  */
 case class Hurt(f:Fighter, gameobject:GameObject) extends FighterState(f){
-  f.takeDamage(gameobject)
+  f.takeDamage(gameobject.strength)
   f.images.set(OUCH)
   override def actOnCollision(g: GameObject): Unit = {
     g.state match {

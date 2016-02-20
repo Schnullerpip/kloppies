@@ -28,30 +28,26 @@ case class StandardAttack(f:Fighter) extends FighterState(f){
                   f.intention = main.scala.model.intention.Harmful
                   f.images.next
                   Thread.sleep(1000/f.speed)
-                  f.intention = main.scala.model.intention.Normal
+                  f.intention = main.scala.model.intention.Harmless
                 }
               }
             }
           }
         }
       }
-      f.state = Normal(f)
+      if(f.state.isInstanceOf[StandardAttack])f.state = Normal(f)
     }
   }).start()
 
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[StandardAttack]) {Thread.sleep(1000/f.speed/2);b}
 
 
-  override def actOnCollision(go:GameObject): Unit = {
-    go.state match {
-      case _ =>
-    }
-  }
-  override def hit = {}
-  override def moveUp =   {}
+  override def hit      = {}
+  override def moveUp   = {}
   override def moveDown = {}
   override def moveLeft = {}
-  override def moveRight ={}
+  override def moveRight= {}
+  override def jump     = {}
 
   override def stop = {
     f.state = Normal(f)

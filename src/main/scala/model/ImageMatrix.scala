@@ -47,7 +47,8 @@ object ImageMatrix{
   val JUMPING = 8
   val LEVITATING = 10
   val LEVITATING_HIT = 12
-  val FALLING = 14
-  val LYING = 16
-  val OUCH = 18
+  val LANDING = 14
+  val FALLING = 16
+  val LYING = 18
+  val OUCH = 20
 }

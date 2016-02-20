@@ -47,10 +47,14 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable{
   @tailrec
   private final def hitDetection(elements:Seq[GameObject]): Unit ={
     if(elements nonEmpty) {
-      elements.tail.foreach { e => if (e.colliding(elements.head)) e.state.actOnCollision(elements.head) }
+      elements.tail.foreach { e =>
+        if (e.colliding(elements.head)) {
+          e.state.actOnCollision(elements.head)
+          elements.head.state.actOnCollision(e)
+          println(s"${elements.head} &\t $e")
+        }
+      }
       hitDetection(elements.tail)
-
-}
+    }
   }
-
 }

@@ -1,7 +1,7 @@
 package main.scala.model
 
 import main.scala.model.attributes.Strength
-import main.scala.model.intention.{Normal, Intention}
+import main.scala.model.intention.{Harmless, Intention}
 import main.scala.model.states.{MidAir, State}
 
 /**
@@ -11,7 +11,7 @@ import main.scala.model.states.{MidAir, State}
  */
 trait GameObject extends Size with Mass with Direction with Strength{
   var state:State
-  var intention:Intention = Normal
+  var intention:Intention = Harmless
   var images:ImageMatrix
   def image = images.currentImage
 
@@ -21,9 +21,9 @@ trait GameObject extends Size with Mass with Direction with Strength{
   }
 
   def colliding(o:GameObject):Boolean = {
-    if((x > o.x && x < o.x + o.width) || ( x < o.x && x + width > o.x)) {
-      if ((y > o.y && y < o.y + o.height) || (y < o.y && y + height > o.y)) {
-        if ((z > o.z && z < o.z + o.width) || (z < o.z && z + width > o.z)) {
+    if((x >= o.x && x <= o.x + o.width) || ( x <= o.x && x + width >= o.x)) {
+      if ((y >= o.y && y <= o.y + o.height) || (y <= o.y && y + height >= o.y)) {
+        if ((z >= o.z && z <= o.z + o.width) || (z <= o.z && z + width >= o.z)) {
           return true
         }
       }

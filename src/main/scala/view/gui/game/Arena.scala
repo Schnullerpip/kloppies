@@ -1,19 +1,40 @@
-package main.scala.view.gui
+package main.scala.view.gui.game
 
-import java.awt.Graphics2D
+import java.awt.{Color, Graphics2D}
+import javax.swing.border.LineBorder
 
 import main.scala.controller.Controller
 import main.scala.model.GameObject
 import main.scala.util.Observer
 
 import scala.swing._
-import scala.swing.event.{KeyReleased, KeyPressed}
+import scala.swing.event.{KeyPressed, KeyReleased}
 
 /**
  * Created by julian on 15.02.16.
  */
 case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observer{
   controller.addObserver(this)
+
+  val statusPanel = new FlowPanel{
+    opaque = false
+    focusable = false
+    controller.players.foreach{ p =>
+      val f = p.fighter
+      contents += new GridPanel(3, 2){
+        preferredSize = new Dimension(350, 50)
+        border = new LineBorder(Color.BLACK)
+        contents += new Label(f.name)
+        contents += new Component{}
+
+        contents += new Label("HP")
+        contents += FighterStatusBar(f, f.hp _, Color.RED)
+
+        contents += new Label("MANA")
+        contents += FighterStatusBar(f, f.mana _, Color.BLUE)
+      }
+    }
+  }
 
   val gamePanel = new BorderPanel {
       layout += new Panel {
@@ -24,6 +45,8 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
           }
         }
       } -> BorderPanel.Position.Center
+
+      layout += statusPanel -> BorderPanel.Position.South
       focusable = true
       requestFocus()
       listenTo(keys)
@@ -36,7 +59,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       }
     }
 
-  val frame = new Frame {
+  new Frame {
     title = "Fight!"
     centerOnScreen()
     contents = gamePanel

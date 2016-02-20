@@ -28,7 +28,7 @@ case class LevitatingAttack(f:Fighter) extends FighterState(f) with MidAir {
                   f.intention = main.scala.model.intention.Harmful
                   f.images.next
                   Thread.sleep(1000 / f.speed)
-                  f.intention = main.scala.model.intention.Normal
+                  f.intention = main.scala.model.intention.Harmless
                 }
               }
             }
@@ -49,4 +49,5 @@ case class LevitatingAttack(f:Fighter) extends FighterState(f) with MidAir {
   override def moveDown = {}
   override def moveLeft = {}
   override def moveRight= {}
+  override def jump     = {}
 }

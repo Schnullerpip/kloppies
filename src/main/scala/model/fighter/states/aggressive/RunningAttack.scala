@@ -26,7 +26,7 @@ case class RunningAttack(f:Fighter) extends FighterState(f) {
                     f.intention = main.scala.model.intention.Harmful
                     f.images.next
                     Thread.sleep(1000 / f.speed)
-                    f.intention = main.scala.model.intention.Normal
+                    f.intention = main.scala.model.intention.Harmless
                   }
                 }
               }
@@ -44,4 +44,5 @@ case class RunningAttack(f:Fighter) extends FighterState(f) {
   override def moveDown = {}
   override def moveLeft = {}
   override def moveRight= {}
+  override def jump     = {}
 }

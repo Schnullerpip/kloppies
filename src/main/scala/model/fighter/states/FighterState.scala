@@ -1,12 +1,10 @@
 package main.scala.model.fighter.states
 
-import java.awt.image.BufferedImage
-
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.midair.Jumping
-import main.scala.model.intention.Harmful
-import main.scala.model.states.{Harmful, State}
+import main.scala.model.intention.{Harmless, Harmful}
+import main.scala.model.states.State
 
 /**
  * Created by julian on 14.02.16.
@@ -16,11 +14,18 @@ abstract class FighterState(f:Fighter) extends State(f){
   /**
    * actOnCollision is to be interpreted passively.
    * */
-  override def actOnCollision(g: GameObject): Unit ={}
+  override def actOnCollision(g: GameObject): Unit ={
+    if(g.intention.equals(Harmful)){
+      f.takeDamage(g.strength)
+    }
+    if(f.intention == Harmful){
+      f.intention = Harmless
+    }
+  }
 
   def hit
 
-  override def stop = {}
+  override def stop = {stopUp; stopLeft}
 
   def moveUp = f.y_velocity = -1 * f.speed
   def moveDown = f.y_velocity = f.speed

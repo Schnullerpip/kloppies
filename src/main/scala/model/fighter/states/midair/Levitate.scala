@@ -21,12 +21,4 @@ case class Levitate(f:Fighter) extends FighterState(f) with MidAir with AnimateM
   override def moveLeft = super.moveLeft
   override def moveRight =super.moveRight
   override def jump = {}
-
-  override def actOnCollision(go:GameObject): Unit ={
-    go match {
-      case s:Stage =>
-        f.z_velocity = 0
-        f.moveTo(f.x, f.y, s.z)
-    }
-  }
 }

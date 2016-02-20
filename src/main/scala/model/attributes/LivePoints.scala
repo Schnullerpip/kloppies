@@ -1,6 +1,6 @@
 package main.scala.model.attributes
 
-import main.scala.model.{GameObject, Size}
+import main.scala.model.Size
 
 /**
  * Created by julian on 14.02.16.
@@ -11,5 +11,5 @@ import main.scala.model.{GameObject, Size}
 trait LivePoints extends Size{
   var hp:Int
   var vulnerable = true
-  def takeDamage(go:GameObject)
+  def takeDamage(damage:Int) = hp -= damage
 }
