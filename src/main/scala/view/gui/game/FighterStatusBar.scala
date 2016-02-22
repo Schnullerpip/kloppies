@@ -11,7 +11,7 @@ import scala.swing.{Dimension, Component}
  */
 case class FighterStatusBar(f:Fighter, getter:() => Int, color:Color) extends Component {
   private val full = getter()
-  val width = 200
+  val width = 300
   preferredSize = new Dimension(width, 20)
   override def paint(g:Graphics2D) = {
     super.paint(g)

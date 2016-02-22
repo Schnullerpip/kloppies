@@ -1,8 +1,11 @@
 package main.scala.model.fighter.states.aggressive
 
+import main.scala.model.GameObject
+import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.{Normal, FighterState}
+import main.scala.model.fighter.states.{Hurt, Normal, FighterState}
 import main.scala.model.fighter.states.midair.Levitate
+import main.scala.model.intention.Harmless
 import main.scala.model.states.MidAir
 import main.scala.model.ImageMatrix.LEVITATING_HIT
 
@@ -43,7 +46,7 @@ case class LevitatingAttack(f:Fighter) extends FighterState(f) with MidAir {
   }).start()
 
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[LevitatingAttack]) {Thread.sleep(1000/f.speed/2);b}
-
+  
   override def hit      = {}
   override def moveUp   = {}
   override def moveDown = {}

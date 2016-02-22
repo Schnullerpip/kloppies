@@ -22,7 +22,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
     controller.players.foreach{ p =>
       val f = p.fighter
       contents += new GridPanel(3, 2){
-        preferredSize = new Dimension(350, 50)
+        //preferredSize = new Dimension(350, 50)
         border = new LineBorder(Color.BLACK)
         contents += new Label(f.name)
         contents += new Component{}

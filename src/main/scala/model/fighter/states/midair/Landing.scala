@@ -1,6 +1,8 @@
 package main.scala.model.fighter.states.midair
 
+import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
+import main.scala.model.fighter.states.aggressive.StandardAttack
 import main.scala.model.fighter.states.{Normal, Hurt, FighterState}
 import main.scala.model.ImageMatrix.LANDING
 
@@ -11,10 +13,10 @@ case class Landing(f:Fighter) extends FighterState(f){
   f.images.set(LANDING)
   f.x_velocity = 0
   f.y_velocity = 0
+  f.moveable = false
 
-  new Thread(new Runnable {
+  val movethread = new Thread(new Runnable {
     override def run(): Unit = {
-      f.moveable = false
       ifNotHurt{
         f.images.next
         ifNotHurt{
@@ -34,16 +36,12 @@ case class Landing(f:Fighter) extends FighterState(f){
           }
         }
       }
-      f.moveable = true
       f.state = Normal(f)
     }
-  }).start()
+  })
+  movethread.start()
   def ifNotHurt(b: => Unit){if(!f.state.isInstanceOf[Hurt]){Thread.sleep(1000/f.speed);b}}
 
-  override def hit: Unit = {}
-  override def moveUp =   {}
-  override def moveDown = {}
-  override def moveLeft = {}
-  override def moveRight ={}
-  override def jump = {}
+  override def actOnCollision(go:GameObject)={}
+  override def hit      = {movethread.stop(); f.state = StandardAttack(f)}
 }

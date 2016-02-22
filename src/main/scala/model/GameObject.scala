@@ -1,6 +1,6 @@
 package main.scala.model
 
-import main.scala.model.attributes.Strength
+import main.scala.model.attributes.{LivePoints, Strength}
 import main.scala.model.intention.{Harmless, Intention}
 import main.scala.model.states.{MidAir, State}
 
@@ -9,11 +9,12 @@ import main.scala.model.states.{MidAir, State}
  * A GameObject basically describes the minimum requirements for an entity to be "in" the Game
  * Anything, that is in the game needs to have data on position and size so there can be collision detection
  */
-trait GameObject extends Size with Mass with Direction with Strength{
+trait GameObject extends Size with Mass with Direction with Strength with LivePoints{
   var state:State
   var intention:Intention = Harmless
   var images:ImageMatrix
   def image = images.currentImage
+  var collidable = true
 
   override def gravity_affect(pace:Int = 1) = state match {
     case m:MidAir => super.gravity_affect(pace)

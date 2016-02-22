@@ -11,5 +11,6 @@ import main.scala.model.Size
 trait LivePoints extends Size{
   var hp:Int
   var vulnerable = true
-  def takeDamage(damage:Int) = hp -= damage
+  def takeDamage(damage:Int) = if(vulnerable)hp -= damage
+  def goKillYourself = hp = 0
 }

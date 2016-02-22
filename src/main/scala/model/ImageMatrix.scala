@@ -13,8 +13,8 @@ import main.scala.util.Observable
 class ImageMatrix(val path:String, val go:GameObject, val rows:Int, val cols:Int) extends Observable{
  val image_coordinate = ImageCoordinate(cols)
 
-  def set(row:Int, col:Int = 0){
-    image_coordinate.r = {if(go.looksLeft) 1 else 0} + row
+  def set(row:Int, col:Int = 0, dir:Boolean = go.looksLeft){
+    image_coordinate.r = {if(dir) 1 else 0} + row
     image_coordinate.c = col
     notifyObservers()
   }
@@ -40,6 +40,7 @@ object ImageMatrix{
     def next:ImageCoordinate = {if(c+1 >= cols) c = 0 else c+=1; this}
   }
   /*rows even numbers are for the left direction*/
+  /*FOR FIGHTERS*/
   val STANDING = 0
   val STANDING_HIT = 2
   val RUNNING = 4
@@ -49,6 +50,15 @@ object ImageMatrix{
   val LEVITATING_HIT = 12
   val LANDING = 14
   val FALLING = 16
-  val LYING = 18
-  val OUCH = 20
+  val HIT_THE_GROUND = 18
+  val LYING = 20
+  val OUCH = 22
+  val THROW_TECHNIQUE = 24
+  val USE_TECHNIQUE = 26
+  val DEFENDING = 28
+
+  /*FOR ITEMS*/
+    val ITEM_NORMAL = 0
+    val ITEM_MOVE = 2
+    val ITEM_BREAK = 4
 }

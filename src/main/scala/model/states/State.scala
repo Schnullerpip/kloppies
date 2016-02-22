@@ -8,5 +8,7 @@ import main.scala.model.GameObject
  */
 abstract class State(val go:GameObject) {
   def actOnCollision(go:GameObject)
+  def inflictDamageTo(go:GameObject, amount:Int)
+  def hurtBy(go:GameObject)
   def stop
 }

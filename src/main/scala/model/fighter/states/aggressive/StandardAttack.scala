@@ -10,10 +10,10 @@ import main.scala.model.fighter.states.{FighterState, Normal}
  */
 case class StandardAttack(f:Fighter) extends FighterState(f){
   f.images.set(STANDING_HIT)
+  f.moveable = false
   /*start own animationthread*/
-  new Thread(new Runnable {
+  val moveThread = new Thread(new Runnable {
     override def run(): Unit = {
-      f.moveable = false
       ifAggressive{
         f.images.next
         ifAggressive{
@@ -37,11 +37,12 @@ case class StandardAttack(f:Fighter) extends FighterState(f){
       }
       if(f.state.isInstanceOf[StandardAttack])f.state = Normal(f)
     }
-  }).start()
+  })
+  moveThread.start()
 
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[StandardAttack]) {Thread.sleep(1000/f.speed/2);b}
 
-
+  override def hurtBy(go:GameObject) = {moveThread.stop(); super.hurtBy(go)}
   override def hit      = {}
   override def moveUp   = {}
   override def moveDown = {}

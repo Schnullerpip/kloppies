@@ -22,9 +22,6 @@ class GameMap(val backGround: BufferedImage, val stages:Seq[Stage], var observer
   }
   def apply(element:GameObject) = {
     elements = element +: elements
-    element match {
-      case f:Fighter => f.images.observers = observers
-    }
   }
 
   /*this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
