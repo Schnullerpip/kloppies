@@ -18,9 +18,6 @@ case class Falling(f:Fighter, opponent:GameObject) extends FighterState(f) with 
   f.images.set(FALLING)
 
   override def actOnCollision(go:GameObject) = {}
-  override def inflictDamageTo(go:GameObject, amount:Int) = {}
-  override def hurtBy(go:GameObject) = {}
   override def landing = {f.state = HitTheGround(f, height)}
   override def hit     = {}
-  override def jump = {}
 }

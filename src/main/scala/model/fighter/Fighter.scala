@@ -24,6 +24,7 @@ case class Fighter (var name:String,
                imagePath:String,
                rows: Int = 30,
                cols: Int = 7,
+               var xp:Int = 0,
                override var hp:Int = 100,
                override var strength:Int = 10,
                override var speed:Int = 10,
@@ -42,8 +43,6 @@ case class Fighter (var name:String,
   override def gravity_affect(pace:Int) = {
     state match {
       case m:MidAir =>
-        if(state.isInstanceOf[UsingTechnique])
-          println("gotcha")
         if(gravity_affected)z_velocity -= pace
         /*TODO replace with check for collision with stage instance*/
         if(z <= 0) {

@@ -47,18 +47,17 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
   }
 
   private class KeyCombination{
-    val queue = scala.collection.mutable.Queue[Char](' ', ' ', ' ', ' ', ' ')
+    val queue = scala.collection.mutable.Queue[String]("", "", "")
     def apply(newChar:Char) = {
       queue dequeue()
       queue enqueue {newChar match {
-        case `up` => 'u'
-        case `down` => 'd'
-        case `left` => 'l'
-        case `right` => 'r'
-        case `jump` => 'j'
-        case `defense` => 'D'
-        case `attack` => 'a'
-        case _ => ' '
+        case `up` => "up"
+        case `down` => "down"
+        case `left` | `right` => "direction"
+        case `jump` => "jump"
+        case `defense` => "defend"
+        case `attack` => "attack"
+        case _ => ""
       }}
       queue mkString
     }

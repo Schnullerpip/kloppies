@@ -13,14 +13,12 @@ case class Defending(f:Fighter) extends FighterState(f){
   f.moveable = false
   var reflexes = true
   var dodge = true
+  private val sleeptime = 1000/f.speed
 
   override def hit = f.state = StandardAttack(f)
-  override def hurtBy(go:GameObject) = {
-    println(s"$go -> ${go.looksLeft} -> ${f.name}")
+  override def hurtBy(go:GameObject):Unit = {
     f.looksLeft = !go.looksLeft
-    if (go.strength > f.strength || !reflexes) {
-      super.hurtBy(go)
-    } else if(reflexes){
+    if(reflexes && go.strength < f.strength){
       if (dodge) {
         new Thread(new Runnable {
     override def run(): Unit = {
@@ -28,13 +26,13 @@ case class Defending(f:Fighter) extends FighterState(f){
       dodge = false
       ifNotHurt {
         f.images.set(DEFENDING)
-        Thread.sleep(1000 / f.speed)
+        Thread.sleep(sleeptime)
         ifNotHurt{
           f.images.next
-          Thread.sleep(1000/f.speed)
+          Thread.sleep(sleeptime)
           ifNotHurt{
             f.images.next
-            Thread.sleep(1000/f.speed)
+            Thread.sleep(sleeptime)
             reflexes = true
           }
         }
@@ -48,16 +46,16 @@ case class Defending(f:Fighter) extends FighterState(f){
       reflexes = false
       ifNotHurt {
         f.images.set(DEFENDING, 3)
-        Thread.sleep(1000 / f.speed)
+        Thread.sleep(sleeptime)
         ifNotHurt{
           f.images.next
-          Thread.sleep(1000 / f.speed)
+          Thread.sleep(sleeptime)
           ifNotHurt {
             f.images.next
-            Thread.sleep(1000 / f.speed)
+            Thread.sleep(sleeptime)
             ifNotHurt {
               f.images.next
-              Thread.sleep(1000 / f.speed)
+              Thread.sleep(sleeptime)
               reflexes = true
             }
           }
@@ -66,6 +64,8 @@ case class Defending(f:Fighter) extends FighterState(f){
     }
   }).start()
       }
+    } else {
+      super.hurtBy(go)
     }
   }
 

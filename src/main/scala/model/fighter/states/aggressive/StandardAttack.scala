@@ -43,12 +43,7 @@ case class StandardAttack(f:Fighter) extends FighterState(f){
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[StandardAttack]) {Thread.sleep(1000/f.speed/2);b}
 
   override def hurtBy(go:GameObject) = {moveThread.stop(); super.hurtBy(go)}
-  override def hit      = {}
-  override def moveUp   = {}
-  override def moveDown = {}
-  override def moveLeft = {}
-  override def moveRight= {}
-  override def jump     = {}
+  override def hit = {}
 
   override def stop = {
     f.state = Normal(f)

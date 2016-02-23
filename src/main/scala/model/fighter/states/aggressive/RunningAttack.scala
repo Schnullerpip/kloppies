@@ -1,10 +1,8 @@
 package main.scala.model.fighter.states.aggressive
 
-import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.{Normal, Running, FighterState}
 import main.scala.model.ImageMatrix.RUNNING_HIT
-import main.scala.model.intention.Harmless
 
 /**
  * Created by julian on 19.02.16.
@@ -42,9 +40,4 @@ case class RunningAttack(f:Fighter) extends FighterState(f) {
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[RunningAttack]) {Thread.sleep(1000/f.speed/2);b}
 
   override def hit      = {}
-  override def moveUp   = {}
-  override def moveDown = {}
-  override def moveLeft = {}
-  override def moveRight= {}
-  override def jump     = {}
 }

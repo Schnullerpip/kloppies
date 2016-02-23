@@ -2,6 +2,7 @@ package main.scala.controller
 
 import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
+import main.scala.model.fighter.Fighter
 import main.scala.model.map.GameMap
 import main.scala.model.player.Player
 import scala.annotation.tailrec
@@ -38,6 +39,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
 
   private def garbageCollector() = {
     gameMap.elements = gameMap.elements.filter {case l: LivePoints => l.hp > 0 case _ => true}
+    gameMap.elements.count{case f: Fighter => true case _ => false } > 1
   }
 
   private def moveElements = {

@@ -10,6 +10,7 @@ import main.scala.model.states.AnimateMe
  */
 case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   f.vulnerable = false
+  f.moveable = false
   f.images.set(LYING)
   new Thread(new Runnable {
     override def run(): Unit = {
@@ -20,8 +21,4 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   }).start()
   override def landing = {}
   override def hit = {}
-  override def moveUp =   {}
-  override def moveDown = {}
-  override def moveLeft = {}
-  override def moveRight ={}
 }
