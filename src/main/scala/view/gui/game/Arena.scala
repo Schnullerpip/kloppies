@@ -14,7 +14,6 @@ import scala.swing.event.{KeyPressed, KeyReleased}
  * Created by julian on 15.02.16.
  */
 case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observer{
-  controller.addObserver(this)
 
   val statusPanel = new FlowPanel{
     opaque = false
@@ -73,6 +72,9 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       System.exit(0)//TODO sollte auf Main.scala ausgelagert werden
     }
   }
+
+  controller addObserver this
+  controller init
 
   override def update: Unit = {
     Swing.onEDT {

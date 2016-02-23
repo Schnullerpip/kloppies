@@ -2,8 +2,10 @@ package main.scala.model.fighter.states
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.aggressive.StandardAttack
+import main.scala.model.fighter.states.aggressive.{LevitatingAttack, StandardAttack}
 import main.scala.model.ImageMatrix.DEFENDING
+import main.scala.model.fighter.states.midair.Levitate
+import main.scala.model.states.MidAir
 
 /**
  * Created by julian on 16.02.16.
@@ -15,7 +17,7 @@ case class Defending(f:Fighter) extends FighterState(f){
   var dodge = true
   private val sleeptime = 1000/f.speed
 
-  override def hit = f.state = StandardAttack(f)
+  override def hit = f.state = if(this.isInstanceOf[MidAir])LevitatingAttack(f) else StandardAttack(f)
   override def hurtBy(go:GameObject):Unit = {
     f.looksLeft = !go.looksLeft
     if(reflexes && go.strength < f.strength){
@@ -70,7 +72,7 @@ case class Defending(f:Fighter) extends FighterState(f){
   }
 
   override def stop = {
-    f.state = Normal(f)
+    f.state = if(this.isInstanceOf[MidAir]) Levitate(f) else Normal(f)
   }
 
   private def ifNotHurt(b: =>Unit){if(!f.state.isInstanceOf[Hurt])b}

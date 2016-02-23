@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage
 
 import main.scala.model.attributes.{Mana, Speed, LivePoints}
 import main.scala.model.fighter.states.{FighterState, Normal}
-import main.scala.model.fighter.states.techniques.{UsingTechnique, Technique}
+import main.scala.model.fighter.states.techniques.Technique
 import main.scala.model._
 import main.scala.model.states.{MidAir, State}
 
@@ -14,29 +14,34 @@ import scala.collection.mutable.HashMap
  * Created by julian on 14.02.16.
  * A Fighter is the data representation of an object controlled by the Player
  * @param name is the name of the Fighter
- * @param strength will affect the damage punches produce or how far an item can be tossed
- * @param speed will affect ho fast a Fighter can be moved from A to B and also will affect how fast a Fighter
+ * @param full_strength will affect the damage punches produce or how far an item can be tossed
+ * @param full_speed will affect ho fast a Fighter can be moved from A to B and also will affect how fast a Fighter
  *              can complete a summoning or an action like throwing an item
- * @param mana will affect how many techniques a fighter can use
+ * @param full_mana will affect how many techniques a fighter can use
  * @param imagesName the image matrix out of which the fighter takes its current image
  */
 case class Fighter (var name:String,
                imagesName:String,
+               var xp:Int = 0,
+               full_hp:Int = 100,
+               full_strength:Int = 10,
+               full_speed:Int = 10,
+               full_mana:Int = 100,
+               full_mass:Int = 1,
+               techniques:HashMap[String, Technique] = HashMap(),
                rows: Int = 30,
                cols: Int = 7,
-               var xp:Int = 0,
-               override var hp:Int = 100,
-               override var strength:Int = 10,
-               override var speed:Int = 10,
-               override var mana:Int = 80,
-               override var mass:Int = 1,
                override var x:Int = 1,
                override var y:Int = 1,
                override var z:Int = 0
                ) extends GameObject with LivePoints with Speed with Mana{
+  override var hp:Int = full_hp
+  override var strength:Int = full_strength
+  override var speed:Int = full_speed
+  override var mana:Int = full_mana
+  override var mass:Int = full_mass
   override var images = new ImageMatrix(imagesName, this, rows, cols)
   override var state:State = Normal(this)
-  val techniques:HashMap[String, Technique] = HashMap()
 
   override def image: BufferedImage = images.currentImage
 
@@ -53,4 +58,6 @@ case class Fighter (var name:String,
       case _ =>
     }
   }
+
+  def newTechnique(t:Technique, combination:String) = techniques.put(combination, t)
 }

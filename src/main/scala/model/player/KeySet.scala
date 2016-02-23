@@ -39,7 +39,7 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
         case this.left => left_set = true; fighter_state.moveLeft
         case this.right => right_set = true; fighter_state.moveRight
         case this.attack => attack_set = true; fighter_state.hit
-        case this.defense => defense_set = true; fighter_state.defend
+        case this.defense => if(!defense_set)fighter_state.defend; defense_set = true
         case this.jump => jump_set = true; fighter_state.jump
         case _ =>
       }

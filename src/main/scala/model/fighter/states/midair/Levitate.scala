@@ -4,7 +4,7 @@ import main.scala.model.GameObject
 import main.scala.model.ImageMatrix.LEVITATING
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.{UsingTechnique, Technique}
-import main.scala.model.fighter.states.{Hurt, FighterState}
+import main.scala.model.fighter.states.{Defending, Hurt, FighterState}
 import main.scala.model.fighter.states.aggressive.LevitatingAttack
 import main.scala.model.states.{AnimateMe, MidAir}
 

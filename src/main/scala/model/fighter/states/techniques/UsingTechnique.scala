@@ -34,7 +34,7 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
           case m: MidAir => fighter.state = Levitate(fighter)
           case _ => fighter.state = Normal(fighter)
         }
-        technique.act(fighter)
+        technique act
       }
     }
   }).start()

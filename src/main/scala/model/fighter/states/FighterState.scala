@@ -2,10 +2,10 @@ package main.scala.model.fighter.states
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.midair.Jumping
+import main.scala.model.fighter.states.midair.{Landing, Jumping}
 import main.scala.model.fighter.states.techniques.{Effect, Summoning, UsingTechnique, Technique}
 import main.scala.model.intention.{Harmless, Harmful}
-import main.scala.model.states.State
+import main.scala.model.states.{MidAir, State}
 
 /**
  * Created by julian on 14.02.16.
@@ -39,7 +39,7 @@ abstract class FighterState(f:Fighter) extends State(f){
 
   override def stop = {stopUp; stopLeft}
 
-  def landing = {}
+  def landing = f.state = Landing(f)
 
   private def ifMoveable(b: => Unit) = if(f.moveable)b
   def moveUp = ifMoveable(f.y_velocity = -1 * f.speed)
@@ -53,5 +53,7 @@ abstract class FighterState(f:Fighter) extends State(f){
   def stopLeft = f.x_velocity = 0
   def stopRight = stopLeft
 
-  def defend = f.state = Defending(f)
+  def defend = {
+    ifMoveable{f.state = if(this.isInstanceOf[MidAir]) new Defending(f) with MidAir else Defending(f)}
+  }
 }

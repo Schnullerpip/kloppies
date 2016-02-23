@@ -16,9 +16,15 @@ import main.scala.util.{Observer, Observable}
 case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable with Observer{
   var animators = Seq[QueueAnimator]()
   players.foreach{p => {
+    p.fighter.addObserver(this)
     gameMap(p.fighter)
-    animators = QueueAnimator(p.fighter, gameMap.elements) +: animators
   }}
+
+  def init ={
+    players.foreach { p =>
+      animators = QueueAnimator(p.fighter, gameMap.elements) +: animators
+    }
+  }
 
   def cycle() = {
     //introduceView()
