@@ -18,10 +18,10 @@ import scala.collection.mutable.HashMap
  * @param speed will affect ho fast a Fighter can be moved from A to B and also will affect how fast a Fighter
  *              can complete a summoning or an action like throwing an item
  * @param mana will affect how many techniques a fighter can use
- * @param imagePath the image matrix out of which the fighter takes its current image
+ * @param imagesName the image matrix out of which the fighter takes its current image
  */
 case class Fighter (var name:String,
-               imagePath:String,
+               imagesName:String,
                rows: Int = 30,
                cols: Int = 7,
                var xp:Int = 0,
@@ -34,7 +34,7 @@ case class Fighter (var name:String,
                override var y:Int = 1,
                override var z:Int = 0
                ) extends GameObject with LivePoints with Speed with Mana{
-  override var images = new ImageMatrix(imagePath, this, rows, cols)
+  override var images = new ImageMatrix(imagesName, this, rows, cols)
   override var state:State = Normal(this)
   val techniques:HashMap[String, Technique] = HashMap()
 

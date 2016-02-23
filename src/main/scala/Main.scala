@@ -3,6 +3,7 @@ package main.scala
 import javax.swing.Timer
 
 import main.scala.controller.Controller
+import main.scala.model.ImageMatrix
 import main.scala.model.fighter.states.techniques.fire.ThrowFireball
 import main.scala.model.map.{Stage, GameMap}
 import main.scala.model.fighter.Fighter
@@ -19,9 +20,12 @@ import scala.swing.Swing
 object Main {
 
   def main(args:Array[String]): Unit ={
+
+    ImageMatrix("images/fighters/fighter_stickfigure.png")
+
     val fighters = Seq(
-      Fighter("julian", "images/fighters/fighter_stickfigure.png", speed = 10, strength = 20),
-      Fighter("kiki", "images/fighters/fighter_stickfigure.png", speed = 30, strength = 1)
+      Fighter("julian", "fighter_stickfigure.png", speed = 10, strength = 20),
+      Fighter("kiki", "fighter_stickfigure.png", speed = 30, strength = 1)
     )
     val players = Seq(
       Player(fighters.head),
@@ -35,11 +39,11 @@ object Main {
 
 
     lazy val timer = new Timer(GAME_SPEED, Swing.ActionListener{ _ =>
-      if(controller.cycle())
+      if(!controller.cycle())
         stopTimer()
     })
 
-    def stopTimer() = timer.stop()
+    def stopTimer():Unit = timer.stop()
 
     new Arena(controller, timer)
 

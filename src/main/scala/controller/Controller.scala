@@ -73,4 +73,9 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     gameMap(go)
     QueueAnimator(go, gameMap.elements)
   }
+
+  override def addObserver(obs:Observer) = {
+    super.addObserver(obs)
+    gameMap(obs)
+  }
 }
