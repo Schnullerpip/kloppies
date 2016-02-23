@@ -19,7 +19,4 @@ class Menu {
 
     }
   }
-
-  lazy val
-
 }
