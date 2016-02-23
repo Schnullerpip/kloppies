@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import main.scala.model.ImageMatrix.ImageCoordinate
-import main.scala.util.Observable
+import main.scala.util.{Observer, Observable}
 
 import scala.collection.mutable
 

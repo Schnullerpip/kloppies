@@ -26,7 +26,6 @@ case class QueueAnimator (go:GameObject, pool:Seq[GameObject], sleep:Int = 250) 
     if(pool.contains(go)){
       if(go.state.isInstanceOf[AnimateMe]){
         go.images.next
-        //println(s"$go's images running at ${1000/sleepTime} FPS -> sleeptime $sleepTime")
       }
     }else stopTimer()
   })

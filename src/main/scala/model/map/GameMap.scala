@@ -15,10 +15,7 @@ import main.scala.util.Observer
 class GameMap(val backGround: BufferedImage, val stages:Seq[Stage], var observers:Seq[Observer]){
   def apply(observer: Observer) = {
     observers = observer +: observers
-    elements.foreach{
-      case f:Fighter => f.images.observers = observers
-      case _ =>
-    }
+    elements.foreach{go => go.images.observers = observers}
   }
   def apply(element:GameObject) = {
     elements = element +: elements

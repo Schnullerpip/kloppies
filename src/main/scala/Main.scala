@@ -39,7 +39,7 @@ object Main {
 
 
     lazy val timer = new Timer(GAME_SPEED, Swing.ActionListener{ _ =>
-      if(controller.cycle())
+      if(!controller.cycle())
         stopTimer()
     })
 
