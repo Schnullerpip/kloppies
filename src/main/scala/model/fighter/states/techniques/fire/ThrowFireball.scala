@@ -10,11 +10,15 @@ import main.scala.model.items.magical.fire.FireBall
  *               infuse fighters attributes to technique
  */
 case class ThrowFireball(caster:Fighter) extends Technique(caster) with Summoning{
+  val fireball = FireBall(caster)
   override val name: String = "ThrowFireball"
+  override val description = s"""Throws a single fireball in the direction, the character is looking at, dealing
+    ${fireball.strength} points of damage on contact."""
   override val manaUse: Int = Techniques.MANA_USE_TECHNIQUE_LEVEL_1
+  override val image = fireball.image
 
   override def act: Unit = {
-    caster.notifyObservers(FireBall(caster))
+    caster.notifyObservers(fireball)
   }
 
 }

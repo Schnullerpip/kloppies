@@ -1,7 +1,8 @@
 package main.scala.model.fighter.states.techniques
 
+import java.awt.image.BufferedImage
+
 import main.scala.model.fighter.Fighter
-import main.scala.util.{Observer, Observable}
 
 /**
  * Created by julian on 14.02.16.
@@ -12,6 +13,8 @@ import main.scala.util.{Observer, Observable}
  */
 abstract class Technique(caster:Fighter){
   val name:String
+  val image:BufferedImage
+  val description:String
   val manaUse:Int
   def act
 }

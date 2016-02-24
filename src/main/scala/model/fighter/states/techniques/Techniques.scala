@@ -16,6 +16,7 @@ object Techniques {
   def newTechnique(name:String, f:Fighter) = {
     name match {
       case "ThrowFireball" => new ThrowFireball(f)
+      case _ => new ThrowFireball(f)
     }
   }
 }

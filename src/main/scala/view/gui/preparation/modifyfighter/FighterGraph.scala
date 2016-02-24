@@ -3,10 +3,10 @@ package main.scala.view.gui.preparation.modifyfighter
 import main.scala.model.ImageMatrix
 import java.awt._
 import main.scala.model.fighter.Fighter
+import main.scala.view.gui.Defaults
 import scala.swing.{Font, MainFrame, Dimension, Component}
 
-case class FighterGraph(f:Fighter) extends Component {
-  val length = 100
+case class FighterGraph(f:Fighter, length:Int = 100) extends Component {
   val (width, height) = (length, length)
   val offset = 30
   preferredSize = new Dimension(width+offset, height+offset+10)
@@ -34,16 +34,17 @@ case class FighterGraph(f:Fighter) extends Component {
       (length/2-cos(4)*unifiedAttributes(4), length/2 - sin(4)*unifiedAttributes(4)+ offset))
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-    g.setColor(new Color(220, 206, 0))
+    g.setColor(Defaults.OCKER)
     g.drawOval(0, 0+ offset, length, length)
     var ovalwidth = width/2
     g.drawOval(width/2-ovalwidth/2, width/2-ovalwidth/2+ offset, ovalwidth, ovalwidth)
     ovalwidth = width/8
     g.drawOval(width/2-ovalwidth/2, width/2-ovalwidth/2+ offset, ovalwidth, ovalwidth)
     g.setFont(new Font(g.getFont.getFontName, Font.PLAIN, 8))
-    g.drawString(s"$greatest", width/2-6, height+offset-2)
+    g.drawString(s"${greatest/2}", width/2, height/4*3+offset - 2)
+    g.drawString(s"$greatest", width/2, height+offset-2)
 
-    g.setColor(new Color(255, 80, 0))
+    g.setColor(Defaults.REDDISH)
     g.setStroke(new BasicStroke(3))
     g.drawLine(p1._1, p1._2, p2._1, p2._2)
     g.drawLine(p2._1, p2._2, p3._1, p3._2)
@@ -70,7 +71,7 @@ object FighterGraphTest extends App{
   val f = Fighter("julian", "fighter_stickfigure.png")
 
   new MainFrame{
-    contents = FighterGraph(f)
+    contents = FighterGraph(f, 200)
     visible = true
   }
 
