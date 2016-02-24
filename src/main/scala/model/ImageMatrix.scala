@@ -31,6 +31,7 @@ object ImageMatrix{
     var r:Int = 0
     var c:Int = 0
     def next:ImageCoordinate = {if(c+1 >= cols) c = 0 else c+=1; this}
+    override def toString = s"r:$r, c:$c"
   }
 
   private val matrices = mutable.HashMap[String, IndexedSeq[IndexedSeq[BufferedImage]]]()

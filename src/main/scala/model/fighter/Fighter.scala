@@ -23,11 +23,11 @@ import scala.collection.mutable.HashMap
 case class Fighter (var name:String,
                imagesName:String,
                var xp:Int = 0,
-               full_hp:Int = 100,
-               full_strength:Int = 10,
-               full_speed:Int = 10,
-               full_mana:Int = 100,
-               full_mass:Int = 1,
+               var full_hp:Int = 10,
+               var full_strength:Int = 10,
+               var full_speed:Int = 10,
+               var full_mana:Int = 10,
+               var full_mass:Int = 10,
                techniques:HashMap[String, Technique] = HashMap(),
                rows: Int = 30,
                cols: Int = 7,
@@ -35,13 +35,38 @@ case class Fighter (var name:String,
                override var y:Int = 1,
                override var z:Int = 0
                ) extends GameObject with LivePoints with Speed with Mana{
-  override var hp:Int = full_hp
+  override var hp:Int = full_hp*10
+  override var mana:Int = full_mana *10
   override var strength:Int = full_strength
   override var speed:Int = full_speed
-  override var mana:Int = full_mana
   override var mass:Int = full_mass
   override var images = new ImageMatrix(imagesName, this, rows, cols)
   override var state:State = Normal(this)
+
+  def increase_full_hp: Unit ={
+    full_hp +=1
+    hp = full_hp *10
+  }
+
+  def increase_full_strength: Unit ={
+    full_strength += 1
+    strength = full_strength
+  }
+
+  def increase_full_speed{
+    full_speed += 1
+    speed = full_speed
+  }
+
+  def increase_full_mana: Unit ={
+    full_mana += 1
+    mana = full_mana*10
+  }
+
+  def increase_full_mass: Unit ={
+    full_mass += 1
+    mass = full_mass
+  }
 
   override def image: BufferedImage = images.currentImage
 

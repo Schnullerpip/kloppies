@@ -3,6 +3,7 @@ package main.scala
 import javax.swing.Timer
 
 import main.scala.controller.Controller
+import main.scala.dao.db4o.DB4O
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.states.techniques.fire.ThrowFireball
 import main.scala.model.map.{Stage, GameMap}
@@ -10,8 +11,9 @@ import main.scala.model.fighter.Fighter
 import main.scala.model.player.{KeySet, Player}
 import main.scala.controller.GAME_SPEED
 import main.scala.view.gui.game.Arena
+import main.scala.view.gui.preparation.modemenu.ModeMenu
 
-import scala.swing.Swing
+import scala.swing.{MainFrame, Swing}
 
 /**
  * Created by julian on 15.02.16.
@@ -20,19 +22,35 @@ import scala.swing.Swing
 object Main {
 
   def main(args:Array[String]): Unit ={
+    /*initialize DAO*/
+    val dao = new DB4O
 
+    /*Load all the Images*/
     ImageMatrix("images/fighters/fighter_stickfigure.png")
     ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
 
-    val fighters = Seq(
-      Fighter("julian", "fighter_stickfigure.png", full_speed = 10, full_strength = 20),
-      Fighter("kiki", "fighter_stickfigure.png", full_speed = 30, full_strength = 1)
-    )
-    fighters.foreach{f => f.newTechnique(ThrowFireball(f), "defenddirectionattack")}
+    /*Get the Fighters*/
+    val fighters = dao.query
+
+
+    /*declare GameMode*/
+    val frame = new MainFrame{
+      title = "Kloppies"
+      centerOnScreen()
+      maximize()
+      contents = new ModeMenu(fighters)
+      visible = true
+    }
+
+    /*shutdown application*/
+    dao.close
+    return
     val players = Seq(
       Player(fighters.head),
       Player(fighters(1), keySet = KeySet('k', 'j', 'h', 'l', 'u', 'o', 'p'))
     )
+
+    /**/
     val map = GameMap("images/backround_white.png", Seq(new Stage()))
     val controller = new Controller(players, map)
 
