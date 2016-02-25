@@ -41,6 +41,7 @@ case class FighterGraph(f:Fighter, length:Int = 100) extends Component {
     ovalwidth = width/8
     g.drawOval(width/2-ovalwidth/2, width/2-ovalwidth/2+ offset, ovalwidth, ovalwidth)
     g.setFont(new Font(g.getFont.getFontName, Font.PLAIN, 8))
+    //g.drawString(s"${greatest/4}", width/2, height/20.0*11+offset - 2)
     g.drawString(s"${greatest/2}", width/2, height/4*3+offset - 2)
     g.drawString(s"$greatest", width/2, height+offset-2)
 
