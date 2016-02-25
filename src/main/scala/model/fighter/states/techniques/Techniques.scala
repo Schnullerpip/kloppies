@@ -2,6 +2,7 @@ package main.scala.model.fighter.states.techniques
 
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.fire.ThrowFireball
+import main.scala.model.fighter.states.techniques.wind.SummonWind
 
 /**
  * Created by julian on 22.02.16.
@@ -15,8 +16,9 @@ object Techniques {
 
   def newTechnique(name:String, f:Fighter) = {
     name match {
-      case "ThrowFireball" => new ThrowFireball(f)
-      case _ => new ThrowFireball(f)
+      case "ThrowFireball" => ThrowFireball(f)
+      case "SummonWind" =>  SummonWind(f)
+      case _ => ThrowFireball(f)
     }
   }
 }

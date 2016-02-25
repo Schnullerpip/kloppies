@@ -4,6 +4,7 @@ import main.scala.dao.db4o.DB4O
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.fire.ThrowFireball
+import main.scala.model.fighter.states.techniques.wind.SummonWind
 
 /**
  * Created by julian on 23.02.16.
@@ -18,7 +19,10 @@ object db4oInsertTestFighters extends App {
     Fighter("julian", "fighter_stickfigure.png", full_speed = 10, full_strength = 10, full_mana = 10, full_hp = 10, full_mass = 10),
     Fighter("kiki", "fighter_stickfigure.png", full_speed = 15, full_strength = 1)
   )
-  fighters.foreach{f => f.newTechnique(ThrowFireball(f), "defenddirectionattack")}
+  fighters.foreach{f =>
+    f.newTechnique(ThrowFireball(f), "defenddirectionattack")
+    f.newTechnique(SummonWind(f), "defenddirectionjump")
+  }
   fighters.foreach{dao store}
   dao close
 }

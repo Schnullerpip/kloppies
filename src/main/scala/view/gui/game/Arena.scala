@@ -39,7 +39,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       layout += new Panel {
         override def paint(g: Graphics2D): Unit = {
           g.drawImage(controller.gameMap.backGround, 0, 0, null)
-          controller.gameMap.elements.foreach { go =>
+          controller.gameMap.elements.foreach { case go if go.images != null =>
             g.drawImage(go.image, go.x, go.y-go.z, null)
           }
         }
