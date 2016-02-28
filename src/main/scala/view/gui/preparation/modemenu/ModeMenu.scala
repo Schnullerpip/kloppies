@@ -62,5 +62,7 @@ class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
   }
   private def defaultActionProcedure[T](b: => T) = {
     modifyFighterInstance.close
+    b
+    frame.repaint()
   }
 }

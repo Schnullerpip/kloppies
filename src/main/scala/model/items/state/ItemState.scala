@@ -11,9 +11,9 @@ import main.scala.model.states.State
  */
 abstract class ItemState(item:Item) extends State(item) {
   override def actOnCollision(go: GameObject): Unit = {
-    if(item.intention == Harmful){
+    if(item.intention == Harmful && go.tangible){
       item.state.inflictDamageTo(go, item.strength)
-      item.state = Break(item)
+      //item.state = Break(item)
     }
   }
 
@@ -24,7 +24,7 @@ abstract class ItemState(item:Item) extends State(item) {
   override def hurtBy(go:GameObject) = item match {
     case l:LivePoints if item.vulnerable =>
       l.takeDamage(go.strength)
-    case _ => Break(item)
+    case _ => //Break(item)
   }
   override def stop: Unit = {}
 

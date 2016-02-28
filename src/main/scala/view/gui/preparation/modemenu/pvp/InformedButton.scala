@@ -11,7 +11,6 @@ import scala.swing.Button
  */
 class InformedButton(b:() => BufferedImage) extends Button {
   listenTo(mouse.clicks)
-  icon = new ImageIcon(b())
   override def paint(g:Graphics2D): Unit ={
     icon = new ImageIcon(b())
     super.paint(g)

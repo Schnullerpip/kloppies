@@ -2,6 +2,7 @@ package main.scala.model
 
 import main.scala.model.attributes.{LivePoints, Strength}
 import main.scala.model.intention.{Harmless, Intention}
+import main.scala.model.items.magical.wind.Wind
 import main.scala.model.states.{MidAir, State}
 import main.scala.util.Observable
 
@@ -14,8 +15,10 @@ trait GameObject extends Size with Mass with Direction with Strength with LivePo
   var state:State
   var intention:Intention = Harmless
   var images:ImageMatrix
-  def image = images.currentImage
   var collidable = true
+  var tangible = true
+
+  def image = images.currentImage
 
   override def gravity_affect(pace:Int = 1) = state match {
     case m:MidAir => super.gravity_affect(pace)

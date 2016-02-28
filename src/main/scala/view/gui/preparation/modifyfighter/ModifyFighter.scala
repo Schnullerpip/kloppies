@@ -78,7 +78,7 @@ case class ModifyFighter(f:Fighter) extends BorderPanel{
   val timer = new Timer(1000/f.speed, Swing.ActionListener{ _ =>
     f.images.next
     fighter_image.icon = new ImageIcon(f.image)
-    revalidate()
+    //revalidate()
     repaint()
   })
   timer.start()

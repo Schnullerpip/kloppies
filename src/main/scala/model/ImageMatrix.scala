@@ -34,7 +34,7 @@ object ImageMatrix{
     override def toString = s"r:$r, c:$c"
   }
 
-  private val matrices = mutable.HashMap[String, IndexedSeq[IndexedSeq[BufferedImage]]]()
+  val matrices = mutable.HashMap[String, IndexedSeq[IndexedSeq[BufferedImage]]]()
   def apply(path:String, rows:Int=FIGHTER_ROWS, cols:Int=FIGHTER_COLS, width:Int=FIGHTER_WIDTH, height:Int=FIGHTER_HEIGHT) = {
     val imageFile = new File(path)
     val imagePalette = ImageIO.read(imageFile)

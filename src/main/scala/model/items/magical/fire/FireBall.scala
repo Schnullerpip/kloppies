@@ -11,7 +11,7 @@ import main.scala.model.states.{AnimateMe, State}
  * Created by julian on 22.02.16.
  */
 case class FireBall(caster:GameObject) extends Item with Speed{
-  override var strength: Int = caster.strength+10
+  override var strength: Int = 10
   override var speed: Int = 15
   override var mass: Int = 1
   override var hp: Int = 1
@@ -37,8 +37,9 @@ case class FireBall(caster:GameObject) extends Item with Speed{
 case class FireBallStateNormal(item:FireBall) extends Normal(item) with AnimateMe{
   item.intention = Harmful
   override def actOnCollision(go:GameObject) = {
-    if (go != item.caster){
+    if (go != item.caster && go.tangible){
       super.actOnCollision(go)
+      item.state = Break(item)
     }
   }
 }
@@ -47,8 +48,9 @@ case class FireBallStateMove(item:FireBall) extends Move(item) with AnimateMe{
   item.intention = Harmful
   item.x_velocity += item.speed * {if(item.caster.looksLeft) -1 else 1}
   override def actOnCollision(go:GameObject) = {
-    if (go != item.caster && !go.state.isInstanceOf[Break]){
+    if (go != item.caster && go.tangible){
       super.actOnCollision(go)
+      item.state = Break(item)
     }
   }
 }

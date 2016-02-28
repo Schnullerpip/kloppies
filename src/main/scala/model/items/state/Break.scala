@@ -16,7 +16,9 @@ case class Break(item:Item) extends ItemState(item){
   item.x_velocity = 0
   item.y_velocity = 0
   item.z_velocity = 0
-  item.images.set(ITEM_BREAK)
+  item.tangible = false
+  if(item.images != null)
+    item.images.set(ITEM_BREAK)
 
   private val sleepTime = 1000 / {item match {
     case s:Speed => s.speed

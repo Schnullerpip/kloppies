@@ -15,9 +15,10 @@ import main.scala.util.{Observer, Observable}
  */
 case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable with Observer{
   var animators = Seq[QueueAnimator]()
-  players.foreach{p => {
-    p.fighter.addObserver(this)
-    gameMap(p.fighter)
+  players.zipWithIndex.foreach{pi => {
+    pi._1.fighter.x = pi._2*100
+    pi._1.fighter.addObserver(this)
+    gameMap(pi._1.fighter)
   }}
 
   def init ={
@@ -61,7 +62,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   private def hitDetection():Unit = hitDetection(gameMap.elements.filter(_.collidable))
   @tailrec
   private final def hitDetection(elements:Seq[GameObject]): Unit ={
-    if(elements nonEmpty) {
+    if(elements.size > 1) {
       elements.tail.foreach { e =>
         if (e.colliding(elements.head)) {
           e.state.actOnCollision(elements.head)
@@ -75,9 +76,11 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   override def update: Unit = cycle()
 
   override def update(go: GameObject): Unit = {
-    rainDownObservers(go.images)
     gameMap(go)
-    QueueAnimator(go, gameMap.elements)
+    if(go.images != null){
+      rainDownObservers(go.images)
+      QueueAnimator(go, gameMap.elements)
+    }
   }
 
   override def addObserver(obs:Observer) = {

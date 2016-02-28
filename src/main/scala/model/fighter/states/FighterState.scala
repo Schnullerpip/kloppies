@@ -17,7 +17,7 @@ abstract class FighterState(f:Fighter) extends State(f){
    * */
   override def actOnCollision(g: GameObject): Unit ={
     if(f.intention == Harmful) {
-      if (g.vulnerable) {
+      if (g.vulnerable && g.tangible) {
         f.state.asInstanceOf[FighterState].inflictDamageTo(g)
       }
     }

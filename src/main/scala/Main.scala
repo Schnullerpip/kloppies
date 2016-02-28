@@ -38,9 +38,9 @@ object Main {
       title = "Kloppies"
       centerOnScreen()
       maximize()
-      contents = new ModeMenu(fighters, frame)
-      visible = true
     }
+    frame.contents = new ModeMenu(fighters, frame)
+    frame.visible = true
 
     /*shutdown application*/
     dao.close
