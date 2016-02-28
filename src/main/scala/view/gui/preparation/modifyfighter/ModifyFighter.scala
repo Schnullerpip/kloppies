@@ -63,19 +63,20 @@ case class ModifyFighter(f:Fighter) extends BorderPanel{
         contents += new LabelButton(f, f.increase_full_mass _)
       }
     }
-    contents += new BoxPanel(Orientation.Vertical){
-      border = new LineBorder(Defaults.OCKER)
-      contents += new TechniqueComponent(f.techniques.head._2)
-      //f.techniques.values.foreach{
-      //  contents += new TechniqueComponent(_)
-      //}
+    contents += new ScrollPane() {
+      contents = new BoxPanel(Orientation.Vertical) {
+        border = new LineBorder(Defaults.OCKER)
+        f.techniques.values.foreach {
+          contents += new TechniqueComponent(_)
+        }
+      }
     }
   } -> BorderPanel.Position.Center
 
 
   /*TIMER THAT RUNS THE ANIMATION FOR THE CHARACTERS IMAGE*/
   val timer = new Timer(1000/f.speed, Swing.ActionListener{ _ =>
-    f.name + "\t" + f.images.next
+    f.images.next
     fighter_image.icon = new ImageIcon(f.image)
     revalidate()
     repaint()

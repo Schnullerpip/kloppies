@@ -5,6 +5,8 @@ import javax.swing.ImageIcon
 import javax.swing.border.LineBorder
 
 import main.scala.model.fighter.Fighter
+import main.scala.view.gui.Defaults
+import main.scala.view.gui.preparation.modemenu.pvp.PvP_Mode
 import main.scala.view.gui.preparation.modifyfighter.ModifyFighter
 
 import scala.swing.event.MouseClicked
@@ -13,23 +15,23 @@ import scala.swing._
 /**
  * Created by julian on 23.02.16.
  */
-class ModeMenu(fighters:Seq[Fighter]) extends BorderPanel{
+class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
   var modifyFighterInstance = ModifyFighter(fighters.head)
   layout += new GridPanel(1, 3){
     contents += new Label("PvP"){
-      peer.setFont(ModeMenu.font)
+      peer.setFont(Defaults.FONT)
       border = new LineBorder(Color.BLACK)
       listenTo(mouse.clicks)
-      reactions += {case e:MouseClicked => defaultActionProcedure(println("PvP was chosen"))}}
+      reactions += {case e:MouseClicked => defaultActionProcedure(frame.contents = new PvP_Mode(fighters, frame))}}
 
     contents += new Label("Campaign"){
-      peer.setFont(ModeMenu.font)
+      peer.setFont(Defaults.FONT)
       border = new LineBorder(Color.BLACK)
       listenTo(mouse.clicks)
       reactions += {case e:MouseClicked => defaultActionProcedure(println("campaign was chosen"))}}
 
     contents += new Label("Options"){
-      peer.setFont(ModeMenu.font)
+      peer.setFont(Defaults.FONT)
       border = new LineBorder(Color.BLACK)
       listenTo(mouse.clicks)
       reactions += {case e:MouseClicked => defaultActionProcedure(println("options was chosen"))}}
@@ -61,8 +63,4 @@ class ModeMenu(fighters:Seq[Fighter]) extends BorderPanel{
   private def defaultActionProcedure[T](b: => T) = {
     modifyFighterInstance.close
   }
-}
-
-object ModeMenu {
-  val font = new Font(Font.SANS_SERIF, Font.PLAIN, 25)
 }

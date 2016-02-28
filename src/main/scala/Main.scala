@@ -34,11 +34,11 @@ object Main {
 
 
     /*declare GameMode*/
-    val frame = new MainFrame{
+    val frame:MainFrame = new MainFrame{
       title = "Kloppies"
       centerOnScreen()
       maximize()
-      contents = new ModeMenu(fighters)
+      contents = new ModeMenu(fighters, frame)
       visible = true
     }
 
