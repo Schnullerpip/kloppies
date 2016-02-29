@@ -39,12 +39,12 @@ object Main {
       centerOnScreen()
       maximize()
     }
-    frame.contents = new ModeMenu(fighters, frame)
-    frame.visible = true
+    //frame.contents = new ModeMenu(fighters, frame)
+    //frame.visible = true
 
     /*shutdown application*/
     dao.close
-    return
+    //return
     val players = Seq(
       Player(fighters.head),
       Player(fighters(1), keySet = KeySet('k', 'j', 'h', 'l', 'u', 'o', 'p'))
