@@ -29,21 +29,25 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
 
   def pressed(key:Char, f:Fighter) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
+    key match {
+      case this.up => up_set = true; checkKeyBuffer(key, f, fighter_state.moveUp)
+      case this.down => down_set = true; checkKeyBuffer(key, f, fighter_state.moveDown)
+      case this.left => left_set = true; checkKeyBuffer(key, f, fighter_state.moveLeft)
+      case this.right => right_set = true; checkKeyBuffer(key, f, fighter_state.moveRight)
+      case this.attack => attack_set = true; checkKeyBuffer(key, f, fighter_state.hit)
+      case this.defense => if (!defense_set) checkKeyBuffer(key, f, {fighter_state.defend; defense_set = true})
+      case this.jump => jump_set = true; checkKeyBuffer(key, f, fighter_state.jump)
+      case _ =>
+    }
+  }
+
+  private def checkKeyBuffer(key:Char, f:Fighter, Else: => Unit) = {
+    val fighter_state = f.state.asInstanceOf[FighterState]
     val combination = kBuffer(key)
     if(f.techniques.contains(combination))
       fighter_state.technique(f.techniques(combination))
-    else {
-      key match {
-        case this.up => up_set = true; fighter_state.moveUp
-        case this.down => down_set = true; fighter_state.moveDown
-        case this.left => left_set = true; fighter_state.moveLeft
-        case this.right => right_set = true; fighter_state.moveRight
-        case this.attack => attack_set = true; fighter_state.hit
-        case this.defense => if(!defense_set)fighter_state.defend; defense_set = true
-        case this.jump => jump_set = true; fighter_state.jump
-        case _ =>
-      }
-    }
+    else
+      Else
   }
 
   private class KeyCombination{
