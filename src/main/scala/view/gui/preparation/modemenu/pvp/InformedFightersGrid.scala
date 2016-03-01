@@ -13,7 +13,10 @@ class InformedFightersGrid(f:Seq[Fighter]) extends GridPanel(0, 6){
   var timers = Seq[Timer]()
   def drop = {
     timers foreach {_ stop()}
-    fighters filter (_ != fighter)
+    if(fighter isDefined)
+      fighters filter (_ != fighter.get)
+    else
+      Seq()
   }
   private def fightersView() =
   //contents.clear()
