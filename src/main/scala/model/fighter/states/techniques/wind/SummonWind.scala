@@ -11,12 +11,11 @@ import main.scala.model.items.magical.wind.Wind
 /**
  * Created by julian on 25.02.16.
  */
-case class SummonWind(caster:Fighter) extends Technique(caster) with Effect{
+case class SummonWind(override val caster:Fighter) extends Technique(caster) with Effect with WindTechnique{
   override val name: String = "SummonWind"
 
   override val manaUse: Int = Techniques.MANA_USE_TECHNIQUE_LEVEL_1
-  override val description: String = """Summons wind around the caster either accelerating objects towards the casters direction
-    or slowing down the movement of objects opposing the caster. Or just move all the motionless objects around him/her."""
+  override val description: String = "Summons wind around the caster either accelerating objects towards the casters direction or slowing down the movement of objects opposing the caster. Or just move all the motionless objects around him/her."
   override val image: BufferedImage = ImageIO.read(new File("images/items/magical/wind.png"))
 
   override def act: Unit = {

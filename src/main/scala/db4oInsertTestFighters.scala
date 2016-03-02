@@ -19,10 +19,11 @@ object db4oInsertTestFighters extends App {
     Fighter("julian", "fighter_stickfigure.png", full_speed = 10, full_strength = 10, full_mana = 10, full_hp = 10, full_mass = 10),
     Fighter("kiki", "fighter_stickfigure.png", full_speed = 15, full_strength = 1)
   )
-  fighters.foreach{f =>
-    f.newTechnique(ThrowFireball(f), "defenddirectionattack")
-    f.newTechnique(SummonWind(f), "defenddirectionjump")
-  }
+
+  fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
+  fighters(1).newTechnique(SummonWind(fighters(1)), "defenddirectionjump")
+  fighters(1).newTechnique(ThrowFireball(fighters(1)), "defenddirectionattack")
+
   fighters.foreach{dao store}
   dao close
 }

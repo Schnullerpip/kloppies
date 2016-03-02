@@ -16,7 +16,8 @@ import scala.swing._
  * Created by julian on 23.02.16.
  */
 class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
-  var modifyFighterInstance = ModifyFighter(fighters.head)
+  val selfMM = this
+  var modifyFighter = ModifyFighter(fighters.head, this)
   layout += new GridPanel(1, 3){
     contents += new Label("PvP"){
       peer.setFont(Defaults.FONT)
@@ -38,7 +39,7 @@ class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
 
   } -> BorderPanel.Position.North
   
-  layout += modifyFighterInstance -> BorderPanel.Position.Center
+  layout += modifyFighter -> BorderPanel.Position.Center
   
   layout += new FlowPanel{
     fighters.foreach{
@@ -47,7 +48,7 @@ class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
         listenTo(mouse.clicks)
         reactions += {
           case e: MouseClicked =>
-            layout += defaultActionProcedureModifyFighter(ModifyFighter(f)) -> BorderPanel.Position.Center
+            layout += defaultActionProcedureModifyFighter(ModifyFighter(f, selfMM)) -> BorderPanel.Position.Center
             revalidate()
             repaint()
         }
@@ -55,13 +56,15 @@ class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
     }
   } -> BorderPanel.Position.South
 
-  private def defaultActionProcedureModifyFighter(mf:ModifyFighter)={
+  def defaultActionProcedureModifyFighter(mf:ModifyFighter)={
     defaultActionProcedure()
-    modifyFighterInstance = mf
+    modifyFighter = mf
+    revalidate()
+    frame.repaint()
     mf
   }
   private def defaultActionProcedure[T](b: => T) = {
-    modifyFighterInstance.close
+    modifyFighter.close()
     b
     frame.repaint()
   }

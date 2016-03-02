@@ -1,20 +1,23 @@
 package main.scala.view.gui.preparation.modifyfighter
 
-import java.awt.{Color, Font}
+import java.awt.Font
 import javax.swing.border.LineBorder
 import javax.swing.{Timer, ImageIcon}
 
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.Fighter
 import main.scala.view.gui.Defaults
+import main.scala.view.gui.preparation.modemenu.ModeMenu
+import main.scala.view.gui.preparation.modifyfighter.techniqueTree.TechniqueTree
 
 import scala.swing._
 import scala.swing.event.MouseClicked
 
 /**
  * Created by julian on 23.02.16.
+ * The Standard class for fighter exhibition and modification
  */
-case class ModifyFighter(f:Fighter) extends BorderPanel{
+case class ModifyFighter(f:Fighter, parent:ModeMenu) extends BorderPanel{
   val fighter_image = new Label{
     f.images.set(ImageMatrix.RUNNING)
     icon = new ImageIcon(f.image)
@@ -22,8 +25,6 @@ case class ModifyFighter(f:Fighter) extends BorderPanel{
   preferredSize = new Dimension(150, 150)
   val f_name = new Label(s"${f.name}")
   f_name.peer.setFont(new Font(f_name.peer.getFont.getName, Font.PLAIN, 25))
-
-
 
   layout += new BoxPanel(Orientation.Vertical){
     contents += new FlowPanel{ contents += f_name }
@@ -66,6 +67,13 @@ case class ModifyFighter(f:Fighter) extends BorderPanel{
     contents += new ScrollPane() {
       contents = new BoxPanel(Orientation.Vertical) {
         border = new LineBorder(Defaults.OCKER)
+        contents += new Button("+"){
+          listenTo(mouse.clicks)
+          reactions += {
+            case e:MouseClicked =>
+               new TechniqueTree(f, parent)
+          }
+        }
         f.techniques.values.foreach {
           contents += new TechniqueComponent(_)
         }
@@ -74,21 +82,17 @@ case class ModifyFighter(f:Fighter) extends BorderPanel{
   } -> BorderPanel.Position.Center
 
 
-  /*TIMER THAT RUNS THE ANIMATION FOR THE CHARACTERS IMAGE*/
+  /*TIMER THAT RUNS THE ANIMATION FOR THE CHARACTERS IMAGE IN THE MODIFYFIGHTERS COMPONENT*/
   val timer = new Timer(1000/f.speed, Swing.ActionListener{ _ =>
     f.images.next
     fighter_image.icon = new ImageIcon(f.image)
-    //revalidate()
     repaint()
   })
   timer.start()
 
-  def close = {
-    stopTimer
+  def close() = {
+    stopTimer()
     f.images.set(ImageMatrix.STANDING)
   }
-  private def stopTimer = if(timer.isRunning)timer.stop()
-  private def ifEnoughXP(b: => Unit): Unit ={
-    if(/*f.xp >= 100*/true)b
-  }
+  private def stopTimer() = if(timer.isRunning)timer.stop()
 }

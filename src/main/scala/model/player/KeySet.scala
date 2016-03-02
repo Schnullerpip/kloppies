@@ -44,14 +44,27 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
   private def checkKeyBuffer(key:Char, f:Fighter, Else: => Unit) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
     val combination = kBuffer(key)
-    if(f.techniques.contains(combination))
-      fighter_state.technique(f.techniques(combination))
+    var found = false
+    var combi = ""
+    f.techniques.keySet.foreach{
+      case k if combination.contains(k) =>
+        found = true
+        combi = k
+      case _ =>
+    }
+    if(found) {
+      fighter_state.technique(f.techniques(combi))
+      kBuffer.queue.foreach{k =>
+        kBuffer.queue dequeue()
+        kBuffer.queue enqueue ""
+      }
+    }
     else
       Else
   }
 
   private class KeyCombination{
-    val queue = scala.collection.mutable.Queue[String]("", "", "")
+    var queue = scala.collection.mutable.Queue[String]("", "", "", "", "")
     def apply(newChar:Char) = {
       queue dequeue()
       queue enqueue {newChar match {

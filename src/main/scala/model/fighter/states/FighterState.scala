@@ -31,7 +31,7 @@ abstract class FighterState(f:Fighter) extends State(f){
 
   override def inflictDamageTo(gameObject: GameObject, amount:Int = f.strength) = {
         if(f.intention == Harmful) {
-          gameObject.state.asInstanceOf[FighterState].hurtBy(f)
+          gameObject.state.hurtBy(f)
           f.intention = Harmless
         }
   }

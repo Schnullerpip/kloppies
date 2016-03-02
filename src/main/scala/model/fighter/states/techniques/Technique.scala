@@ -11,7 +11,7 @@ import main.scala.model.fighter.Fighter
  * @param caster is the calling fighter, this is given the technique so it can
  * infuse fighters attributes to technique
  */
-abstract class Technique(caster:Fighter){
+abstract class Technique(val caster:Fighter){
   val name:String
   val image:BufferedImage
   val description:String
