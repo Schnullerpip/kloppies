@@ -4,6 +4,7 @@ import main.scala.dao.db4o.DB4O
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.fire.ThrowFireball
+import main.scala.model.fighter.states.techniques.shock.SpeedPlus
 import main.scala.model.fighter.states.techniques.wind.SummonWind
 
 /**
@@ -23,6 +24,7 @@ object db4oInsertTestFighters extends App {
   fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
   fighters(1).newTechnique(SummonWind(fighters(1)), "defenddirectionjump")
   fighters(1).newTechnique(ThrowFireball(fighters(1)), "defenddirectionattack")
+  fighters(1).newTechnique(SpeedPlus(fighters(1)), "defenddownjump")
 
   fighters.foreach{dao store}
   dao close

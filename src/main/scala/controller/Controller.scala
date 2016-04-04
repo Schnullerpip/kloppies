@@ -3,8 +3,10 @@ package main.scala.controller
 import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
+import main.scala.model.items.magical.shock.ElectricSpark
 import main.scala.model.map.GameMap
 import main.scala.model.player.Player
+import main.scala.model.states.OneHitWonder
 import scala.annotation.tailrec
 import main.scala.util.{Observer, Observable}
 

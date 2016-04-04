@@ -23,5 +23,6 @@ case class ThrowFireball(override val caster:Fighter) extends Technique(caster) 
 }
 
 object ThrowFireball {
+  ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
   val image = ImageMatrix.matrices("fireball.png").head.head
 }

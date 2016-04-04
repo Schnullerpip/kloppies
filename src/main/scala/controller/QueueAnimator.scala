@@ -2,7 +2,8 @@ package main.scala.controller
 
 import main.scala.model.GameObject
 import main.scala.model.attributes.Speed
-import main.scala.model.states.AnimateMe
+import main.scala.model.items.magical.shock.ElectricSpark
+import main.scala.model.states.{OneHitWonder, AnimateMe}
 
 import scala.swing.Swing
 
@@ -20,15 +21,31 @@ case class QueueAnimator (go:GameObject, pool:Seq[GameObject], sleep:Int = 250) 
     case _ => sleep
   }
 
-  def stopTimer():Unit = timer.stop()
+  val timer = go.state match {
+    case ohw: OneHitWonder =>
+      new javax.swing.Timer(sleepTime, Swing.ActionListener { _ =>
+        if (pool.contains(go)) {
+          if (go.images.next.c == go.images.cols-1) {
+            stopTimer()
+            ohw.cleanMeUp
+          }
+        }else{
+            stopTimer()
+            ohw.cleanMeUp
+          }
+      })
+    case _ =>
+      new javax.swing.Timer(sleepTime, Swing.ActionListener { _ =>
+        if (pool.contains(go)) {
+          if (go.state.isInstanceOf[AnimateMe]) {
+            go.images.next
+          }
+        } else
+          stopTimer()
+      })
+  }
 
-  val timer = new javax.swing.Timer(sleepTime, Swing.ActionListener{ _ =>
-    if(pool.contains(go)){
-      if(go.state.isInstanceOf[AnimateMe]){
-        go.images.next
-      }
-    }else stopTimer()
-  })
+  def stopTimer():Unit = timer.stop()
 
   timer.start()
 }

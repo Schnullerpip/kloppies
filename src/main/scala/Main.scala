@@ -27,7 +27,6 @@ object Main {
 
     /*Load all the Images*/
     ImageMatrix("images/fighters/fighter_stickfigure.png")
-    ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
 
     /*Get the Fighters*/
     val fighters = dao.query
