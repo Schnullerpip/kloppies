@@ -26,7 +26,15 @@ class InformedFightersGrid(f:Seq[Fighter]) extends GridPanel(0, 6){
         case e: MouseEntered => //TODO little speachbubble with fighters name
       }
     }
-    contents += l
+
+    /*-----------The fighters image and its name--------*/
+    contents += new BoxPanel(Orientation.Vertical){
+      contents += l
+      contents += new Label(f.name)
+    }
+    /*--------------------------------------------------*/
+
+    /*the timer. that will move the fighters image in the PvP_Mode Menu*/
     val timer = new Timer(1000 / f.speed, Swing.ActionListener { _ =>
       f.images.next
       l.icon = new ImageIcon(f.image)

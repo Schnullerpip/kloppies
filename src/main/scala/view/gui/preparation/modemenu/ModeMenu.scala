@@ -43,8 +43,11 @@ class ModeMenu(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel{
   
   layout += new FlowPanel{
     fighters.foreach{
-      f => contents += new Label{
-        icon = new ImageIcon(f.image)
+      f => contents += new BoxPanel(Orientation.Vertical){
+        contents += new Label{
+          icon = new ImageIcon(f.image)
+        }
+        contents += new Label(f.name)
         listenTo(mouse.clicks)
         reactions += {
           case e: MouseClicked =>

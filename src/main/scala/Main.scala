@@ -31,7 +31,6 @@ object Main {
     /*Get the Fighters*/
     val fighters = dao.query
 
-/*
     /*declare GameMode*/
     val frame:MainFrame = new MainFrame{
       title = "Kloppies"
@@ -43,7 +42,7 @@ object Main {
 
     /*shutdown application*/
     dao.close
-    return*/
+    return
     val players = Seq(
       Player(fighters.head),
       Player(fighters(1), keySet = KeySet('k', 'j', 'h', 'l', 'u', 'o', 'p'))

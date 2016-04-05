@@ -22,7 +22,7 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
   var keySet = KeySet()
   var fightersGrid = new InformedFightersGrid(fighters)
 
-  /*The Textfields which hold the keyset*/
+  /*------------The Textfields which hold the keyset-------------------------*/
   val up      = new TextField(keySet.up.toString) {columns = 2}
   val down    = new TextField(keySet.down.toString) {columns = 2}
   val left    = new TextField(keySet.left.toString) {columns = 2}
@@ -30,9 +30,11 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
   val attack  = new TextField(keySet.attack.toString) {columns = 2}
   val defense = new TextField(keySet.defense.toString) {columns = 2}
   val jump    = new TextField(keySet.jump.toString) {columns = 2}
+  /*-------------------------------------------------------------------------*/
 
   var selectionPanel = new BorderPanel() {
 
+    /*The Keyset modification panel with labels and textfields representing the keyset*/
     layout += new GridPanel(2, 1) {
       border = new LineBorder(Color.BLACK)
       contents += new Label("KeySet")
@@ -55,6 +57,7 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
     } -> BorderPanel.Position.North
 
 
+    /*The Panel showing all the Fighters*/
     layout += new GridPanel(2, 1) {
       border = new LineBorder(Color.BLACK)
       contents += new Label("Fighters")
