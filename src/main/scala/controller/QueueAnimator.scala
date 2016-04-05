@@ -25,7 +25,7 @@ case class QueueAnimator (go:GameObject, pool:Seq[GameObject], sleep:Int = 250) 
     case ohw: OneHitWonder =>
       new javax.swing.Timer(sleepTime, Swing.ActionListener { _ =>
         if (pool.contains(go)) {
-          if (go.images.next.c == go.images.cols-1) {
+          if (go.images.next.c >= go.images.cols-1) {
             stopTimer()
             ohw.cleanMeUp
           }

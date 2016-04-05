@@ -1,6 +1,6 @@
 package main.scala.view.gui.game
 
-import java.awt.{Color, Graphics2D}
+import java.awt.{Color, Graphics2D, RenderingHints}
 import javax.swing.border.LineBorder
 
 import main.scala.controller.Controller
@@ -41,6 +41,9 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
           g.drawImage(controller.gameMap.backGround, 0, 0, null)
           controller.gameMap.elements.reverse.foreach {
             case go if go.images != null =>
+              g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+              g.setColor(new Color(0,0,0,0.30f))
+              g.fillOval(go.x, go.y+go.height-10, go.width, 10)
               g.drawImage(go.image, go.x, go.y-go.z, null)
             case _ =>
           }
@@ -56,7 +59,6 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
           controller.players.foreach { p => p.keySet.pressed(e.peer.getKeyChar, p.fighter) }
         case r: KeyReleased =>
           controller.players.foreach { p => p.keySet.released(r.peer.getKeyChar, p.fighter)}
-
       }
     }
 

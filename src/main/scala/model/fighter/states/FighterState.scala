@@ -57,4 +57,6 @@ abstract class FighterState(f:Fighter) extends State(f){
   def defend = {
     ifMoveable{f.state = if(this.isInstanceOf[MidAir]) new Defending(f) with MidAir else Defending(f)}
   }
+
+  override def toString() = this.getClass.getName
 }

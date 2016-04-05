@@ -14,28 +14,42 @@ case class Landing(f:Fighter) extends FighterState(f){
   f.x_velocity = 0
   f.y_velocity = 0
   f.moveable = false
+  f.collidable = false
 
   val movethread = new Thread(new Runnable {
     override def run(): Unit = {
-      ifNotHurt{
-        f.images.next
-        ifNotHurt{
-          f.images.next
-          ifNotHurt{
-            f.images.next
-            ifNotHurt{
-              f.images.next
-              ifNotHurt{
-                f.images.next
-                ifNotHurt{
-                  f.images.next
-                  Thread.sleep(1000/f.speed/2)
-                }
-              }
-            }
-          }
-        }
-      }
+      //ifNotHurt{
+      //  f.images.next
+      //  ifNotHurt{
+      //    f.images.next
+      //    ifNotHurt{
+      //      f.images.next
+      //      ifNotHurt{
+      //        f.images.next
+      //        ifNotHurt{
+      //          f.images.next
+      //          ifNotHurt{
+      //            f.images.next
+      //            Thread.sleep(1000/f.speed/2)
+      //          }
+      //        }
+      //      }
+      //    }
+      //  }
+      //}
+      Thread.sleep(1000/f.speed)
+      f.images.next
+      Thread.sleep(1000/f.speed)
+      f.images.next
+      Thread.sleep(1000/f.speed)
+      f.images.next
+      Thread.sleep(1000/f.speed)
+      f.images.next
+      Thread.sleep(1000/f.speed)
+      f.images.next
+      Thread.sleep(1000/f.speed)
+      f.images.next
+      Thread.sleep(1000/f.speed/2)
       f.state = Normal(f)
     }
   })

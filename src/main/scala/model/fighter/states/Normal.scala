@@ -13,8 +13,9 @@ import main.scala.model.ImageMatrix.{STANDING, STANDING_HIT}
 case class Normal(f:Fighter) extends FighterState(f) with AnimateMe{
   f.images.set(STANDING)
   f.moveable = true
-  override def hit = f.state = StandardAttack(f)
+  f.collidable = true
 
+  override def hit = f.state = StandardAttack(f)
   override def moveUp =   { super.moveUp;   f.state = Running(f)}
   override def moveDown = { super.moveDown; f.state = Running(f)}
   override def moveLeft = { super.moveLeft; f.looksLeft = true; f.state = Running(f)}

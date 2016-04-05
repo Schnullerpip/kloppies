@@ -39,8 +39,8 @@ object ImageMatrix{
     val imageFile = new File(path)
     val imagePalette = ImageIO.read(imageFile)
     val matrix = {
-      for (row <- 0 to rows - 1) yield {
-        for (col <- 0 to cols - 1) yield {
+      for (row <- 0 until rows) yield {
+        for (col <- 0 until cols) yield {
           val (x, y, w, h) = (col * width, row * height, width, height)
           imagePalette.getSubimage(x, y, w, h)
         }

@@ -3,10 +3,8 @@ package main.scala.controller
 import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
-import main.scala.model.items.magical.shock.ElectricSpark
 import main.scala.model.map.GameMap
 import main.scala.model.player.Player
-import main.scala.model.states.OneHitWonder
 import scala.annotation.tailrec
 import main.scala.util.{Observer, Observable}
 
@@ -31,6 +29,8 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
 
   def cycle() = {
     //introduceView()
+   // gameMap.fighters.foreach{case f:Fighter if f.name == "julian" => println(f.name + "\t" + f.state + "\t" + f.images.image_coordinate.c)
+   // case _ =>}
     gravityEffect(moveElements)
     hitDetection()
     notifyObservers()
