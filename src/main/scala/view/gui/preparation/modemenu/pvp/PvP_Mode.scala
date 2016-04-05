@@ -21,6 +21,16 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
   var nPlayer = 0
   var keySet = KeySet()
   var fightersGrid = new InformedFightersGrid(fighters)
+
+  /*The Textfields which hold the keyset*/
+  val up      = new TextField(keySet.up.toString) {columns = 2}
+  val down    = new TextField(keySet.down.toString) {columns = 2}
+  val left    = new TextField(keySet.left.toString) {columns = 2}
+  val right   = new TextField(keySet.right.toString) {columns = 2}
+  val attack  = new TextField(keySet.attack.toString) {columns = 2}
+  val defense = new TextField(keySet.defense.toString) {columns = 2}
+  val jump    = new TextField(keySet.jump.toString) {columns = 2}
+
   var selectionPanel = new BorderPanel() {
 
     layout += new GridPanel(2, 1) {
@@ -28,19 +38,19 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
       contents += new Label("KeySet")
       contents += new GridPanel(0, 2) {
         contents += new BorderPanel() { layout += new Label("Up") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.up.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += up -> BorderPanel.Position.West }
         contents += new BorderPanel() { layout += new Label("Down") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.down.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += down -> BorderPanel.Position.West }
         contents += new BorderPanel() { layout += new Label("Left") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.left.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += left -> BorderPanel.Position.West }
         contents += new BorderPanel() { layout += new Label("Right") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.right.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += right -> BorderPanel.Position.West }
         contents += new BorderPanel() { layout += new Label("Attack") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.attack.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += attack -> BorderPanel.Position.West }
         contents += new BorderPanel() { layout += new Label("Jump") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.jump.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += jump -> BorderPanel.Position.West }
         contents += new BorderPanel() { layout += new Label("Defense") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += new TextField(keySet.defense.toString) { columns = 2 } -> BorderPanel.Position.West }
+        contents += new BorderPanel() { layout += defense -> BorderPanel.Position.West }
       }
     } -> BorderPanel.Position.North
 
@@ -58,9 +68,8 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
     reactions += {
       case e:MouseClicked =>
         if(fightersGrid.fighter isDefined) {
-          players = Player(fightersGrid.fighter.get, keySet) +: players
+          nextPlayer_and_start_routine
           nPlayer += 1
-          keySet = KeySet()
           fightersGrid = new InformedFightersGrid(fightersGrid.drop)
           selectionPanel.layout += new GridPanel(2, 1) {
             border = new LineBorder(Color.BLACK)
@@ -84,7 +93,7 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
         reactions += {
           case e: MouseClicked if players.nonEmpty =>
             close()
-            players = Player(fightersGrid.fighter.get, keySet) +: players
+            nextPlayer_and_start_routine
             //frame.contents = new Arena() TODO game should not start new frame but frame's content should be replaced with an arena component
             val map = GameMap("images/backround_white.png", Seq(new Stage()))
             val controller = new Controller(players, map)
@@ -102,5 +111,17 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
 
   layout += selectionPanel -> BorderPanel.Position.Center
 
- private def close() = timers.foreach{_ stop()}
+  private def close() = timers.foreach{_ stop()}
+
+  private def nextPlayer_and_start_routine = {
+    /*------ generating keyset ----------*/
+      keySet = KeySet(up, down, left, right, attack, defense, jump)
+    /*---------------------------------*/
+
+    /*------adding new player to players list---------*/
+    players = Player(fightersGrid.fighter.get, keySet) +: players
+    /*------------------------------------------------*/
+  }
+
+  private implicit def textfieldToChar(t:TextField):Char = t.text.charAt(0)
 }

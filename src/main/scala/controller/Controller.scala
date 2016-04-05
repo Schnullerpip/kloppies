@@ -46,18 +46,18 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     gameMap.elements.foreach{go => rainDownObservers(go.images)}
   }
 
-  private def garbageCollector() = {
+  private def garbageCollector():Boolean = {
     gameMap.elements = gameMap.elements.filter {case l: LivePoints => l.hp > 0 case _ => true}
     gameMap.elements.count{case f: Fighter => true case _ => false } > 1
   }
 
   private def moveElements = {
     val moveables = gameMap.elements
-    moveables.foreach{_.move}
+    moveables foreach{_.move}
     moveables
   }
   private def gravityEffect(gos:Seq[GameObject]) = {
-   gos.foreach{_.gravity_affect()}
+   gos foreach{_.gravity_affect()}
    gos
   }
 

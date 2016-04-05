@@ -19,6 +19,7 @@ class DB4O extends DAO{
     var seq = Seq[StorableFighter]()
     while(objset hasNext){
       val obj = objset.next()
+
       seq = obj +: seq
     }
     fighters = seq

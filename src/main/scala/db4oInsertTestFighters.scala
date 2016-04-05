@@ -9,6 +9,7 @@ import main.scala.model.fighter.states.techniques.wind.SummonWind
 
 /**
  * Created by julian on 23.02.16.
+  * Testclass solely for inserting some default Fighter in to the game
  */
 object db4oInsertTestFighters extends App {
   /*Load all the Images*/
@@ -17,15 +18,16 @@ object db4oInsertTestFighters extends App {
 
   val dao = new DB4O
   val fighters = Seq(
-    Fighter("julian", "fighter_stickfigure.png", full_speed = 10, full_strength = 10, full_mana = 10, full_hp = 10, full_mass = 10),
-    Fighter("kiki", "fighter_stickfigure.png", full_speed = 15, full_strength = 1)
+    Fighter("julian", "fighter_stickfigure.png", full_speed = 1, full_strength = 10, full_mana = 10, full_hp = 10, full_mass = 10),
+    Fighter("kiki", "fighter_stickfigure.png", full_speed = 1, full_strength = 1)
   )
 
   fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
+
   fighters(1).newTechnique(SummonWind(fighters(1)), "defenddirectionjump")
   fighters(1).newTechnique(ThrowFireball(fighters(1)), "defenddirectionattack")
   fighters(1).newTechnique(SpeedPlus(fighters(1)), "defenddownjump")
 
-  fighters.foreach{dao store}
+  fighters foreach{dao store}
   dao close
 }

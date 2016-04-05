@@ -17,6 +17,7 @@ case class Landing(f:Fighter) extends FighterState(f){
 
   val movethread = new Thread(new Runnable {
     override def run(): Unit = {
+      println(Thread.currentThread().getId)
       ifNotHurt{
         f.images.next
         ifNotHurt{

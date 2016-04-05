@@ -21,7 +21,8 @@ trait GameObject extends Size with Mass with Direction with Strength with LivePo
   def image = images.currentImage
 
   override def gravity_affect(pace:Int = 1) = state match {
-    case m:MidAir => super.gravity_affect(pace)
+    case m:MidAir =>
+      super.gravity_affect(pace)
     case _ =>
   }
 

@@ -3,7 +3,7 @@ package main.scala.model.fighter.states.midair
 import main.scala.model.GameObject
 import main.scala.model.ImageMatrix.JUMPING
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.{Hurt, FighterState}
+import main.scala.model.fighter.states.FighterState
 
 /**
  * Created by julian on 14.02.16.

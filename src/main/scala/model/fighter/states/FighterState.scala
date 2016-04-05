@@ -39,7 +39,8 @@ abstract class FighterState(f:Fighter) extends State(f){
 
   override def stop = {stopUp; stopLeft}
 
-  def landing = f.state = Landing(f)
+  def landing =
+    f.state = Landing(f)
 
   private def ifMoveable(b: => Unit) = if(f.moveable)b
   def moveUp = ifMoveable(f.y_velocity = -1 * f.speed)
