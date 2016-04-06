@@ -69,10 +69,10 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
 
     /*NEW WAY*/
     gos foreach{go =>
+      go.gravity_affect(GRAVITY_CONSTANT)
       if(go.gravity_affected){
         go.state match {
           case ma:MidAir =>
-            go.z_velocity -= GRAVITY_CONSTANT
             val iterator = gameMap.stages.iterator
             var contin = true
             while(contin && iterator.hasNext && go.z_velocity < 0) {

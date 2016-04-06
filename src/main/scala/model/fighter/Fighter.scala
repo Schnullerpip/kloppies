@@ -3,10 +3,10 @@ package main.scala.model.fighter
 import java.awt.image.BufferedImage
 
 import main.scala.model.attributes.{Mana, Speed, LivePoints}
-import main.scala.model.fighter.states.{FighterState, Normal}
+import main.scala.model.fighter.states.Normal
 import main.scala.model.fighter.states.techniques.Technique
 import main.scala.model._
-import main.scala.model.states.{MidAir, State}
+import main.scala.model.states.State
 
 import scala.collection.mutable.HashMap
 
@@ -69,20 +69,5 @@ case class Fighter (var name:String,
   }
 
   override def image: BufferedImage = images.currentImage
-
-  override def gravity_affect(pace:Int) = {
-    state match {
-      case m:MidAir =>
-        if(gravity_affected)z_velocity -= pace
-        /*TODO replace with check for collision with stage instance*/
-        if(z <= 0) {
-          z = 0
-          z_velocity = 0
-          state.asInstanceOf[FighterState].landing
-        }
-      case _ =>
-    }
-  }
-
   def newTechnique(t:Technique, combination:String) = techniques.put(combination, t)
 }
