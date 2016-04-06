@@ -3,10 +3,13 @@ package main.scala.controller
 import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
+import main.scala.model.fighter.states.FighterState
 import main.scala.model.map.GameMap
 import main.scala.model.player.Player
+import main.scala.model.states.MidAir
+
 import scala.annotation.tailrec
-import main.scala.util.{Observer, Observable}
+import main.scala.util.{Observable, Observer}
 
 /**
  * Created by julian on 14.02.16.
@@ -56,9 +59,40 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     moveables foreach{_.move}
     moveables
   }
+
+  private val GRAVITY_CONSTANT = 1
+  /**
+    * instead of letting the GameObjects decide what to do in case of gravityEffect now the Controller has the responsibility to
+    * manipulate the GameObjects velocities and to check for Ground Contact*/
   private def gravityEffect(gos:Seq[GameObject]) = {
-   gos foreach{_.gravity_affect()}
-   gos
+    /*gos foreach{_.gravity_affect()}  OLD WAY*/
+
+    /*NEW WAY*/
+    gos foreach{go =>
+      if(go.gravity_affected){
+        go.state match {
+          case ma:MidAir =>
+            go.z_velocity -= GRAVITY_CONSTANT
+            val iterator = gameMap.stages.iterator
+            var contin = true
+            while(contin && iterator.hasNext && go.z_velocity < 0) {
+              val s = iterator.next()
+              if((go.x >= s.x && go.x <= s.x + s.width) || ( go.x <= s.x && go.x + go.width >= s.x)) {
+                if ((go.y >= s.y && go.y <= s.y + s.width) || (go.y <= s.y && go.y + go.width >= s.y)) {
+                  if (go.z <= s.z && go.z + go.height/3 >= s.z) {
+                    go.z = s.z
+                    go.z_velocity = 0
+                    go.state.asInstanceOf[FighterState].landing
+                    contin = false
+                  }
+                }
+              }
+            }
+          case _ =>
+        }
+      }
+    }
+    gos
   }
 
   private def hitDetection():Unit = hitDetection(gameMap.elements.filter(_.collidable))

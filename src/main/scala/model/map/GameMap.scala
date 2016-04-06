@@ -12,16 +12,16 @@ import main.scala.util.Observer
  * Created by julian on 14.02.16.
  * representation of a Map, that has a background image and consists of stages
  */
-class GameMap(val backGround: BufferedImage, val stages:Seq[Stage], var observers:Seq[Observer]){
+class GameMap(val backGround: BufferedImage, var stages:Seq[Stage], var observers:Seq[Observer]){
   def apply(observer: Observer) = {
     observers = observer +: observers
     elements.foreach{go => go.images.observers = observers}
   }
-  def apply(element:GameObject) = {
-    elements = element +: elements
-  }
+  def apply(element:GameObject) = elements = element +: elements
 
-  /*this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
+  def apply(stage:Stage) = stages = stage +: stages
+
+  /*TODO this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
   var elements:Seq[GameObject] = Seq()
 
   private def filter[T] = (f:(AnyRef) => Boolean) => elements.filter{f}.asInstanceOf[Seq[T]]
