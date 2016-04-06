@@ -2,7 +2,7 @@ package main.scala.model.items.magical.fire
 
 import main.scala.model.attributes.Speed
 import main.scala.model.intention.Harmful
-import main.scala.model.items.state.{Break, Move, Normal}
+import main.scala.model.items.state.{Break, ItemState, Move, Normal}
 import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.items.Item
 import main.scala.model.states.{AnimateMe, State}
@@ -35,12 +35,16 @@ case class FireBall(caster:GameObject) extends Item with Speed{
   }
 }
 
+case class FireBallStateBreak(i:FireBall) extends Break(i){
+  SoundDistributer.play("small_explosion")
+}
+
 case class FireBallStateNormal(item:FireBall) extends Normal(item) with AnimateMe{
   item.intention = Harmful
   override def actOnCollision(go:GameObject) = {
     if (go != item.caster && go.tangible){
       super.actOnCollision(go)
-      item.state = Break(item)
+      item.state = FireBallStateBreak(item)
     }
   }
 }
@@ -52,7 +56,8 @@ case class FireBallStateMove(item:FireBall) extends Move(item) with AnimateMe{
   override def actOnCollision(go:GameObject) = {
     if (go != item.caster && go.tangible){
       super.actOnCollision(go)
-      item.state = Break(item)
+      item.state = FireBallStateBreak(item)
     }
   }
 }
+

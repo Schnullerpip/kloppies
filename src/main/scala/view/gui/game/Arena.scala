@@ -6,6 +6,7 @@ import javax.swing.border.LineBorder
 import main.scala.controller.Controller
 import main.scala.model.GameObject
 import main.scala.util.Observer
+import main.scala.util.sound.SoundDistributer
 
 import scala.swing._
 import scala.swing.event.{KeyPressed, KeyReleased}
@@ -69,6 +70,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
     maximize()
     visible = true
     override def closeOperation(): Unit ={
+      SoundDistributer.stop("fight_music")
       timer.stop()
       controller.shutDown()
       controller.animators.foreach{_.stopTimer()}
@@ -76,6 +78,8 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       System.exit(0)//TODO sollte auf Main.scala ausgelagert werden
     }
   }
+
+  SoundDistributer.loop("fight_music")
 
   controller addObserver this
   controller init

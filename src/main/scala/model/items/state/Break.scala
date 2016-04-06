@@ -9,7 +9,7 @@ import main.scala.model.states.AnimateMe
 /**
  * Created by julian on 22.02.16.
  */
-case class Break(item:Item) extends ItemState(item){
+class Break(val item:Item) extends ItemState(item){
   item.intention = Harmless
   item.vulnerable = false
   item.moveable = false

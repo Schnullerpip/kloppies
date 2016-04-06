@@ -14,8 +14,12 @@ object SoundDistributer {
     * sounds are initially loaded and ready to be played - whether this is a good idea will be clear later in testing since for example
     * three fireballs all play the same sound right now and therefore interrupting the sound of their previous instances - nnot nice but efficient*/
   private val sounds = Map(
+    "fight_music" -> createClip("fight_music"),
+
+
     "small_punch" -> createClip("small_punch"),
     "throw_fireball" -> createClip("throw_fireball"),
+    "small_explosion" -> createClip("small_explosion"),
     "wind" -> createClip("wind"),
     "wind_loop" -> createClip("wind_loop"),
     "zap" -> createClip("zap")
