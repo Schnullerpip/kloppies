@@ -16,8 +16,6 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   new Thread(new Runnable {
     override def run(): Unit = {
       Thread.sleep(3000)
-      f.vulnerable = true
-      f.collidable = true
       f.state = Landing(f)
     }
   }).start()

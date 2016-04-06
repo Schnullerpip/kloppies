@@ -14,7 +14,6 @@ case class Landing(f:Fighter) extends FighterState(f){
   f.x_velocity = 0
   f.y_velocity = 0
   f.moveable = false
-  f.collidable = false
 
   val movethread = new Thread(new Runnable {
     override def run(): Unit = {

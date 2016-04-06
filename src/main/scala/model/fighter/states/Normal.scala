@@ -14,6 +14,7 @@ case class Normal(f:Fighter) extends FighterState(f) with AnimateMe{
   f.images.set(STANDING)
   f.moveable = true
   f.collidable = true
+  f.vulnerable = true
 
   override def hit = f.state = StandardAttack(f)
   override def moveUp =   { super.moveUp;   f.state = Running(f)}

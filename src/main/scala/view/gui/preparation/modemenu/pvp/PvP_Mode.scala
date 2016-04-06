@@ -11,6 +11,7 @@ import main.scala.model.map.{GameMap, Stage}
 import main.scala.model.player.{KeySet, Player}
 import main.scala.view.gui.Defaults
 import main.scala.view.gui.game.Arena
+import main.scala.view.gui.preparation.KeySetMenu
 
 import scala.swing._
 import scala.swing.event.MouseClicked
@@ -18,42 +19,14 @@ import scala.swing.event.MouseClicked
 class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
   var players = Seq[Player]()
   var nPlayer = 0
-  var keySet = KeySet()
   var fightersGrid = new InformedFightersGrid(fighters)
+  val keySetMenu = new KeySetMenu()
 
-  /*------------The Textfields which hold the keyset-------------------------*/
-  val up      = new TextField(keySet.up.toString) {columns = 2}
-  val down    = new TextField(keySet.down.toString) {columns = 2}
-  val left    = new TextField(keySet.left.toString) {columns = 2}
-  val right   = new TextField(keySet.right.toString) {columns = 2}
-  val attack  = new TextField(keySet.attack.toString) {columns = 2}
-  val defense = new TextField(keySet.defense.toString) {columns = 2}
-  val jump    = new TextField(keySet.jump.toString) {columns = 2}
-  /*-------------------------------------------------------------------------*/
 
   var selectionPanel = new BorderPanel() {
 
     /*The Keyset modification panel with labels and textfields representing the keyset*/
-    layout += new GridPanel(2, 1) {
-      border = new LineBorder(Color.BLACK)
-      contents += new Label("KeySet")
-      contents += new GridPanel(0, 2) {
-        contents += new BorderPanel() { layout += new Label("Up") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += up -> BorderPanel.Position.West }
-        contents += new BorderPanel() { layout += new Label("Down") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += down -> BorderPanel.Position.West }
-        contents += new BorderPanel() { layout += new Label("Left") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += left -> BorderPanel.Position.West }
-        contents += new BorderPanel() { layout += new Label("Right") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += right -> BorderPanel.Position.West }
-        contents += new BorderPanel() { layout += new Label("Attack") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += attack -> BorderPanel.Position.West }
-        contents += new BorderPanel() { layout += new Label("Jump") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += jump -> BorderPanel.Position.West }
-        contents += new BorderPanel() { layout += new Label("Defense") -> BorderPanel.Position.East }
-        contents += new BorderPanel() { layout += defense -> BorderPanel.Position.West }
-      }
-    } -> BorderPanel.Position.North
+    layout += keySetMenu -> BorderPanel.Position.North
 
 
     /*The Panel showing all the Fighters*/
@@ -64,6 +37,7 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
     } -> BorderPanel.Position.Center
   }
 
+  /*Buttonlike Label serving as 'next Player'-function saving a players configurations and switching to the next one*/
   val player_label = new Label(s"Player ${nPlayer +1}"){
     font = Defaults.FONT
     listenTo(mouse.clicks)
@@ -71,6 +45,7 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
       case e:MouseClicked =>
         if(fightersGrid.fighter.isDefined) {
           nextPlayer_and_start_routine
+          keySetMenu.next //triggers new default keyset
           if(players.size < fighters.size) {
             nPlayer += 1
             fightersGrid = new InformedFightersGrid(fightersGrid.drop)
@@ -121,14 +96,9 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
   private def close() = fightersGrid.drop
 
   private def nextPlayer_and_start_routine = {
-    /*------ generating keyset ----------*/
-      keySet = KeySet(up, down, left, right, attack, defense, jump)
-    /*---------------------------------*/
-
     /*------adding new player to players list---------*/
-    players = Player(fightersGrid.fighter.get, keySet) +: players
+    players = Player(fightersGrid.fighter.get, keySetMenu.get) +: players
     /*------------------------------------------------*/
   }
 
-  private implicit def textfieldToChar(t:TextField):Char = t.text.charAt(0)
 }
