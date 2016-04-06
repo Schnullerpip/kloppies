@@ -33,7 +33,7 @@ case class Hurt(f:Fighter, gameobject:GameObject, combo:Int = 0)(damageAmount:In
                 if (contin && f.state.isInstanceOf[Hurt]) {
                   Thread.sleep(sleepTime)
                   f.images.next
-                  if (combo < MAX_COMBO && f.state.isInstanceOf[Hurt] && contin) {
+                  if (combo <= MAX_COMBO && f.state.isInstanceOf[Hurt] && contin) {
                     f.state = Normal(f)
                   } else f.state = Falling(f, gameobject)
                 }

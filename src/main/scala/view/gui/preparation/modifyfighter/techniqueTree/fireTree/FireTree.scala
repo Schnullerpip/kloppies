@@ -3,7 +3,7 @@ package main.scala.view.gui.preparation.modifyfighter.techniqueTree.fireTree
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.Techniques
 import main.scala.view.gui.preparation.modemenu.ModeMenu
-import main.scala.view.gui.preparation.modifyfighter.techniqueTree.TechniqueTree
+import main.scala.view.gui.preparation.modifyfighter.techniqueTree.TechniqueTreeMenu
 import main.scala.view.gui.preparation.modifyfighter.{ModifyFighter, TechniqueComponent}
 
 import scala.swing.event.MouseClicked
@@ -12,7 +12,7 @@ import scala.swing.{Dimension, Button, Component, GridPanel}
 /**
  * Created by julian on 02.03.16.
  */
-class FireTree(val f:Fighter, parent:TechniqueTree) extends GridPanel(0,2){
+class FireTree(val f:Fighter, parent:TechniqueTreeMenu) extends GridPanel(0,2){
   FireTree.techniques.foreach{ t =>
     val technique = Techniques.newTechnique(t, f)
     contents += new TechniqueComponent(technique)

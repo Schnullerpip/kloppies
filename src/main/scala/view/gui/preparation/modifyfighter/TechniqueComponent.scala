@@ -27,7 +27,7 @@ class TechniqueComponent(technique:Technique) extends BoxPanel(Orientation.Verti
       None
   }
   border = new LineBorder(Color.BLACK)
-  preferredSize = new Dimension(80, 50)
+  preferredSize = new Dimension(80, 200)
   technique match {
     case f:FireTechnique =>
       background = Defaults.REDDISH

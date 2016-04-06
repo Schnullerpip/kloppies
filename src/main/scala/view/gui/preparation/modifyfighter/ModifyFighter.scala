@@ -2,14 +2,15 @@ package main.scala.view.gui.preparation.modifyfighter
 
 import java.awt.Font
 import javax.swing.border.LineBorder
-import javax.swing.{Timer, ImageIcon}
+import javax.swing.{ImageIcon, ScrollPaneConstants, Timer}
 
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.Fighter
 import main.scala.view.gui.Defaults
 import main.scala.view.gui.preparation.modemenu.ModeMenu
-import main.scala.view.gui.preparation.modifyfighter.techniqueTree.TechniqueTree
+import main.scala.view.gui.preparation.modifyfighter.techniqueTree.TechniqueTreeMenu
 
+import scala.swing.ScrollPane.BarPolicy
 import scala.swing._
 import scala.swing.event.MouseClicked
 
@@ -65,13 +66,16 @@ case class ModifyFighter(f:Fighter, parent:ModeMenu) extends BorderPanel{
       }
     }
     contents += new ScrollPane() {
+      verticalScrollBarPolicy = BarPolicy.AsNeeded
+      horizontalScrollBarPolicy = BarPolicy.Never
+
       contents = new BoxPanel(Orientation.Vertical) {
         border = new LineBorder(Defaults.OCKER)
         contents += new Button("+"){
           listenTo(mouse.clicks)
           reactions += {
             case e:MouseClicked =>
-               new TechniqueTree(f, parent)
+               new TechniqueTreeMenu(f, parent)
           }
         }
         f.techniques.values.foreach {

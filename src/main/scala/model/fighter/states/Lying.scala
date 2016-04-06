@@ -2,6 +2,7 @@ package main.scala.model.fighter.states
 
 import main.scala.model.fighter.Fighter
 import main.scala.model.ImageMatrix._
+import main.scala.model.fighter.states.aggressive.RunningAttack
 import main.scala.model.fighter.states.midair.Landing
 import main.scala.model.states.AnimateMe
 
@@ -17,10 +18,17 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   new Thread(new Runnable {
     override def run(): Unit = {
       Thread.sleep(3000)
-      f.state = Landing(f)
+      f.moveable = true
+      //f.state = Landing(f)
     }
   }).start()
 
   override def landing = {}
-  override def hit = {}
+  override def hit = if(f.moveable){ f.collidable = true; f.state = RunningAttack(f)}
+
+  override def moveUp = if(f.moveable) f.state = Landing(f)
+  override def moveDown = moveUp
+  override def moveLeft = moveUp
+  override def moveRight = moveUp
+  //override def defend = moveUp
 }

@@ -24,3 +24,11 @@ object Techniques {
     }
   }
 }
+
+object TechniqueLists {
+  val fireTechniques = Seq("ThrowFireball")
+  val waterTechniques = Seq()
+  val earthTechniques = Seq()
+  val windTechniques = Seq("SummonWind")
+  val shockTechniques = Seq("SpeedPlus")
+}
