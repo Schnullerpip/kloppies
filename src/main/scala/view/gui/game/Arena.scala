@@ -79,6 +79,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
     }
   }
 
+  SoundDistributer.stopAll
   SoundDistributer.loop("fight_music")
 
   controller addObserver this

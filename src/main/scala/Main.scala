@@ -6,10 +6,11 @@ import main.scala.controller.Controller
 import main.scala.dao.db4o.DB4O
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.states.techniques.fire.ThrowFireball
-import main.scala.model.map.{Stage, GameMap}
+import main.scala.model.map.{GameMap, Stage}
 import main.scala.model.fighter.Fighter
 import main.scala.model.player.{KeySet, Player}
 import main.scala.controller.GAME_SPEED
+import main.scala.util.sound.SoundDistributer
 import main.scala.view.gui.game.Arena
 import main.scala.view.gui.preparation.modemenu.ModeMenu
 
@@ -37,6 +38,7 @@ object Main {
       centerOnScreen()
       maximize()
     }
+    SoundDistributer.loop("menu_music")
     frame.contents = new ModeMenu(fighters, frame)
     frame.visible = true
 

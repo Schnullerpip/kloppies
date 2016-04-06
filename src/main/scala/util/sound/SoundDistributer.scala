@@ -15,9 +15,11 @@ object SoundDistributer {
     * three fireballs all play the same sound right now and therefore interrupting the sound of their previous instances - nnot nice but efficient*/
   private val sounds = Map(
     "fight_music" -> createClip("fight_music"),
+    "menu_music" -> createClip("menu_music"),
 
 
     "small_punch" -> createClip("small_punch"),
+    "deep_smash" -> createClip("deep_smash"),
     "throw_fireball" -> createClip("throw_fireball"),
     "small_explosion" -> createClip("small_explosion"),
     "wind" -> createClip("wind"),
@@ -32,6 +34,7 @@ object SoundDistributer {
   }
   def loop(clip:String){sounds(clip).loop(Clip.LOOP_CONTINUOUSLY)}
   def stop(clip:String){sounds(clip).stop()}
+  def stopAll = sounds foreach{_._2.stop}
 
 
   private def createClip(file:String):Clip = {

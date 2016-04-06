@@ -2,6 +2,7 @@ package main.scala.model.fighter.states
 
 import main.scala.model.fighter.Fighter
 import main.scala.model.ImageMatrix.HIT_THE_GROUND
+import main.scala.util.sound.SoundDistributer
 
 /**
  * Created by julian on 22.02.16.
@@ -15,6 +16,7 @@ case class HitTheGround(f:Fighter, height:Int=0) extends FighterState(f) {
   f.takeDamage(height)
   f.vulnerable = false
   f.moveable = false
+  SoundDistributer.play("deep_smash")
   private val sleepTime = 100
   new Thread(new Runnable {
     override def run(): Unit = {

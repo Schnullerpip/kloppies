@@ -11,7 +11,7 @@ import main.scala.model.states.{MidAir, AnimateMe}
 /**
  * Created by julian on 22.02.16.
  */
-case class UsingTechnique(fighter:Fighter, technique: Technique) extends FighterState(fighter) with AnimateMe{
+case class UsingTechnique(fighter:Fighter, technique: Technique) extends FighterState(fighter){
   technique match{
     case s:Summoning if this.isInstanceOf[MidAir] => fighter.images.set(RUNNING_HIT)
     case s:Summoning => fighter.images.set(THROW_TECHNIQUE)
@@ -28,16 +28,36 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
   val toRemove = this
   new Thread(new Runnable {
     override def run(): Unit = {
-      Thread.sleep(1000/fighter.speed*fighter.images.cols)
+      ifNotInterrupted{
+        fighter.images.next
+        ifNotInterrupted{
+          fighter.images.next
+          ifNotInterrupted{
+            fighter.images.next
+            ifNotInterrupted{
+              fighter.images.next
+              ifNotInterrupted{
+                fighter.images.next
+                ifNotInterrupted{
+                  fighter.images.next
+                  Thread.sleep(1000/fighter.speed)
+                  technique act
+                }
+              }
+            }
+          }
+        }
+      }
       if(fighter.state == toRemove) {
         toRemove match {
           case m: MidAir => fighter.state = Levitate(fighter)
           case _ => fighter.state = Normal(fighter)
         }
-        technique act
       }
     }
   }).start()
+
+  private def ifNotInterrupted(f: => Unit) = if(fighter.state.isInstanceOf[UsingTechnique]){Thread.sleep(1000/fighter.speed);f}
 
   override def actOnCollision(go:GameObject) = {}
   override def landing = {fighter.state = Landing(fighter)}

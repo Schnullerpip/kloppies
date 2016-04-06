@@ -26,7 +26,7 @@ case class Levitate(f:Fighter) extends FighterState(f) with MidAir with AnimateM
   override def technique(t:Technique) = f.state = new UsingTechnique(f, t) with MidAir
   override def moveUp = {}
   override def moveDown = {}
-  override def moveLeft = super.moveLeft
-  override def moveRight =super.moveRight
+  override def moveLeft = if(f.moveable)f.x_velocity = -1 * f.strength
+  override def moveRight =if(f.moveable) f.x_velocity = f.strength
   override def jump = {}
 }
