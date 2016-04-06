@@ -2,7 +2,7 @@ package main.scala.model.fighter.states.techniques.fire
 
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.techniques.{Techniques, Summoning, Technique}
+import main.scala.model.fighter.states.techniques.{Summoning, Technique, Techniques}
 import main.scala.model.items.magical.fire.FireBall
 
 /**

@@ -5,6 +5,7 @@ import main.scala.model.attributes.Speed
 import main.scala.model.items.Item
 import main.scala.model.items.state.Normal
 import main.scala.model.states.{OneHitWonder, State}
+import main.scala.util.sound.SoundDistributer
 
 /**
  * Created by julian on 02.03.16.
@@ -21,4 +22,5 @@ case class ElectricSpark(override var x:Int, override var y:Int, override var z:
   collidable = false
   vulnerable = false
   moveable = false
+  SoundDistributer.play("zap")
 }

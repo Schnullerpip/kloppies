@@ -5,8 +5,9 @@ import java.io.File
 import javax.imageio.ImageIO
 
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.techniques.{Techniques, Effect, Technique}
+import main.scala.model.fighter.states.techniques.{Effect, Technique, Techniques}
 import main.scala.model.items.magical.wind.Wind
+import main.scala.util.sound.SoundDistributer
 
 /**
  * Created by julian on 25.02.16.

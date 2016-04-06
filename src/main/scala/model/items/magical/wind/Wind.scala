@@ -6,6 +6,7 @@ import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.fighter.Fighter
 import main.scala.model.items.Item
 import main.scala.model.items.state.ItemState
+import main.scala.util.sound.SoundDistributer
 
 /**
  * Created by julian on 25.02.16.
@@ -23,6 +24,12 @@ case class Wind(caster:Fighter) extends Item{
   override var state:State = WindState(this)
   tangible = false
   looksLeft = caster.looksLeft
+  SoundDistributer.loop("wind_loop")
+
+  override def goKillYourself = {
+    SoundDistributer.stop("wind_loop")
+    super.goKillYourself
+  }
 }
 
 case class WindState(item:Item) extends ItemState(item){

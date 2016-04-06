@@ -1,7 +1,7 @@
 package main.scala.model.fighter.states.aggressive
 
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.{Hurt, Normal, FighterState}
+import main.scala.model.fighter.states.{Normal, FighterState}
 import main.scala.model.fighter.states.midair.Levitate
 import main.scala.model.states.MidAir
 import main.scala.model.ImageMatrix.LEVITATING_HIT
