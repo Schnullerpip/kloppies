@@ -6,7 +6,7 @@ import main.scala.model.items.state.{Break, ItemState, Move, Normal}
 import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.items.Item
 import main.scala.model.states.{AnimateMe, State}
-import main.scala.util.sound.SoundDistributer
+import main.scala.util.sound.SoundDistributor
 
 /**
  * Created by julian on 22.02.16.
@@ -35,8 +35,9 @@ case class FireBall(caster:GameObject) extends Item with Speed{
   }
 }
 
+
 case class FireBallStateBreak(i:FireBall) extends Break(i){
-  SoundDistributer.play("small_explosion")
+  SoundDistributor.play("small_explosion")
 }
 
 case class FireBallStateNormal(item:FireBall) extends Normal(item) with AnimateMe{
@@ -52,7 +53,7 @@ case class FireBallStateNormal(item:FireBall) extends Normal(item) with AnimateM
 case class FireBallStateMove(item:FireBall) extends Move(item) with AnimateMe{
   item.intention = Harmful
   item.x_velocity += item.speed * {if(item.caster.looksLeft) -1 else 1}
-  SoundDistributer.play("throw_fireball")
+  SoundDistributor.play("throw_fireball")
   override def actOnCollision(go:GameObject) = {
     if (go != item.caster && go.tangible){
       super.actOnCollision(go)

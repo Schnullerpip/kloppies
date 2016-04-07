@@ -7,6 +7,7 @@ import javax.swing.Timer
 import main.scala.controller.Controller
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.{Normal, Running}
+import main.scala.model.items.normal.{Stone, StoneFalling}
 import main.scala.model.map.{GameMap, Stage}
 import main.scala.model.player.{KeySet, Player}
 import main.scala.view.gui.Defaults

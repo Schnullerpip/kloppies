@@ -11,4 +11,5 @@ abstract class State(val go:GameObject) {
   def inflictDamageTo(go:GameObject, amount:Int)
   def hurtBy(go:GameObject)
   def stop
+  def landing
 }

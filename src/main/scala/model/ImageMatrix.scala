@@ -82,4 +82,5 @@ object ImageMatrix{
   val ITEM_NORMAL = 0
   val ITEM_MOVE = 2
   val ITEM_BREAK = 4
+  val ITEM_OUCH = 6
 }

@@ -6,7 +6,7 @@ import main.scala.model.fighter.states.midair.{Jumping, Landing}
 import main.scala.model.fighter.states.techniques.{Effect, Summoning, Technique, UsingTechnique}
 import main.scala.model.intention.{Harmful, Harmless}
 import main.scala.model.states.{MidAir, State}
-import main.scala.util.sound.SoundDistributer
+import main.scala.util.sound.SoundDistributor
 
 /**
  * Created by julian on 14.02.16.
@@ -19,7 +19,7 @@ abstract class FighterState(f:Fighter) extends State(f){
   override def actOnCollision(g: GameObject): Unit ={
     if(f.intention == Harmful) {
       if (g.vulnerable && g.tangible) {
-        SoundDistributer.play("small_punch")
+        SoundDistributor.play("small_punch")
         f.state.asInstanceOf[FighterState].inflictDamageTo(g)
       }
     }
@@ -41,7 +41,7 @@ abstract class FighterState(f:Fighter) extends State(f){
 
   override def stop = {stopUp; stopLeft}
 
-  def landing =
+  override def landing =
     f.state = Landing(f)
 
   private def ifMoveable(b: => Unit) = if(f.moveable)b

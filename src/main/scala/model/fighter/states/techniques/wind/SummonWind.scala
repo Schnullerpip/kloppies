@@ -6,8 +6,8 @@ import javax.imageio.ImageIO
 
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.{Effect, Technique, Techniques}
-import main.scala.model.items.magical.wind.Wind
-import main.scala.util.sound.SoundDistributer
+import main.scala.model.items.magical.wind.MagicalWind
+import main.scala.util.sound.SoundDistributor
 
 /**
  * Created by julian on 25.02.16.
@@ -20,7 +20,7 @@ case class SummonWind(override val caster:Fighter) extends Technique(caster) wit
   override val image: BufferedImage = ImageIO.read(new File("images/techniques/wind.png"))
 
   override def act: Unit = {
-    val wind = Wind(caster)
+    val wind = MagicalWind(caster)
     caster.notifyObservers(wind)
 
     new Thread(new Runnable {

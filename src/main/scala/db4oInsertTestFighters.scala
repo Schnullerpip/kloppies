@@ -9,6 +9,7 @@ import main.scala.model.fighter.states.techniques.fire.ThrowFireball
 import main.scala.model.fighter.states.techniques.shock.SpeedPlus
 import main.scala.model.fighter.states.techniques.wind.SummonWind
 import main.scala.dao.DEFAULT_DATABASE_NAME
+import main.scala.model.fighter.states.techniques.earth.StoneRain
 
 /**
  * Created by julian on 23.02.16.
@@ -28,6 +29,7 @@ object db4oInsertTestFighters extends App {
   )
 
   fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
+  fighters.head.newTechnique(StoneRain(fighters.head), "defenddefenddefend")
 
   fighters(1).newTechnique(SummonWind(fighters(1)), "defenddirectionjump")
   fighters(1).newTechnique(ThrowFireball(fighters(1)), "defenddirectionattack")

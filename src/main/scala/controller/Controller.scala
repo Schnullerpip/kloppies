@@ -72,18 +72,20 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
       go.gravity_affect(GRAVITY_CONSTANT)
       if(go.gravity_affected){
         go.state match {
+          case ma:MidAir if go.z_velocity > 0 => go.z += go.z_velocity
           case ma:MidAir =>
-            val iterator = gameMap.stages.iterator
-            var contin = true
-            while(contin && iterator.hasNext && go.z_velocity < 0) {
-              val s = iterator.next()
-              if((go.x >= s.x && go.x <= s.x + s.width) || ( go.x <= s.x && go.x + go.width >= s.x)) {
-                if ((go.y >= s.y && go.y <= s.y + s.width) || (go.y <= s.y && go.y + go.width >= s.y)) {
-                  if (go.z <= s.z && go.z + go.height/3 >= s.z) {
+            val stages = gameMap.stages.filter(s => s.z <= go.z && s.z >= go.z+go.z_velocity)
+            if(stages isEmpty)
+              go.z += go.z_velocity
+            else{
+              val iterator = stages.iterator
+              while (iterator.hasNext && go.z_velocity < 0) {
+                val s = iterator.next()
+                if ((go.x >= s.x && go.x <= s.x + s.width) || (go.x <= s.x && go.x + go.width >= s.x)) {
+                  if ((go.y >= s.y && go.y <= s.y + s.width) || (go.y <= s.y && go.y + go.width >= s.y)) {
                     go.z = s.z
                     go.z_velocity = 0
-                    go.state.asInstanceOf[FighterState].landing
-                    contin = false
+                    go.state.landing //asInstanceOf[FighterState].landing
                   }
                 }
               }

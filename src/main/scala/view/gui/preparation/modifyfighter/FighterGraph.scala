@@ -68,7 +68,6 @@ case class FighterGraph(f:Fighter, length:Int = 100) extends Component {
 
 object FighterGraphTest extends App{
   ImageMatrix("images/fighters/fighter_stickfigure.png")
-  ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
   val f = Fighter("julian", "fighter_stickfigure.png")
 
   new MainFrame{

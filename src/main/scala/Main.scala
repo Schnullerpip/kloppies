@@ -10,7 +10,7 @@ import main.scala.model.map.{GameMap, Stage}
 import main.scala.model.fighter.Fighter
 import main.scala.model.player.{KeySet, Player}
 import main.scala.controller.GAME_SPEED
-import main.scala.util.sound.SoundDistributer
+import main.scala.util.sound.SoundDistributor
 import main.scala.view.gui.game.Arena
 import main.scala.view.gui.preparation.modemenu.ModeMenu
 
@@ -28,6 +28,8 @@ object Main {
 
     /*Load all the Images*/
     ImageMatrix("images/fighters/fighter_stickfigure.png")
+    ImageMatrix("images/items/stone.png", 8, 6, 10, 10)
+    //ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
 
     /*Get the Fighters*/
     val fighters = dao.query
@@ -38,7 +40,7 @@ object Main {
       centerOnScreen()
       maximize()
     }
-    SoundDistributer.loop("menu_music")
+    SoundDistributor.loop("menu_music")
     frame.contents = new ModeMenu(fighters, frame)
     frame.visible = true
 

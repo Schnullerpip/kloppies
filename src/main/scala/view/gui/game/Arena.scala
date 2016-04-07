@@ -4,9 +4,10 @@ import java.awt.{Color, Graphics2D, RenderingHints}
 import javax.swing.border.LineBorder
 
 import main.scala.controller.Controller
-import main.scala.model.GameObject
+import main.scala.model.map.Stage
+import main.scala.model.{GameObject, Position}
 import main.scala.util.Observer
-import main.scala.util.sound.SoundDistributer
+import main.scala.util.sound.SoundDistributor
 
 import scala.swing._
 import scala.swing.event.{KeyPressed, KeyReleased}
@@ -44,16 +45,28 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
   val gamePanel = new BorderPanel {
       layout += new Panel {
         override def paint(g: Graphics2D): Unit = {
-          g.drawImage(controller.gameMap.backGround, 0, 0, null)
-          controller.gameMap.elements.reverse.foreach {
-            case go if go.images != null =>
-              g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+          g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+          val allElements:Seq[Position] = sort(controller.gameMap.elements ++: controller.gameMap.stages)
+          allElements.foreach{
+            case s:Stage if s.image.isDefined => g.drawImage(s.image.get, s.x, s.y, null)
+            case s:Stage =>
+              val col = g.getColor
+              g.setColor(s.style.get.color)
+              g.fillRect(s.x, s.y, s.width, s.height)
+              g.setColor(col)
+            case go:GameObject if go.images != null =>
+              /*----draw shadow----*/
               g.setColor(new Color(0,0,0,0.30f))
               g.fillOval(go.x, go.y+go.height-10, go.width, 10)
+              /*-------------------*/
               g.drawImage(go.image, go.x, go.y-go.z, null)
-            case _ =>
+            case go:GameObject =>
+              val col = g.getColor
+              g.setColor(new Color(0.1f, 0.1f, 0.1f, 0.30f))
+              g.fillRect(go.x, go.y, go.width, go.width)
+              g.setColor(col)
+            case _ => }
           }
-        }
       } -> BorderPanel.Position.Center
 
       layout += statusPanel -> BorderPanel.Position.South
@@ -80,7 +93,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
     maximize()
     visible = true
     override def closeOperation(): Unit ={
-      SoundDistributer.stop("fight_music")
+      SoundDistributor.stop("fight_music")
       timer.stop()
       controller.shutDown()
       controller.animators.foreach{_.stopTimer()}
@@ -89,11 +102,19 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
     }
   }
 
-  SoundDistributer.stopAll
-  SoundDistributer.loop("fight_music")
+  SoundDistributor.stopAll
+  SoundDistributor.loop("fight_music")
 
   controller addObserver this
   controller init
+
+  private def sort(seq:Seq[Position]):Seq[Position] = {
+    if(seq.length < 2) seq
+    else {
+      val pivot = seq(seq.length/2)
+      sort(seq.filter(pivot>)) ++ seq.filter(pivot===) ++ sort(seq.filter(pivot<))
+    }
+  }
 
   override def update: Unit = {
     Swing.onEDT {

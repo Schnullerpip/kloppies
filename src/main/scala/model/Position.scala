@@ -12,4 +12,15 @@ trait Position {
     y = y_new
     z = z_new
   }
+
+  private def getDepth = this match {
+    case s:Size => y+s.width
+    case _ => y
+  }
+
+  def ===(p:Position):Boolean = getDepth == p.getDepth
+  def <(p:Position):Boolean =   getDepth <  p.getDepth
+  def >(p:Position):Boolean =   getDepth >  p.getDepth
+  def <=(p:Position):Boolean =  getDepth <= p.getDepth
+  def >=(p:Position):Boolean =  getDepth >= p.getDepth
 }

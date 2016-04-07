@@ -6,7 +6,7 @@ import javax.sound.sampled.{AudioSystem, Clip}
 /**
   * Created by julian on 06.04.16.
   */
-object SoundDistributer {
+object SoundDistributor {
 
   /**
     * the map that holds all the sounds, sounds need to be introduced here as well for consistency reasons

@@ -2,8 +2,8 @@ package main.scala.model.fighter.states.midair
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.aggressive.StandardAttack
-import main.scala.model.fighter.states.{Normal, Hurt, FighterState}
+import main.scala.model.fighter.states.aggressive.RunningAttack
+import main.scala.model.fighter.states.{FighterState, Hurt, Normal}
 import main.scala.model.ImageMatrix.LANDING
 
 /**
@@ -37,5 +37,5 @@ case class Landing(f:Fighter) extends FighterState(f){
   def ifNotHurt(b: => Unit){if(!f.state.isInstanceOf[Hurt]){Thread.sleep(1000/f.speed);b}}
 
   override def actOnCollision(go:GameObject)={}
-  override def hit      = {movethread.stop(); f.state = StandardAttack(f)}
+  override def hit      = {movethread.stop(); f.state = RunningAttack(f)}
 }

@@ -4,7 +4,6 @@ import main.scala.model.attributes.Speed
 import main.scala.model.intention.Harmless
 import main.scala.model.items.Item
 import main.scala.model.ImageMatrix.ITEM_BREAK
-import main.scala.model.states.AnimateMe
 
 /**
  * Created by julian on 22.02.16.
@@ -13,6 +12,7 @@ class Break(val item:Item) extends ItemState(item){
   item.intention = Harmless
   item.vulnerable = false
   item.moveable = false
+  item.collidable = false
   item.x_velocity = 0
   item.y_velocity = 0
   item.z_velocity = 0
@@ -22,7 +22,7 @@ class Break(val item:Item) extends ItemState(item){
 
   private val sleepTime = 1000 / {item match {
     case s:Speed => s.speed
-    case _ => 15
+    case _ => 150
   }}
 
   new Thread(new Runnable {

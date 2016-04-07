@@ -17,6 +17,6 @@ trait Moveable extends Position{
   def move{
     x += x_velocity
     y += y_velocity
-    z += z_velocity
+    //z += z_velocity
   }
 }
