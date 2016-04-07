@@ -16,6 +16,7 @@ import scala.swing.event.{KeyPressed, KeyReleased}
  */
 case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observer{
 
+  /*------------Component that shows the data for each Player's fighter-------------*/
   val statusPanel = new FlowPanel{
     opaque = false
     focusable = false
@@ -35,7 +36,11 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       }
     }
   }
+  /*----------------------------------------------------------------------------------*/
 
+
+
+  /*-----------The panel showing each GameObject and the Background-----*/
   val gamePanel = new BorderPanel {
       layout += new Panel {
         override def paint(g: Graphics2D): Unit = {
@@ -62,6 +67,11 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
           controller.players.foreach { p => p.keySet.released(r.peer.getKeyChar, p.fighter)}
       }
     }
+  /*---------------------------------------------------------------------*/
+
+
+
+
 
   new Frame {
     title = "Fight!"
