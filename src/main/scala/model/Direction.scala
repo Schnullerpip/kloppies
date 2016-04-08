@@ -6,4 +6,5 @@ package main.scala.model
 trait Direction {
   var looksLeft = false
   def turn = looksLeft = !looksLeft
+  def directionValue = if(looksLeft) -1 else 1
 }

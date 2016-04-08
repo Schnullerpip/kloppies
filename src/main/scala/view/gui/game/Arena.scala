@@ -57,14 +57,14 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
             case go:GameObject if go.images != null =>
               /*----draw shadow----*/
               g.setColor(new Color(0,0,0,0.30f))
-              g.fillOval(go.x, go.y+go.height-10, go.width, 10)
+              g.fillOval(go.x, go.y-go.width+go.height-10, go.width, 10)
               /*-------------------*/
-              g.drawImage(go.image, go.x, go.y-go.z, null)
-            case go:GameObject =>
+              g.drawImage(go.image, go.x, go.y-go.width-go.z, null)
+            /*case go:GameObject => only for debugging
               val col = g.getColor
               g.setColor(new Color(0.1f, 0.1f, 0.1f, 0.30f))
               g.fillRect(go.x, go.y, go.width, go.width)
-              g.setColor(col)
+              g.setColor(col)*/
             case _ => }
           }
       } -> BorderPanel.Position.Center
@@ -84,10 +84,8 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
 
 
 
-
-
   new Frame {
-    title = "Fight!"
+    title = "Fight Kloppies!"
     centerOnScreen()
     contents = gamePanel
     maximize()

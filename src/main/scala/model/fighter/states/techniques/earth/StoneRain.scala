@@ -45,7 +45,7 @@ case class StoneRain(c:Fighter) extends  Technique(c) with Effect with EarthTech
 
   private class StoneFallingMagical(stone:Stone, caster:Fighter) extends StoneFalling(stone) {
     override def actOnCollision(go:GameObject)={
-      if(go != caster)
+      if(go != caster && !go.isInstanceOf[Stone])
         super.actOnCollision(go)
     }
   }
