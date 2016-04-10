@@ -34,7 +34,8 @@ case class StoneFalling(s:Stone) extends StoneNormal(s) with MidAir{
     s.state = new StoneNormal(s)
   }
   override def actOnCollision(go:GameObject)={
-    SoundDistributor.play("small_punch")
+    if(go.tangible)
+      SoundDistributor.play("small_punch")
     super.actOnCollision(go)
   }
 }
