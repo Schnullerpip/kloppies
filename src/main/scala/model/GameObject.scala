@@ -1,9 +1,7 @@
 package main.scala.model
 
 import main.scala.model.attributes.{LivePoints, Strength}
-import main.scala.model.fighter.Fighter
 import main.scala.model.intention.{Harmless, Intention}
-import main.scala.model.items.magical.wind.MagicalWind
 import main.scala.model.states.{MidAir, State}
 import main.scala.util.Observable
 
