@@ -49,7 +49,11 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
 
   private def moveElements = {
     val moveables = gameMap.elements
-    moveables foreach{_.move}
+    moveables foreach{ m =>
+      m.x += m.x_velocity
+      m.y += m.y_velocity
+      
+    }
     moveables
   }
 
