@@ -31,10 +31,8 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   }
 
   def cycle() = {
-    //introduceView()
-   // gameMap.fighters.foreach{case f:Fighter if f.name == "julian" => println(f.name + "\t" + f.state + "\t" + f.images.image_coordinate.c)
-   // case _ =>}
-    gravityEffect(moveElements)
+    moveElements
+    gravityEffect()
     hitDetection()
     notifyObservers()
     garbageCollector()
@@ -42,11 +40,6 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
 
   def shutDown(): Unit ={
     gameMap.elements = Seq()
-  }
-
-  @deprecated
-  private def introduceView() = {
-    gameMap.elements.foreach{go => rainDownObservers(go.images)}
   }
 
   private def garbageCollector():Boolean = {
@@ -64,7 +57,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   /**
     * instead of letting the GameObjects decide what to do in case of gravityEffect now the Controller has the responsibility to
     * manipulate the GameObjects velocities and to check for Ground Contact*/
-  private def gravityEffect(gos:Seq[GameObject]) = {
+  private def gravityEffect(gos:Seq[GameObject] = gameMap.elements) = {
     /*gos foreach{_.gravity_affect()}  OLD WAY*/
 
     /*NEW WAY*/
