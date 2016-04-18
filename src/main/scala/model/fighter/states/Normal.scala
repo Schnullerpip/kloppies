@@ -4,6 +4,7 @@ import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.aggressive.StandardAttack
 import main.scala.model.states.AnimateMe
 import main.scala.model.ImageMatrix.{STANDING, STANDING_HIT}
+import main.scala.model.intention.Harmless
 
 /**
  * Created by julian on 14.02.16.
@@ -15,6 +16,7 @@ case class Normal(f:Fighter) extends FighterState(f) with AnimateMe{
   f.moveable = true
   f.collidable = true
   f.vulnerable = true
+  f.intention = Harmless
 
   override def hit = f.state = StandardAttack(f)
   override def moveUp =   { super.moveUp;   f.state = Running(f)}

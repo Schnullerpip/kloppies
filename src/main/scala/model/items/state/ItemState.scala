@@ -4,8 +4,7 @@ import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
 import main.scala.model.intention.Harmful
 import main.scala.model.items.Item
-import main.scala.model.states.State
-import main.scala.util.sound.SoundDistributor
+import main.scala.model.states.{MidAir, State}
 
 /**
  * Created by julian on 22.02.16.
@@ -16,14 +15,12 @@ abstract class ItemState(item:Item) extends State(item) {
       item.state.inflictDamageTo(go, item.strength)
       //item.state = Break(item)
     }
+    super.actOnCollision(go)
   }
 
-  override def landing = {
-    SoundDistributor.play("deep_smash")
-    item.x_velocity = 0
-    item.y_velocity = 0
-    item.state = new Normal(item)
-  }
+  override def levitate = item.state = new Normal(item) with MidAir
+
+  override def landing = item.state = Landing(item)
 
   override def inflictDamageTo(go:GameObject, amount:Int)={
     go.state.hurtBy(item)

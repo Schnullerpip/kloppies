@@ -46,13 +46,12 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       layout += new Panel {
         override def paint(g: Graphics2D): Unit = {
           g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-          val allElements:Seq[Position] = sort(controller.gameMap.elements ++: controller.gameMap.stages)
+          val allElements:Seq[Position] = sort(controller.gameMap.elements)
           allElements.foreach{
-            case s:Stage if s.image.isDefined => g.drawImage(s.image.get, s.x, s.y, null)
-            case s:Stage =>
+            case go:Stage if go.images == null =>
               val col = g.getColor
-              g.setColor(s.style.get.color)
-              g.fillRect(s.x, s.y, s.width, s.height)
+              g.setColor(go.style.get.color)
+              g.fillRect(go.x, go.y, go.width, go.length)
               g.setColor(col)
             case go:GameObject if go.images != null =>
               /*----draw shadow----*/

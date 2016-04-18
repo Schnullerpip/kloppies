@@ -3,7 +3,8 @@ package main.scala.model.fighter.states
 import main.scala.model.fighter.Fighter
 import main.scala.model.ImageMatrix._
 import main.scala.model.fighter.states.aggressive.RunningAttack
-import main.scala.model.fighter.states.midair.Landing
+import main.scala.model.fighter.states.midair.{Falling, Landing}
+import main.scala.model.intention.Harmless
 import main.scala.model.states.AnimateMe
 
 /**
@@ -14,6 +15,7 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   f.vulnerable = false
   f.moveable = false
   f.images.set(LYING)
+  f.intention = Harmless
 
   new Thread(new Runnable {
     override def run(): Unit = {
@@ -30,5 +32,6 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   override def moveDown = moveUp
   override def moveLeft = moveUp
   override def moveRight = moveUp
-  //override def defend = moveUp
+  override def defend = moveUp
+  override def levitate = Falling(f)
 }

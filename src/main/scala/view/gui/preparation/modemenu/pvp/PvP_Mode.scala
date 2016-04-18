@@ -1,6 +1,8 @@
 package main.scala.view.gui.preparation.modemenu.pvp
 
 import java.awt.Color
+import java.io.File
+import javax.imageio.ImageIO
 import javax.swing.border.LineBorder
 import javax.swing.Timer
 
@@ -77,7 +79,7 @@ class PvP_Mode(fighters:Seq[Fighter], frame:MainFrame) extends BorderPanel {
               fighters foreach { f => f.state = Normal(f) }
               nextPlayer_and_start_routine
               //frame.contents = new Arena() TODO game should not start new frame but frame's content should be replaced with an arena component
-              val map = GameMap("images/backround_white.png", Seq(new Stage()))
+              val map = GameMap(ImageIO.read(new File("images/backround_white.png")))
               val controller = new Controller(players, map)
               def stopTimer(): Unit = timer.stop()
               lazy val timer = new Timer(1000 / 25, Swing.ActionListener { _ =>

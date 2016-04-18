@@ -9,10 +9,10 @@ import main.scala.model.states.{AnimateMe, MidAir}
 /**
  * Created by julian on 21.02.16.
  */
-case class Falling(f:Fighter, opponent:GameObject) extends FighterState(f) with MidAir with AnimateMe {
-  f.z_velocity += opponent.strength
-  f.x_velocity += opponent.strength * {if(opponent.looksLeft) -1 else 1}
-  val height = f.z/2 + opponent.strength
+case class Falling(f:Fighter, opponent:Option[GameObject] = None) extends FighterState(f) with MidAir with AnimateMe {
+  f.z_velocity += {if(opponent isDefined) opponent.get.strength else 0}
+  f.x_velocity += {if(opponent isDefined) opponent.get.strength * {if(opponent.get.looksLeft) -1 else 1} else 0}
+  val height = f.z/2 + {if(opponent isDefined) opponent.get.strength else 0}
   f.vulnerable = false
   f.moveable = false
   f.images.set(FALLING)

@@ -7,9 +7,14 @@ import main.scala.model.GameObject
  * Superclass for all States
  */
 abstract class State(val go:GameObject) {
-  def actOnCollision(go:GameObject)
+  def actOnCollision(g:GameObject) = if(go.steppable && go.collidable){
+    go.groundContact = true
+    if(g.state.isInstanceOf[MidAir])
+      g.state.landing
+  }
   def inflictDamageTo(go:GameObject, amount:Int)
   def hurtBy(go:GameObject)
   def stop
   def landing
+  def levitate
 }

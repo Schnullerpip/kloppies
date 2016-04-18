@@ -19,6 +19,7 @@ case class SummonWind(override val caster:Fighter) extends Technique(caster) wit
   override val description: String = "Summons wind around the caster either accelerating objects towards the casters direction or slowing down the movement of objects opposing the caster. Or just move all the motionless objects around him/her."
   override val image: BufferedImage = ImageIO.read(new File("images/techniques/wind.png"))
 
+
   override def act: Unit = {
     val wind = MagicalWind(caster)
     caster.notifyObservers(wind)

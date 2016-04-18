@@ -16,20 +16,6 @@ trait Moveable extends Position with Size{
 
   def moveX = x += x_velocity
   def moveY = y += y_velocity
-  def moveZ(f: => Unit) = {
-    if (z_velocity < 0){
-      val reach = z + z_velocity
-      val velocity = if(z_velocity > height) height else z_velocity
-      while (z > reach)
-      {
-        z -= velocity
-        f
-      }
-    } else {
-      z += z_velocity
-      f
-    }
-  }
 
   def move{
     x += x_velocity

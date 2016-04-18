@@ -68,6 +68,8 @@ case class Fighter (var name:String,
     mass = full_mass
   }
 
+  override def toString() = name + "\t" + state
+
   override def image: BufferedImage = images.currentImage
   def newTechnique(t:Technique, combination:String) = techniques.put(combination, t)
 }

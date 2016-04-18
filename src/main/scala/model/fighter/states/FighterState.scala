@@ -2,7 +2,7 @@ package main.scala.model.fighter.states
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.midair.{Jumping, Landing}
+import main.scala.model.fighter.states.midair.{Jumping, Landing, Levitate}
 import main.scala.model.fighter.states.techniques.{Effect, Summoning, Technique, UsingTechnique}
 import main.scala.model.intention.{Harmful, Harmless}
 import main.scala.model.states.{MidAir, State}
@@ -18,11 +18,12 @@ abstract class FighterState(f:Fighter) extends State(f){
    * */
   override def actOnCollision(g: GameObject): Unit ={
     if(f.intention == Harmful) {
-      if (g.vulnerable && g.tangible) {
+      if (g.vulnerable && g.tangible && g.collidable) {
         SoundDistributor.play("small_punch")
         f.state.asInstanceOf[FighterState].inflictDamageTo(g)
       }
     }
+    super.actOnCollision(g)
   }
 
   def hit = {}
@@ -55,6 +56,8 @@ abstract class FighterState(f:Fighter) extends State(f){
   def stopDown = stopUp
   def stopLeft = f.x_velocity = 0
   def stopRight = stopLeft
+
+  override def levitate = f.state = Levitate(f)
 
   def defend = {
     ifMoveable{f.state = if(this.isInstanceOf[MidAir]) new Defending(f) with MidAir else Defending(f)}

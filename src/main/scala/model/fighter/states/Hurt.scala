@@ -35,7 +35,7 @@ case class Hurt(f:Fighter, gameobject:GameObject, combo:Int = 0)(damageAmount:In
                   f.images.next
                   if (combo <= MAX_COMBO && f.state.isInstanceOf[Hurt] && contin) {
                     f.state = Normal(f)
-                  } else f.state = Falling(f, gameobject)
+                  } else f.state = Falling(f, Some(gameobject))
                 }
               }
             }
@@ -44,16 +44,16 @@ case class Hurt(f:Fighter, gameobject:GameObject, combo:Int = 0)(damageAmount:In
       }
     }
   })
+  f.intention = Harmless
   f.looksLeft = !gameobject.looksLeft
   f.takeDamage(damageAmount)
   f.images.set(OUCH)
   movethread.start()
 
-  override def inflictDamageTo(go:GameObject, amount:Int) = {}
   override def hurtBy(go:GameObject) = {
     contin = false
     movethread.stop()
-    f.state = if(combo < MAX_COMBO)Hurt(f, go, combo +1)()else Falling(f, go)
+    f.state = if(combo < MAX_COMBO)Hurt(f, go, combo +1)()else Falling(f, Some(go))
   }
   override def hit      = {}
   override def moveUp   = {}

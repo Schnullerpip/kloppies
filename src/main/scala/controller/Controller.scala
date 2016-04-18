@@ -3,10 +3,8 @@ package main.scala.controller
 import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.FighterState
 import main.scala.model.map.GameMap
 import main.scala.model.player.Player
-import main.scala.model.states.MidAir
 
 import scala.annotation.tailrec
 import main.scala.util.{Observable, Observer}
@@ -20,6 +18,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   var animators = Seq[QueueAnimator]()
   players.zipWithIndex.foreach{pi => {
     pi._1.fighter.x = pi._2*100
+    pi._1.fighter.y = pi._2*100+200
     pi._1.fighter.addObserver(this)
     gameMap(pi._1.fighter)
   }}
@@ -31,9 +30,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   }
 
   def cycle() = {
-    moveElements
-    gravityEffect()
-    hitDetection()
+    gravityEffect(moveElements)
     notifyObservers()
     garbageCollector()
   }
@@ -47,54 +44,55 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     gameMap.elements.count{case f: Fighter => true case _ => false } > 1
   }
 
+  /**
+    * @return returns a collision matrix Seq[(GameObject, Seq[GameObject])]*/
   private def moveElements = {
     val moveables = gameMap.elements
-    moveables foreach{ m =>
-      m.moveX
-      m.moveY
-      val collisions:Seq[GameObject] = moveables.filter{e => e != m && e.collidingX(m){e.collidingY(m)(true)} }
-      m.moveZ{
-        
+    var go_collision_matrix:Seq[(GameObject, Seq[GameObject])] = Seq()
+    moveables foreach { m =>
+      /*---y and y movement-----*/
+      if (m.moveable) {
+        m.moveX
+        m.moveY
       }
+      /*------------------------*/
+
+
+      /*---------preelimination for x and y axis---------*/
+      var preelimination: Seq[GameObject] =
+        moveables.filter { e => e != m && e.collidingX(m) { e.collidingY(m)(true) } }
+      val collision_sequence = for(e <- preelimination) yield e // just copy the preelimination
+      /*-------------------------------------------------*/
+
+
+      /*--------z movement step by step-------*/
+      m.moveZ {
+        preelimination.filter { o =>
+          (m.z >= o.z && m.z <= o.z + o.height) || (m.z <= o.z && m.z + m.height >= o.z)
+        }.foreach { e =>
+          m.state.actOnCollision(e)
+          preelimination = preelimination.filter{_ != e}
+        }
+      }
+      go_collision_matrix = go_collision_matrix :+ (m, collision_sequence.filter { o =>
+          (m.z >= o.z && m.z <= o.z + o.height) || (m.z <= o.z && m.z + m.height >= o.z)
+        })
+      /*--------------------------------------*/
     }
-    moveables
+    go_collision_matrix
   }
 
   private val GRAVITY_CONSTANT = 1
-  /**
-    * instead of letting the GameObjects decide what to do in case of gravityEffect now the Controller has the responsibility to
-    * manipulate the GameObjects velocities and to check for Ground Contact*/
-  private def gravityEffect(gos:Seq[GameObject] = gameMap.elements) = {
-    /*gos foreach{_.gravity_affect()}  OLD WAY*/
-
-    /*NEW WAY*/
-    gos foreach{go =>
-      go.gravity_affect(GRAVITY_CONSTANT)
-      if(go.gravity_affected){
-        go.state match {
-          case ma:MidAir if go.z_velocity > 0 => go.z += go.z_velocity
-          case ma:MidAir =>
-            val stages = gameMap.stages.filter(s => s.z <= go.z && s.z >= go.z+go.z_velocity)
-            if(stages isEmpty)
-              go.z += go.z_velocity
-            else{
-              val iterator = stages.iterator
-              while (iterator.hasNext && go.z_velocity < 0) {
-                val s = iterator.next()
-                if ((go.x >= s.x && go.x <= s.x + s.width) || (go.x <= s.x && go.x + go.width >= s.x)) {
-                  if ((go.y >= s.y && go.y <= s.y + s.width) || (go.y <= s.y && go.y + go.width >= s.y)) {
-                    go.z = s.z
-                    go.z_velocity = 0
-                    go.state.landing //asInstanceOf[FighterState].landing
-                  }
-                }
-              }
-            }
-          case _ =>
-        }
+  private def gravityEffect(collision_matrix:Seq[(GameObject, Seq[GameObject])]) = {
+    collision_matrix foreach { gocol =>
+      if (gocol._1.gravity_affected) {
+        val go = gocol._1
+        //if(!gocol._2.exists(e => e.steppable && e.tangible && e.collidable)) go.state.levitate
+        if (!go.groundContact) go.state.levitate
+        go.gravity_affect(GRAVITY_CONSTANT)
+        go.groundContact = false
       }
     }
-    gos
   }
 
   /**

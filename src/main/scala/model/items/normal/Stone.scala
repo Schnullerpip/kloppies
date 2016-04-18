@@ -27,12 +27,12 @@ class StoneNormal(stone:Stone) extends ItemState(stone) {
 }
 case class StoneFalling(s:Stone) extends StoneNormal(s) with MidAir{
   s.intention = Harmful
-  override def landing = {
-    SoundDistributor.play("deep_smash")
-    s.x_velocity = 0
-    s.y_velocity = 0
-    s.state = new StoneNormal(s)
-  }
+  //override def landing = {
+  //  SoundDistributor.play("deep_smash")
+  //  s.x_velocity = 0
+  //  s.y_velocity = 0
+  //  s.state = new StoneNormal(s)
+  //}
   override def actOnCollision(go:GameObject)={
     if(go.tangible)
       SoundDistributor.play("small_punch")
