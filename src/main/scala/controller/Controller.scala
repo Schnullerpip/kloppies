@@ -52,6 +52,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     moveables foreach{ m =>
       m.moveX
       m.moveY
+      val collisions:Seq[GameObject] = moveables.filter{e => e != m && e.collidingX(m){e.collidingY(m)(true)} }
       m.moveZ{
         
       }

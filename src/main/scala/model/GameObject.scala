@@ -26,14 +26,6 @@ trait GameObject extends Mass with Direction with Strength with LivePoints with 
   }
 
   def colliding(o:GameObject):Boolean = {
-    /*val (o.width, o.height) = o match {
-      case _:Fighter => (o.width/1.5, o.height/2)
-      case _ => (o.width.toDouble, o.height)
-    }
-    val (this_width, this_height) = this match {
-      case _:Fighter => (width/1.5, height/2)
-      case _ => (width.toDouble, height)
-    }*/
     if((x >= o.x && x <= o.x + o.width) || ( x <= o.x && x + width >= o.x)) {
       if ((y >= o.y && y <= o.y + o.width) || (y <= o.y && y + width >= o.y)) {
         if ((z >= o.z && z <= o.z + o.height) || (z <= o.z && z + height >= o.z)) {
@@ -43,4 +35,16 @@ trait GameObject extends Mass with Direction with Strength with LivePoints with 
     }
     false
   }
+
+  def collidingX(go:GameObject)(f: => Boolean = true):Boolean =
+    if((x >= go.x && x <= go.x + go.width) || ( x <= go.x && x + width >= go.x)) {
+      f
+    }else false
+
+  def collidingY(go:GameObject)(f: => Boolean = true):Boolean =
+    if((y >= go.y && y <= go.y + go.length) || ( y <= go.y && y + length >= go.x)) {
+      f
+    }else false
+
+
 }
