@@ -57,10 +57,10 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
             case go:GameObject if go.images != null =>
               /*----draw shadow----*/
               g.setColor(new Color(0,0,0,0.30f))
-              g.fillOval(go.x, go.y-go.width+go.height-10, go.width, 10)
+              g.fillOval(go.x, go.y-(go.height*0.1).toInt, go.width, 10)
               /*-------------------*/
               g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
-            /*case go:GameObject => only for debugging
+            /*case go:GameObject => only for debugging invisible objects
               val col = g.getColor
               g.setColor(new Color(0.1f, 0.1f, 0.1f, 0.30f))
               g.fillRect(go.x, go.y, go.width, go.width)
