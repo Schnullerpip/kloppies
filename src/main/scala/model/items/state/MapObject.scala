@@ -10,7 +10,7 @@ case class MapObject(item:Item) extends ItemState(item){
   item.intention = Harmless
   item.moveable = false
   item.vulnerable = false
-  item.collidable = true
   item.tangible = false
   item.gravity_affected = false
+  item.collidable = true
 }

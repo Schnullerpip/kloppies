@@ -26,6 +26,7 @@ case class Stage (override var x:Int = -2000,
   override var strength: Int = 0
   override var mass: Int = width*length
   override var hp: Int = mass
+  steppable = true
 }
 
 sealed trait StageStyle{
