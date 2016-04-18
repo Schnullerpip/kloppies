@@ -1,5 +1,7 @@
 package main.scala
 
+import java.io.File
+import javax.imageio.ImageIO
 import javax.swing.Timer
 
 import main.scala.controller.Controller
@@ -53,7 +55,7 @@ object Main {
     )
 
     /**/
-    val map = GameMap("images/backround_white.png", Seq(new Stage()))
+    val map = GameMap(ImageIO.read(new File("images/backround_white.png")))
     val controller = new Controller(players, map)
 
 
