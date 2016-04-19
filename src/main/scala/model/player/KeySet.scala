@@ -16,13 +16,13 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
   def released(key: Char, f: Fighter) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
     key match {
-      case this.up => up_set = false; fighter_state.stopUp
-      case this.down => down_set = false; fighter_state.stopDown
-      case this.left => left_set = false; fighter_state.stopLeft
-      case this.right => right_set = false; fighter_state.stopRight
-      case this.attack => attack_set = false
-      case this.defense => defense_set = false; fighter_state.stop
-      case this.jump => jump_set = false; //fighter_state.jump
+      case `up` => up_set = false; if(down_set)fighter_state.moveDown else fighter_state.stopUp
+      case `down` => down_set = false; if(up_set)fighter_state.moveUp else fighter_state.stopDown
+      case `left` => left_set = false; if(right_set)fighter_state.moveRight else fighter_state.stopLeft
+      case `right` => right_set = false; if(left_set)fighter_state.moveLeft else fighter_state.stopRight
+      case `attack` => attack_set = false
+      case `defense` => defense_set = false; fighter_state.stop
+      case `jump` => jump_set = false; //fighter_state.jump
       case _ =>
     }
   }
@@ -30,13 +30,13 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
   def pressed(key:Char, f:Fighter) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
     key match {
-      case this.up => up_set = true; checkKeyBuffer(key, f, fighter_state.moveUp)
-      case this.down => down_set = true; checkKeyBuffer(key, f, fighter_state.moveDown)
-      case this.left => left_set = true; checkKeyBuffer(key, f, fighter_state.moveLeft)
-      case this.right => right_set = true; checkKeyBuffer(key, f, fighter_state.moveRight)
-      case this.attack => attack_set = true; checkKeyBuffer(key, f, fighter_state.hit)
-      case this.defense => if (!defense_set) checkKeyBuffer(key, f, {fighter_state.defend; defense_set = true})
-      case this.jump => jump_set = true; checkKeyBuffer(key, f, fighter_state.jump)
+      case `up` => up_set = true; checkKeyBuffer(key, f, fighter_state.moveUp)
+      case `down` => down_set = true; checkKeyBuffer(key, f, fighter_state.moveDown)
+      case `left` => left_set = true; checkKeyBuffer(key, f, fighter_state.moveLeft)
+      case `right` => right_set = true; checkKeyBuffer(key, f, fighter_state.moveRight)
+      case `attack` => attack_set = true; checkKeyBuffer(key, f, fighter_state.hit)
+      case `defense` => if (!defense_set) checkKeyBuffer(key, f, {fighter_state.defend; defense_set = true})
+      case `jump` => jump_set = true; checkKeyBuffer(key, f, fighter_state.jump)
       case _ =>
     }
   }
