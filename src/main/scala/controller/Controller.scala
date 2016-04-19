@@ -5,6 +5,7 @@ import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
 import main.scala.model.map.GameMap
 import main.scala.model.player.Player
+import main.scala.model.states.MidAir
 
 import scala.annotation.tailrec
 import main.scala.util.{Observable, Observer}
@@ -51,10 +52,8 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     var go_collision_matrix:Seq[(GameObject, Seq[GameObject])] = Seq()
     moveables foreach { m =>
       /*---y and y movement-----*/
-      if (m.moveable) {
-        m.moveX
-        m.moveY
-      }
+      m.moveX
+      m.moveY
       /*------------------------*/
 
 
@@ -89,7 +88,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
       if (gocol._1.gravity_affected) {
         val go = gocol._1
         //if(!gocol._2.exists(e => e.steppable && e.tangible && e.collidable)) go.state.levitate
-        if (!go.groundContact) go.state.levitate
+        if (!go.groundContact && !go.state.isInstanceOf[MidAir]) go.state.levitate
         go.gravity_affect(GRAVITY_CONSTANT)
         go.groundContact = false
       }

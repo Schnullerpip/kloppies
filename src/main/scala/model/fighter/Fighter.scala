@@ -42,6 +42,7 @@ case class Fighter (var name:String,
   override var mass:Int = full_mass
   override var images = new ImageMatrix(imagesName, this, rows, cols)
   override var state:State = Normal(this)
+  steppable = true
 
   def increase_full_hp: Unit ={
     full_hp +=1

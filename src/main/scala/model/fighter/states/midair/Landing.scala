@@ -14,6 +14,7 @@ case class Landing(f:Fighter) extends FighterState(f){
   f.images.set(LANDING)
   f.x_velocity = 0
   f.y_velocity = 0
+  f.z_velocity = 0
   f.moveable = false
   f.intention = Harmless
 

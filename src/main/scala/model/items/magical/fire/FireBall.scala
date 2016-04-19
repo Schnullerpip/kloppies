@@ -21,6 +21,7 @@ case class FireBall(caster:GameObject) extends Item with Speed{
   override var z: Int = caster.z
   override val width = 50
   override val height = 50
+  override val length = 20
   looksLeft = caster.looksLeft
   override var images: ImageMatrix = new ImageMatrix("fireball.png", this, 6, 6)
   override var state: State = FireBallStateMove(this)

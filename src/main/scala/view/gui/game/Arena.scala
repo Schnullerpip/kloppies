@@ -54,16 +54,19 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
               g.fillRect(go.x, go.y, go.width, go.length)
               g.setColor(col)
             case go:GameObject if go.images != null =>
+
               /*----draw shadow----*/
               g.setColor(new Color(0,0,0,0.30f))
               g.fillOval(go.x, go.y-(go.height*0.1).toInt, go.width, 10)
               /*-------------------*/
+
+              /*----draw Image-----------*/
               g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
-            /*case go:GameObject => only for debugging invisible objects
-              val col = g.getColor
-              g.setColor(new Color(0.1f, 0.1f, 0.1f, 0.30f))
-              g.fillRect(go.x, go.y, go.width, go.width)
-              g.setColor(col)*/
+              /*-------------------------*/
+
+              /*---for collision debugging---*/
+              drawCube(g, go, 0.3f)
+              /*-----------------------------*/
             case _ => }
           }
       } -> BorderPanel.Position.Center
@@ -124,5 +127,35 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
       gamePanel.peer.repaint(go.x, go.y, go.width, go.height)
       gamePanel.toolkit.sync()
     }
+  }
+
+  private def drawCube(g:Graphics2D, go:GameObject, f:Float=0.2f) = {
+    val(w, h, l) = (go.width, go.height, go.length)
+    val x = go.x
+    def y = go.y-go.z
+
+    val angle = 90
+    val w_part = Math.cos(angle) * l
+    val h_part = Math.sin(angle) * l
+
+    /*draw side facing horizon*/
+    for(i <- x until (x + w)){
+      g.setColor(new Color(0, 0, 1, f))
+      g.drawLine(i+w_part, y-h_part, i+w_part, y+h-h_part)
+    }
+
+    /*draw bottom side*/
+    for(i <- x until (x + w)){
+      g.setColor(new Color(0, 1, 0, f))
+      g.drawLine(i, y+h, i+w_part, y+h-h_part)
+    }
+
+    /*draw side facing viewer*/
+    for(i <- x until (x + w)){
+      g.setColor(new Color(0, 0, 1, f))
+      g.drawLine(i, y, i, y+h)
+    }
+
+    implicit def dToi(d:Double):Int = d.toInt
   }
 }

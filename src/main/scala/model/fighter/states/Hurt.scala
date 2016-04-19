@@ -4,7 +4,7 @@ import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.ImageMatrix.OUCH
 import main.scala.model.fighter.states.midair.Falling
-import main.scala.model.intention.{Harmless, Harmful}
+import main.scala.model.intention.Harmless
 
 /**
  * Created by julian on 15.02.16.

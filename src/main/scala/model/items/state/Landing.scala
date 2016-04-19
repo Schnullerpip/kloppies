@@ -15,4 +15,5 @@ case class Landing(item:Item) extends ItemState(item){
   SoundDistributor.play("deep_smash")
   item.x_velocity = 0
   item.y_velocity = 0
+  item.z_velocity = 0
 }
