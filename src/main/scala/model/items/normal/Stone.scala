@@ -16,8 +16,10 @@ class Stone(override var x:Int, override var y:Int, override var z:Int) extends 
   override var mass: Int = 5
   override var hp: Int = mass
   override var strength: Int = 1
-  override val width = 10
-  override val height = 10
+  width = 10
+  height = 10
+  length = 5
+  steppable = true
 }
 
 class StoneNormal(stone:Stone) extends ItemState(stone) {

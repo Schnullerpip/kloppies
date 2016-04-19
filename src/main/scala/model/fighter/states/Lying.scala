@@ -16,12 +16,15 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   f.moveable = false
   f.images.set(LYING)
   f.intention = Harmless
+  val height_standing = f.height
+  f.height = f.height/4
 
   new Thread(new Runnable {
     override def run(): Unit = {
       Thread.sleep(3000)
+      f.height = height_standing
       f.moveable = true
-      //f.state = Landing(f)
+
     }
   }).start()
 

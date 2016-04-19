@@ -16,14 +16,16 @@ case class MagicalWind(caster:Fighter) extends Item{
   override var mass: Int = 0
   override var strength: Int = 10
   override var hp: Int = 1
-  override val width = 2000
-  override val height = 2000
+  width = 2000
+  height = 2000
+  length = 2000
   override var x: Int = caster.x-width/2
   override var y: Int = caster.y-width/2
   override var z: Int = caster.z-width/2
   override var state:State = WindState(this)
   tangible = false
   looksLeft = caster.looksLeft
+  gravity_affected = false
   SoundDistributor.loop("wind_loop")
 
   override def goKillYourself = {

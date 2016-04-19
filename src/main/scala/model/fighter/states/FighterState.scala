@@ -2,7 +2,7 @@ package main.scala.model.fighter.states
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.midair.{Jumping, Landing, Levitate}
+import main.scala.model.fighter.states.midair.{Falling, Jumping, Landing, Levitate}
 import main.scala.model.fighter.states.techniques.{Effect, Summoning, Technique, UsingTechnique}
 import main.scala.model.intention.{Harmful, Harmless}
 import main.scala.model.states.{MidAir, State}
@@ -38,7 +38,7 @@ abstract class FighterState(f:Fighter) extends State(f){
           f.intention = Harmless
         }
   }
-  override def hurtBy(go:GameObject):Unit = if(f.vulnerable){f.state = Hurt(f, go)()}
+  override def hurtBy(go:GameObject):Unit = if(f.vulnerable){f.state = if(go.strength < f.strength+f.mass)Hurt(f, go)() else Falling(f, Some(go))}
 
   override def stop = {stopUp; stopLeft}
 

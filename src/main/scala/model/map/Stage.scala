@@ -16,11 +16,14 @@ import main.scala.view.gui.Defaults
 case class Stage (override var x:Int = -2000,
                   override var y:Int = -2000,
                   override var z:Int = 0,
-                  override val width:Int = 10000,
-                  override val length:Int = 10000,
-                  override val height:Int = 0,
+                  w:Int = 10000,
+                  l:Int = 10000,
+                  h:Int = 0,
                   /**style is used if no image is found to draw a surface for the stage according to a style*/
                   style:Option[StageStyle] = Some(Rocky)) extends Item {
+  width = w
+  length = l
+  height = h
   override var images: ImageMatrix = null
   override var state: State = MapObject(this)
   override var strength: Int = 0

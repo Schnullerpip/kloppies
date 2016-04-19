@@ -18,7 +18,7 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
       new Thread(new Runnable {
         override def run(): Unit = {
           var stones = Seq[Stone]()
-          for(o <- 0 until 15) {
+          for(o <- 0 until 1) {
             val stone = new Stone(caster.x + caster.width/2 * (1 + caster.directionValue), caster.y, caster.z+caster.height/2) {
               x_velocity = 13*caster.directionValue
               z_velocity = 8+randomBlur(3)

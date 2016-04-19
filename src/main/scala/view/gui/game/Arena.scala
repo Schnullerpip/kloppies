@@ -60,13 +60,13 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
               g.fillOval(go.x, go.y-(go.height*0.1).toInt, go.width, 10)
               /*-------------------*/
 
-              /*----draw Image-----------*/
-              g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
-              /*-------------------------*/
-
               /*---for collision debugging---*/
               drawCube(g, go, 0.3f)
               /*-----------------------------*/
+
+              /*----draw Image-----------*/
+              g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
+              /*-------------------------*/
             case _ => }
           }
       } -> BorderPanel.Position.Center
@@ -154,6 +154,12 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
     for(i <- x until (x + w)){
       g.setColor(new Color(0, 0, 1, f))
       g.drawLine(i, y, i, y+h)
+    }
+
+    /*draw upper side*/
+    for(i <- x until (x + w)){
+      g.setColor(new Color(0, 1, 0, f))
+      g.drawLine(i, y, i+w_part, y-h_part)
     }
 
     implicit def dToi(d:Double):Int = d.toInt
