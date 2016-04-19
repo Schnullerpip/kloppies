@@ -2,7 +2,7 @@ package main.scala.model.items.magical.fire
 
 import main.scala.model.attributes.Speed
 import main.scala.model.intention.Harmful
-import main.scala.model.items.state.{Break, ItemState, Move, Normal}
+import main.scala.model.items.state.{Break, Move, Normal}
 import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.items.Item
 import main.scala.model.states.{AnimateMe, State}
@@ -19,6 +19,7 @@ case class FireBall(caster:GameObject) extends Item with Speed{
   override var x: Int = caster.x + (caster.width * {if (caster.looksLeft) -1 else 1})
   override var y: Int = caster.y
   override var z: Int = caster.z
+  gravity_affected = false
   width = 50
   height = 50
   length = 20
