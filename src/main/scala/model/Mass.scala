@@ -8,7 +8,7 @@ package main.scala.model
 trait Mass extends Moveable{
   var mass:Int
   var gravity_affected = true
-  var groundContact = true
+  var groundContact = false
   var steppable = false
 
   def gravity_affect(pace:Int = 1) = {

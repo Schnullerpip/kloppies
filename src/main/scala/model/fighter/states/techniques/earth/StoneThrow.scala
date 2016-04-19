@@ -30,8 +30,8 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
             stones = stone +: stones
             Thread.sleep(150)
           }
-          //Thread.sleep(3000)
-          //stones.foreach{_.goKillYourself}
+          Thread.sleep(5000)
+          stones.foreach{_.goKillYourself}
         }
       }).start()
     }

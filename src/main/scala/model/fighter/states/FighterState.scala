@@ -38,7 +38,13 @@ abstract class FighterState(f:Fighter) extends State(f){
           f.intention = Harmless
         }
   }
-  override def hurtBy(go:GameObject):Unit = if(f.vulnerable){f.state = if(go.strength < f.strength+f.mass)Hurt(f, go)() else Falling(f, Some(go))}
+  override def hurtBy(go:GameObject):Unit =
+    if(f.vulnerable){
+      f.state = if(go.strength < f.mass*2)
+        Hurt(f, go)()
+      else
+        Falling(f, Some(go))
+    }
 
   override def stop = {stopUp; stopLeft}
 
@@ -52,10 +58,10 @@ abstract class FighterState(f:Fighter) extends State(f){
   def moveRight =ifMoveable(f.x_velocity = f.speed)
   def jump = ifMoveable(f.state = Jumping(f))
 
-  def stopUp = f.y_velocity = 0
-  def stopDown = stopUp
-  def stopLeft = f.x_velocity = 0
-  def stopRight = stopLeft
+  def stopUp = ifMoveable(f.y_velocity = 0)
+  def stopDown = ifMoveable(stopUp)
+  def stopLeft = ifMoveable(f.x_velocity = 0)
+  def stopRight = ifMoveable(stopLeft)
 
   override def levitate = f.state = Levitate(f)
 
