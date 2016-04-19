@@ -20,12 +20,13 @@ trait Mass extends Moveable{
   def moveZ(f: => Unit) = {
     if (z_velocity < 0){
       val reach = z + z_velocity
-      val velocity = if(z_velocity > height) -1*height else z_velocity
+      val velocity = -1 //if(z_velocity > height) -1*height else z_velocity
       while (z > reach && !groundContact)
       {
         z += velocity
         f
       }
+      z = reach
     } else {
       z += z_velocity
       f

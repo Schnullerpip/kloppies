@@ -7,7 +7,9 @@ import scala.util.Random
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.{Summoning, Technique, Techniques}
-import main.scala.model.items.normal.{Stone, StoneFalling}
+import main.scala.model.items.normal.{Stone, StoneFalling, StoneNormal}
+import main.scala.model.items.state.Normal
+import main.scala.util.sound.SoundDistributor
 /**
   * Created by julian on 08.04.16.
   */
@@ -18,7 +20,7 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
       new Thread(new Runnable {
         override def run(): Unit = {
           var stones = Seq[Stone]()
-          for(o <- 0 until 1) {
+          for(o <- 0 until 15) {
             val stone = new Stone(caster.x + caster.width/2 * (1 + caster.directionValue), caster.y, caster.z+caster.height/2) {
               x_velocity = 13*caster.directionValue
               z_velocity = 8+randomBlur(3)
@@ -28,8 +30,8 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
             stones = stone +: stones
             Thread.sleep(150)
           }
-          Thread.sleep(3000)
-          stones.foreach{_.goKillYourself}
+          //Thread.sleep(3000)
+          //stones.foreach{_.goKillYourself}
         }
       }).start()
     }
@@ -41,10 +43,24 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
     private def randomBlur(max:Int) = Random.nextInt(max) * (if(Random.nextBoolean()) -1 else 1)
 
     private class StoneFallingMagical(stone:Stone, caster:Fighter) extends StoneFalling(stone) {
+      stone.tangible = false
       override def actOnCollision(go:GameObject)={
-        if(go != caster && !go.isInstanceOf[Stone])
+        if(go != caster)
           super.actOnCollision(go)
       }
+      override def landing = {
+        val velocity = stone.z_velocity * {if(stone.z_velocity < 0 ) -1 else 1}
+        if(velocity > stone.mass){
+          stone.z_velocity = velocity/2
+          SoundDistributor.play("deep_smash")
+        }else{
+          stone.x_velocity = 0
+          stone.y_velocity = 0
+          stone.z_velocity = 0
+          stone.state = new StoneNormal(stone)
+          SoundDistributor.play("deep_smash")
+        }
+  }
     }
 
   }

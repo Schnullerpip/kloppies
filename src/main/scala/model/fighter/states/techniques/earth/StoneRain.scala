@@ -23,7 +23,7 @@ case class StoneRain(c:Fighter) extends  Technique(c) with Effect with EarthTech
         var stones = Seq[Stone]()
         for(i <- 0 until 15) {
           for(o <- 0 until 15) {
-            val stone = new Stone(caster.x + randomBlur(500), caster.y + randomBlur(150), 400) {
+            val stone = new Stone(caster.x + randomBlur(500), caster.y + randomBlur(150), 700) {
               state = new StoneFallingMagical(this, caster)
             }
             caster.notifyObservers(stone)
@@ -31,7 +31,7 @@ case class StoneRain(c:Fighter) extends  Technique(c) with Effect with EarthTech
           }
           Thread.sleep(200 + Random.nextInt(300))
         }
-        Thread.sleep(3000)
+        Thread.sleep(7000)
         stones.foreach{_.goKillYourself}
       }
     }).start()

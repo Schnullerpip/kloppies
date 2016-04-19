@@ -70,7 +70,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
           (m.z >= o.z && m.z <= o.z + o.height) || (m.z <= o.z && m.z + m.height >= o.z)
         }
         colliding.foreach { e =>
-          m.state.actOnCollision(e)
+          e.state.actOnCollision(m)
           preelimination = preelimination.filter{_ != e}
         }
       }

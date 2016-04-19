@@ -8,7 +8,7 @@ import main.scala.model.intention.Harmless
 /**
  * Created by julian on 22.02.16.
  */
-class Normal(item:Item) extends ItemState(item) with AnimateMe{
+class Normal(item:Item) extends ItemState(item){
   item.intention = Harmless
   item.images.set(ITEM_NORMAL)
 }

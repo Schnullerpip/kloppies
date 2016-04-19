@@ -26,6 +26,7 @@ class StoneNormal(stone:Stone) extends ItemState(stone) {
   import main.scala.model.ImageMatrix.ITEM_NORMAL
   stone.intention = Harmless
   stone.images.set(ITEM_NORMAL)
+  stone.tangible = true
 }
 case class StoneFalling(s:Stone) extends StoneNormal(s) with MidAir{
   s.intention = Harmful

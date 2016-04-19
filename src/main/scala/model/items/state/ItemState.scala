@@ -11,6 +11,7 @@ import main.scala.util.sound.SoundDistributor
  * Created by julian on 22.02.16.
  */
 abstract class ItemState(item:Item) extends State(item) {
+
   override def actOnCollision(go: GameObject): Unit = {
     if(item.intention == Harmful && go.tangible){
       item.state.inflictDamageTo(go, item.strength)
