@@ -7,5 +7,5 @@ package main.scala.model
 trait Size {
   var width = 40
   var height = 50
-  var length = width/2
+  var length = 10
 }

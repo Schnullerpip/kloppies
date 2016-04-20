@@ -61,7 +61,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
               /*-------------------*/
 
               /*---for collision debugging---*/
-              drawCube(g, go, 0.3f)
+              //drawCube(g, go, 0.3f)
               /*-----------------------------*/
 
               /*----draw Image-----------*/

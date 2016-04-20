@@ -1,7 +1,7 @@
 package main.scala.model.player
 
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.FighterState
+import main.scala.model.fighter.states.{FighterState, Running}
 
 /**
  * Created by julian on 14.02.16.
@@ -16,10 +16,10 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
   def released(key: Char, f: Fighter) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
     key match {
-      case `up` => up_set = false; if(down_set)fighter_state.moveDown else fighter_state.stopUp
-      case `down` => down_set = false; if(up_set)fighter_state.moveUp else fighter_state.stopDown
-      case `left` => left_set = false; if(right_set)fighter_state.moveRight else fighter_state.stopLeft
-      case `right` => right_set = false; if(left_set)fighter_state.moveLeft else fighter_state.stopRight
+      case `up` => up_set = false;        if(down_set)fighter_state.moveDown    else fighter_state.stopUp
+      case `down` => down_set = false;    if(up_set)fighter_state.moveUp        else fighter_state.stopDown
+      case `left` => left_set = false;    if(right_set)fighter_state.moveRight  else fighter_state.stopLeft
+      case `right` => right_set = false;  if(left_set)fighter_state.moveLeft    else fighter_state.stopRight
       case `attack` => attack_set = false
         //if(!up_set)fighter_state.stopUp
         //if(!down_set)fighter_state.stopDown

@@ -3,7 +3,7 @@ package main.scala.controller
 import main.scala.model.GameObject
 import main.scala.model.attributes.LivePoints
 import main.scala.model.fighter.Fighter
-import main.scala.model.map.GameMap
+import main.scala.model.map.{GameMap, Stage}
 import main.scala.model.player.Player
 import main.scala.model.states.MidAir
 
@@ -50,8 +50,9 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   private def moveElements = {
     val moveables = gameMap.elements
     var go_collision_matrix:Seq[(GameObject, Seq[GameObject])] = Seq()
-    moveables foreach { m =>
-      /*---y and y movement-----*/
+    //println(moveables.sortBy(m => m.z + m.height).map(m => m.z+m.height))
+    moveables.sortBy(m => m.z+m.height).foreach { m => //sorting to assure groundnearest objects are considered first
+      /*---x and y movement-----*/
       m.moveX
       m.moveY
       /*------------------------*/
@@ -66,10 +67,9 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
 
       /*--------z movement step by step-------*/
       m.moveZ {
-        val colliding = preelimination.filter { o =>
+        preelimination.filter { o =>
           (m.z >= o.z && m.z <= o.z + o.height*0.9) || (m.z <= o.z && m.z + m.height*0.9 >= o.z)
-        }
-        colliding.foreach { e =>
+        }.foreach { e =>
           e.state.actOnCollision(m)
           preelimination = preelimination.filter{_ != e}
         }
@@ -87,10 +87,9 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     collision_matrix foreach { gocol =>
       if (gocol._1.gravity_affected) {
         val go = gocol._1
-        //if(!gocol._2.exists(e => e.steppable && e.tangible && e.collidable)) go.state.levitate
         if (!go.groundContact && !go.state.isInstanceOf[MidAir]) go.state.levitate
         go.gravity_affect(GRAVITY_CONSTANT)
-        go.groundContact = false
+        if(!go.isInstanceOf[Stage])go.groundContact = false
       }
     }
   }

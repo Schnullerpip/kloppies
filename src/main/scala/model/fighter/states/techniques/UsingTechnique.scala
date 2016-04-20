@@ -22,6 +22,7 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
 
   fighter.mana -= technique.manaUse
   fighter.intention = Harmless
+  fighter.state.stop
   fighter.moveable = false
   fighter.vulnerable = true
 

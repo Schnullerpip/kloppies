@@ -11,7 +11,7 @@ import main.scala.model.attributes.Speed
 class Hurt(item:Item, go:GameObject)(amount:Int = go.strength) extends ItemState(item){
   private var contin = true
 
-  if(item.hp - amount < 0){
+  if(item.hp - amount <= 0){
     item.state = new Break(item)
   }else{
     item.takeDamage(amount)

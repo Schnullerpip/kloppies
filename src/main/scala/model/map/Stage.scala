@@ -1,9 +1,6 @@
 package main.scala.model.map
-
 import java.awt.Color
-import java.awt.image.BufferedImage
-
-import main.scala.model.{GameObject, ImageMatrix, Position}
+import main.scala.model.ImageMatrix
 import main.scala.model.items.Item
 import main.scala.model.items.state.MapObject
 import main.scala.model.states.State
@@ -30,6 +27,7 @@ case class Stage (override var x:Int = -2000,
   override var mass: Int = width*length
   override var hp: Int = mass
   steppable = true
+  groundContact = true
 }
 
 sealed trait StageStyle{

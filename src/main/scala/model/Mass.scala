@@ -26,7 +26,6 @@ trait Mass extends Moveable{
         z += velocity
         f
       }
-      z = reach
     } else {
       z += z_velocity
       f

@@ -7,7 +7,8 @@ import javax.imageio.ImageIO
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.Techniques
-import main.scala.model.items.normal.{Rock, RockMoving}
+import main.scala.model.items.state.Hurt
+import main.scala.model.rocks.normal.{Rock, RockHurt, RockMoving}
 import main.scala.model.states.MidAir
 
 import scala.util.Random
@@ -25,7 +26,7 @@ class RockThrow(c:Fighter) extends StoneThrow(c){
     new Thread(new Runnable {
       override def run(): Unit = {
         var stones = Seq[Rock]()
-        for(o <- 0 until 1) {
+        for(o <- 0 until 2) {
           val stone = new Rock(caster.x + {if(caster.looksLeft)-caster.width else caster.width}, caster.y, caster.z+caster.height/2) {
             looksLeft = caster.looksLeft
             x_velocity = 13*caster.directionValue
@@ -41,10 +42,14 @@ class RockThrow(c:Fighter) extends StoneThrow(c){
           }
           caster.notifyObservers(stone)
           stones = stone +: stones
-          Thread.sleep(250)
+          Thread.sleep(1000)
         }
         Thread.sleep(5000)
-        stones.foreach{_.goKillYourself}
+        while(stones nonEmpty){
+          Thread.sleep(1000)
+          stones.head.state = new RockHurt(stones.head, null)(stones.head.hp)
+          stones = stones.slice(1, stones.size)
+        }
       }
     }).start()
 

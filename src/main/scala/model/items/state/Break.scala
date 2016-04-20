@@ -20,10 +20,7 @@ class Break(val item:Item) extends ItemState(item){
   if(item.images != null)
     item.images.set(ITEM_BREAK)
 
-  private val sleepTime = 1000 / {item match {
-    case s:Speed => s.speed
-    case _ => 150
-  }}
+  private val sleepTime = 1000 / 50
 
   new Thread(new Runnable {
     override def run(): Unit = {
