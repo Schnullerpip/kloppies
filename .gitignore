@@ -3,3 +3,4 @@ kloppies.iml
 lib/
 out/
 *.db4o
+*.xcf
