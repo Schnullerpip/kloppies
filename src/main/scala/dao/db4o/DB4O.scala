@@ -38,19 +38,19 @@ class DB4O extends DAO{
     if(storable isDefined){
       storable.get.imagesName = f.imagesName
       storable.get.xp = f.xp
-      storable.get.hp = f.full_hp
-      storable.get.strength = f.full_strength
-      storable.get.speed = f.full_speed
-      storable.get.mana = f.full_mana
-      storable.get.mass = f.full_mass
+      storable.get.hp = f.fighter_hp
+      storable.get.strength = f.fighter_strength
+      storable.get.speed = f.fighter_speed
+      storable.get.mana = f.fighter_mana
+      storable.get.mass = f.fighter_mass
       storable.get.technique_names = new util.ArrayList[String](seqAsJavaList(f.techniques.values.map(_.name).toSeq))
       storable.get.technique_combinations = new util.ArrayList[String](seqAsJavaList(f.techniques.keySet.toSeq))
       storable.get
     }else{
       val technique_names = new util.ArrayList[String](seqAsJavaList(f.techniques.values.map(_.name).toSeq))
       val technique_combinations = new util.ArrayList[String](seqAsJavaList(f.techniques.keySet.toSeq))
-      StorableFighter(f.name, f.imagesName, f.xp, f.full_hp, f.full_strength, f.full_speed,
-                    f.full_mana, f.full_mass, technique_names, technique_combinations)
+      StorableFighter(f.name, f.imagesName, f.xp, f.fighter_hp, f.fighter_strength, f.fighter_speed,
+                    f.fighter_mana, f.fighter_mass, technique_names, technique_combinations)
     }
   }
 }

@@ -20,7 +20,7 @@ case class Defending(f:Fighter) extends FighterState(f){
   override def hit = f.state = if(this.isInstanceOf[MidAir])LevitatingAttack(f) else StandardAttack(f)
   override def hurtBy(go:GameObject):Unit = {
     f.looksLeft = !go.looksLeft
-    if(reflexes && go.strength < f.mass){
+    if(reflexes && go.full_strength < f.mass){
       if (dodge) {
         new Thread(new Runnable {
     override def run(): Unit = {

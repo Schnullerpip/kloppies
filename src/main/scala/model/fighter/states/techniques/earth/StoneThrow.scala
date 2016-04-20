@@ -7,13 +7,12 @@ import scala.util.Random
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.{Summoning, Technique, Techniques}
-import main.scala.model.items.normal.{Stone, StoneFalling, StoneNormal}
-import main.scala.model.items.state.Normal
+import main.scala.model.items.normal.{Rock, Stone, StoneFalling, StoneNormal}
 import main.scala.util.sound.SoundDistributor
 /**
   * Created by julian on 08.04.16.
   */
-case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with EarthTechnique{
+class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with EarthTechnique{
     override val name: String = "StoneThrow"
 
     override def act: Unit = {
@@ -42,7 +41,7 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
 
     private def randomBlur(max:Int) = Random.nextInt(max) * (if(Random.nextBoolean()) -1 else 1)
 
-    private class StoneFallingMagical(stone:Stone, caster:Fighter) extends StoneFalling(stone) {
+    class StoneFallingMagical(stone:Stone, caster:Fighter) extends StoneFalling(stone) {
       stone.tangible = false
       override def actOnCollision(go:GameObject)={
         if(go != caster)
@@ -66,5 +65,6 @@ case class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with Earth
   }
 
   object StoneThrow{
+    def apply(c:Fighter) = new StoneThrow(c)
     lazy val image = ImageIO.read(new File("images/techniques/stonerain.png"))
   }

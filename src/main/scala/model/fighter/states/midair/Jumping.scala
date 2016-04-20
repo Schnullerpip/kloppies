@@ -26,7 +26,7 @@ case class Jumping(f:Fighter) extends FighterState(f){
                 f.images.next
                 ifStillJumping{
                   f.images.next
-                  f.z_velocity = f.strength
+                  f.z_velocity = f.fighter_strength
                   f.state = Levitate(f)
                 }
               }

@@ -23,7 +23,8 @@ class ImageMatrix(val name:String, val go:GameObject, val rows:Int, val cols:Int
     notifyObservers()
   }
   def next = {val ic = image_coordinate.next;notifyObservers();ic}
-  def currentImage = images(image_coordinate.r)(image_coordinate.c)
+  def currentImage =
+    images(image_coordinate.r)(image_coordinate.c)
 }
 
 object ImageMatrix{

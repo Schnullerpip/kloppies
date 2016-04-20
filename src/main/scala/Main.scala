@@ -70,5 +70,6 @@ object Main {
     new Arena(controller, timer)
 
     timer.start()
+    dao.close
   }
 }

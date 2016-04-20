@@ -12,7 +12,7 @@ import main.scala.util.sound.SoundDistributor
  */
 case class ElectricSpark(override var x:Int, override var y:Int, override var z:Int) extends Item with Speed{
   override var images: ImageMatrix = new ImageMatrix("speedplus.png", this, 2, 6)
-  override var strength: Int = 0
+  override var full_strength: Int = 0
   override var hp: Int = 1
   override var mass: Int = 0
   override var speed: Int = 15

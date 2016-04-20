@@ -15,7 +15,7 @@ class Stone(override var x:Int, override var y:Int, override var z:Int) extends 
   override var state: State = new StoneNormal(this)
   override var mass: Int = 5
   override var hp: Int = mass
-  override var strength: Int = 1
+  override var full_strength: Int = 1
   width = 10
   height = 10
   length = 5
@@ -23,19 +23,14 @@ class Stone(override var x:Int, override var y:Int, override var z:Int) extends 
 }
 
 class StoneNormal(stone:Stone) extends ItemState(stone) {
-  import main.scala.model.ImageMatrix.ITEM_NORMAL
   stone.intention = Harmless
-  stone.images.set(ITEM_NORMAL)
+  stone.images.set(ImageMatrix.ITEM_NORMAL)
   stone.tangible = true
+  override def levitate = stone.state = new StoneFalling(stone)
 }
-case class StoneFalling(s:Stone) extends StoneNormal(s) with MidAir{
+case class StoneFalling(s:Stone) extends StoneNormal(s) with MidAir {
   s.intention = Harmful
-  //override def landing = {
-  //  SoundDistributor.play("deep_smash")
-  //  s.x_velocity = 0
-  //  s.y_velocity = 0
-  //  s.state = new StoneNormal(s)
-  //}
+
   override def actOnCollision(go:GameObject)={
     if(go.tangible)
       SoundDistributor.play("small_punch")

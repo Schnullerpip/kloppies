@@ -17,7 +17,7 @@ case class FighterGraph(f:Fighter, length:Int = 100) extends Component {
   override def paint(g:Graphics2D) = {
     super.paint(g)
 
-    val attributes = Seq(f.full_hp, f.full_strength, f.full_speed, f.full_mana, f.full_mass)
+    val attributes = Seq(f.fighter_hp, f.fighter_strength, f.fighter_speed, f.fighter_mana, f.fighter_mass)
     val greatest = attributes.max
     val degree = 360/attributes.size
     def calcLength(attribute:Int):Double = {

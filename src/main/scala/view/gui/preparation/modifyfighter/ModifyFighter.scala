@@ -45,7 +45,7 @@ case class ModifyFighter(f:Fighter, parent:ModeMenu) extends BorderPanel{
         contents += new LabelButton(f, f.increase_full_hp _)
 
         contents += new Label("STRENGTH")
-        contents += new InformedLabel(f.strength _)
+        contents += new InformedLabel(f.fighter_strength _)
         contents += new LabelButton(f, f.increase_full_strength _)
 
         contents += new Label("SPEED")

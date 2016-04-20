@@ -4,8 +4,9 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-import main.scala.model.{GameObject, Moveable, Mass}
+import main.scala.model.{GameObject, Mass, Moveable}
 import main.scala.model.fighter.Fighter
+import main.scala.model.items.normal.Rock
 import main.scala.util.Observer
 
 /**
@@ -15,7 +16,7 @@ import main.scala.util.Observer
 case class GameMap(backGround: BufferedImage){
 
   /*TODO this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
-  var elements:Seq[GameObject] = Seq(Stage())
+  var elements:Seq[GameObject] = Seq(Stage(), Rock(200, 300, 0))
   var observers:Seq[Observer] = Seq()
 
   def apply(observer: Observer) = {

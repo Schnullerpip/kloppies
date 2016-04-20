@@ -11,9 +11,9 @@ import main.scala.util.Observable
  * Anything, that is in the game needs to have data on position and size so there can be collision detection
  */
 trait GameObject extends Mass with Direction with Strength with LivePoints with Observable{
-  var state:State
   var intention:Intention = Harmless
   var images:ImageMatrix
+  var state:State
   var collidable = true
   var tangible = true
 
@@ -37,7 +37,7 @@ trait GameObject extends Mass with Direction with Strength with LivePoints with 
   }
 
   def collidingX(go:GameObject)(f: => Boolean = true):Boolean =
-    if((x >= go.x && x <= go.x + go.width) || ( x <= go.x && x + width >= go.x)) {
+    if((x >= go.x && x <= go.x + go.width*0.75) || ( x <= go.x && x + width*0.75 >= go.x)) {
       f
     }else false
 

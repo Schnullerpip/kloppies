@@ -11,7 +11,7 @@ case class RunningAttack(f:Fighter) extends FighterState(f) {
     f.images.set(RUNNING_HIT)
     new Thread(new Runnable {
       override def run(): Unit = {
-        f.moveable = false
+        //f.moveable = false
         ifAggressive {
           f.images.next
           ifAggressive {

@@ -9,7 +9,7 @@ import main.scala.model.fighter.states.techniques.fire.ThrowFireball
 import main.scala.model.fighter.states.techniques.shock.SpeedPlus
 import main.scala.model.fighter.states.techniques.wind.SummonWind
 import main.scala.dao.DEFAULT_DATABASE_NAME
-import main.scala.model.fighter.states.techniques.earth.{StoneRain, StoneThrow}
+import main.scala.model.fighter.states.techniques.earth.{RockThrow, StoneRain, StoneThrow}
 
 /**
  * Created by julian on 23.02.16.
@@ -24,8 +24,8 @@ object db4oInsertTestFighters extends App {
 
   val dao = new DB4O
   val fighters = Seq(
-    Fighter("julian", "fighter_stickfigure.png", full_speed = 8, full_strength = 30, full_mana = 10, full_hp = 10, full_mass = 10),
-    Fighter("kiki", "fighter_stickfigure.png", full_speed = 10, full_strength = 4, full_mana = 100)
+    Fighter("julian", "fighter_stickfigure.png", fighter_speed = 8, fighter_strength = 30, fighter_mana = 10, fighter_hp = 10, fighter_mass = 10),
+    Fighter("kiki", "fighter_stickfigure.png", fighter_speed = 10, fighter_strength = 4, fighter_mana = 100)
   )
 
   fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
@@ -35,6 +35,7 @@ object db4oInsertTestFighters extends App {
   fighters(1).newTechnique(ThrowFireball(fighters(1)), "defenddirectionattack")
   fighters(1).newTechnique(SpeedPlus(fighters(1)), "defenddownjump")
   fighters(1).newTechnique(StoneThrow(fighters(1)), "defenddefenddefend")
+  fighters(1).newTechnique(RockThrow(fighters(1)), "defenddefenddown")
 
   fighters foreach{dao store}
   dao close

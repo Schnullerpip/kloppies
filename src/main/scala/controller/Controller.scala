@@ -67,7 +67,7 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
       /*--------z movement step by step-------*/
       m.moveZ {
         val colliding = preelimination.filter { o =>
-          (m.z >= o.z && m.z <= o.z + o.height) || (m.z <= o.z && m.z + m.height >= o.z)
+          (m.z >= o.z && m.z <= o.z + o.height*0.9) || (m.z <= o.z && m.z + m.height*0.9 >= o.z)
         }
         colliding.foreach { e =>
           e.state.actOnCollision(m)

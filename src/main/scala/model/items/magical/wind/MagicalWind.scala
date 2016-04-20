@@ -14,7 +14,7 @@ import main.scala.util.sound.SoundDistributor
 case class MagicalWind(caster:Fighter) extends Item{
   override var images: ImageMatrix = null
   override var mass: Int = 0
-  override var strength: Int = 10
+  override var full_strength: Int = 10
   override var hp: Int = 1
   width = 2000
   height = 2000

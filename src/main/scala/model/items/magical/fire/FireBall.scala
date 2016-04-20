@@ -12,7 +12,7 @@ import main.scala.util.sound.SoundDistributor
  * Created by julian on 22.02.16.
  */
 case class FireBall(caster:GameObject) extends Item with Speed{
-  override var strength: Int = 10
+  override var full_strength: Int = 10
   override var speed: Int = 15
   override var mass: Int = 1
   override var hp: Int = 1
