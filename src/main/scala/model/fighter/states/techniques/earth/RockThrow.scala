@@ -26,7 +26,7 @@ class RockThrow(c:Fighter) extends StoneThrow(c){
     new Thread(new Runnable {
       override def run(): Unit = {
         var stones = Seq[Rock]()
-        for(o <- 0 until 2) {
+        for(o <- 0 until 7) {
           val stone = new Rock(caster.x + {if(caster.looksLeft)-caster.width else caster.width}, caster.y, caster.z+caster.height/2) {
             looksLeft = caster.looksLeft
             x_velocity = 13*caster.directionValue
@@ -42,7 +42,7 @@ class RockThrow(c:Fighter) extends StoneThrow(c){
           }
           caster.notifyObservers(stone)
           stones = stone +: stones
-          Thread.sleep(1000)
+          Thread.sleep(300)
         }
         Thread.sleep(5000)
         while(stones nonEmpty){

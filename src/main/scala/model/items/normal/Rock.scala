@@ -5,7 +5,7 @@ import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.intention.{Harmful, Harmless}
 import main.scala.model.items.normal.{Stone, StoneNormal}
 import main.scala.model.items.state.{Break, ItemState}
-import main.scala.model.states.AnimateMe
+import main.scala.model.states.{AnimateMe, MidAir}
 import main.scala.util.sound.SoundDistributor
 
 /**
@@ -18,8 +18,8 @@ class Rock(x:Int, y:Int, z:Int ) extends Stone(x, y, z) with Speed{
   width = Rock.rock_width
   height = Rock.rock_height
   length = Rock.rock_length
-  mass = width * height
-  hp = mass
+  mass = 15
+  hp = 200
   override def strength = velocity_factor+10
   full_strength = strength
 }
@@ -29,15 +29,14 @@ class RockNormal(val rock:Rock) extends ItemState(rock){
   override def hurtBy(go:GameObject) = {
     if(rock.vulnerable) rock.state = new RockHurt(rock, go)()
   }
-}
+  override def levitate = {
+    rock.state = new RockNormal(rock) with MidAir{ rock.intention = Harmful }
+  }
 
-case class RockMoving(r:Rock) extends RockNormal(r) with AnimateMe{
-  rock.images.set(ImageMatrix.ITEM_MOVE)
-  rock.intention = Harmful
   override def actOnCollision(go:GameObject) = {
     if(rock.moving && rock.velocity_factor > rock.speed )
       SoundDistributor.play("deep_smash")
-      super.actOnCollision(go)
+    super.actOnCollision(go)
   }
   override def landing(go:GameObject) = {
     //TODO create shards on Ground
@@ -53,6 +52,11 @@ case class RockMoving(r:Rock) extends RockNormal(r) with AnimateMe{
       rock.state = new RockNormal(rock)
     }
   }
+}
+
+case class RockMoving(r:Rock) extends RockNormal(r) with AnimateMe{
+  rock.images.set(ImageMatrix.ITEM_MOVE)
+  rock.intention = Harmful
 }
 
 case class RockHurt(rock:Rock, opponent:GameObject)(amount:Int = opponent.strength) extends ItemState(rock){

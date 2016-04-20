@@ -24,9 +24,8 @@ abstract class ItemState(item:Item) extends State(item) {
 
   override def landing(go:GameObject) = {
     SoundDistributor.play("deep_smash")
-    val velocity = item.z_velocity * {if(item.z_velocity < 0 ) -1 else 1}
-    if(velocity > item.mass){
-      item.z_velocity = velocity/2
+    if(item.velocity_factor > item.mass){
+      item.z_velocity = -1*item.z_velocity/2
     }else{
       item.x_velocity = 0
       item.y_velocity = 0
