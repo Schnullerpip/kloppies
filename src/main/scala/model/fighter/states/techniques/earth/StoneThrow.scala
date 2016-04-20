@@ -47,7 +47,7 @@ class StoneThrow(c:Fighter) extends  Technique(c) with Summoning with EarthTechn
         if(go != caster)
           super.actOnCollision(go)
       }
-      override def landing = {
+      override def landing(go:GameObject) = {
         val velocity = stone.z_velocity * {if(stone.z_velocity < 0 ) -1 else 1}
         if(velocity > stone.mass){
           stone.z_velocity = velocity/2

@@ -59,5 +59,5 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
 
   private def ifNotInterrupted(f: => Unit) = if(fighter.state.isInstanceOf[UsingTechnique]){Thread.sleep(1000/fighter.speed);f}
 
-  override def landing = {fighter.state = Landing(fighter)}
+  override def landing(go:GameObject) = {fighter.state = Landing(fighter)}
 }

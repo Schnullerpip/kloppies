@@ -22,7 +22,7 @@ abstract class ItemState(item:Item) extends State(item) {
 
   override def levitate = item.state = new Normal(item) with MidAir
 
-  override def landing = {
+  override def landing(go:GameObject) = {
     SoundDistributor.play("deep_smash")
     val velocity = item.z_velocity * {if(item.z_velocity < 0 ) -1 else 1}
     if(velocity > item.mass){

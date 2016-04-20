@@ -1,5 +1,6 @@
 package main.scala.model.fighter.states
 
+import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.ImageMatrix._
 import main.scala.model.fighter.states.aggressive.RunningAttack
@@ -25,7 +26,7 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
     }
   }).start()
 
-  override def landing = {}
+  override def landing(go:GameObject) = {}
   override def hit = if(f.moveable){ f.collidable = true; f.state = RunningAttack(f)}
 
   override def moveUp = if(f.moveable) f.state = Landing(f)

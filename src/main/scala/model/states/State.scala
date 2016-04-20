@@ -10,11 +10,11 @@ abstract class State(val go:GameObject) {
   def actOnCollision(g:GameObject) = if(go.steppable && go.collidable){
     g.groundContact = true
     if(g.state.isInstanceOf[MidAir] && g.z_velocity < 0)
-      g.state.landing
+      g.state.landing(go)
   }
   def inflictDamageTo(go:GameObject, amount:Int)
   def hurtBy(go:GameObject)
   def stop
-  def landing
+  def landing(go:GameObject)
   def levitate
 }

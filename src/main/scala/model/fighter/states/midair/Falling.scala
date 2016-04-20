@@ -29,7 +29,7 @@ case class Falling(f:Fighter, opponent:Option[GameObject] = None) extends Fighte
   recover_thread.start()
 
   override def actOnCollision(go:GameObject) = {}
-  override def landing = {f.state = HitTheGround(f, height)}
+  override def landing(go:GameObject) = {f.state = HitTheGround(f, height)}
 
   override def moveUp     = if(f.moveable)f.state = Levitate(f)
   override def moveDown   = moveUp

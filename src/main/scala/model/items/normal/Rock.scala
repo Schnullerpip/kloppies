@@ -35,8 +35,9 @@ case class RockMoving(rock:Rock) extends ItemState(rock) with AnimateMe{
       SoundDistributor.play("deep_smash")
       super.actOnCollision(go)
   }
-  override def landing = {
+  override def landing(go:GameObject) = {
     //TODO create shards on Ground
+    go.state.hurtBy(rock)
     SoundDistributor.play("deep_smash")
     val velocity = rock.z_velocity * {if(rock.z_velocity < 0 ) -1 else 1}
     if(velocity > rock.mass){
