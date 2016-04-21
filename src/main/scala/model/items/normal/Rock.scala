@@ -1,9 +1,8 @@
-package main.scala.model.rocks.normal
+package main.scala.model.items.normal
 
-import main.scala.model.attributes.{LivePoints, Speed}
+import main.scala.model.attributes.Speed
 import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.intention.{Harmful, Harmless}
-import main.scala.model.items.normal.{Stone, StoneNormal}
 import main.scala.model.items.state.{Break, ItemState}
 import main.scala.model.states.{AnimateMe, MidAir}
 import main.scala.util.sound.SoundDistributor
@@ -95,6 +94,7 @@ case class RockBreak(rock:Rock) extends Break(rock){
   SoundDistributor.play("crumble")
 }
 
+
 object Rock{
   //ImageMatrix("images/items/rock.png", 8, 6, 50, 50)
   private val rock_width = 50
@@ -103,6 +103,4 @@ object Rock{
   private val rock_length = 10
   def apply(x:Int, y:Int, z:Int) = new Rock(x, y, z)
 }
-
-
 

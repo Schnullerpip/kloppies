@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage
 
 import main.scala.model.{GameObject, Mass, Moveable}
 import main.scala.model.fighter.Fighter
-import main.scala.model.rocks.normal.Rock
+import main.scala.model.items.normal.Rock
 import main.scala.util.Observer
 
 /**

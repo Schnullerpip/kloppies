@@ -7,8 +7,7 @@ import javax.imageio.ImageIO
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.Techniques
-import main.scala.model.items.state.Hurt
-import main.scala.model.rocks.normal.{Rock, RockHurt, RockMoving}
+import main.scala.model.items.normal.{Rock, RockHurt, RockMoving}
 import main.scala.model.states.MidAir
 
 import scala.util.Random
