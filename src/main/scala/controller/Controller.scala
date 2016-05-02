@@ -87,7 +87,8 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     collision_matrix foreach { gocol =>
       if (gocol._1.gravity_affected) {
         val go = gocol._1
-        if (!go.groundContact && !go.state.isInstanceOf[MidAir]) go.state.levitate
+        if (!go.groundContact && !go.state.isInstanceOf[MidAir])
+          go.state.levitate
         go.gravity_affect(GRAVITY_CONSTANT)
         if(!go.isInstanceOf[Stage])go.groundContact = false
       }

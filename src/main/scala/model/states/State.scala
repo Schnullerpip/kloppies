@@ -19,4 +19,6 @@ abstract class State(val go:GameObject) {
   def stop
   def landing(go:GameObject)
   def levitate
+
+  override def toString = this.getClass.getSimpleName
 }

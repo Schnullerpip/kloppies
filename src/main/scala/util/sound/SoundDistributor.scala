@@ -30,6 +30,7 @@ object SoundDistributor {
   )
 
   def play(clip:String){
+    //println("[SoundDistributor] - playing " + clip)
     val c = sounds(clip)
     c.setFramePosition(0)
     c.start()

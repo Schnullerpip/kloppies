@@ -12,13 +12,6 @@ import main.scala.model.states.{MidAir, AnimateMe}
  * Created by julian on 22.02.16.
  */
 case class UsingTechnique(fighter:Fighter, technique: Technique) extends FighterState(fighter){
-  technique match{
-    case s:Summoning if this.isInstanceOf[MidAir] => fighter.images.set(RUNNING_HIT)
-    case s:Summoning => fighter.images.set(THROW_TECHNIQUE)
-    case e:Effect if this.isInstanceOf[MidAir] => fighter.images.set(USE_TECHNIQUE)
-    case e:Effect => fighter.images.set(USE_TECHNIQUE)
-    case _ =>
-  }
 
   fighter.mana -= technique.manaUse
   fighter.intention = Harmless
@@ -27,7 +20,7 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
   fighter.vulnerable = true
 
   val toRemove = this
-  new Thread(new Runnable {
+  val moveThread = new Thread(new Runnable {
     override def run(): Unit = {
       ifNotInterrupted{
         fighter.images.next
@@ -56,7 +49,15 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
         }
       }
     }
-  }).start()
+  })
+
+  technique match{
+    case s:Summoning if this.isInstanceOf[MidAir] => fighter.images.set(RUNNING_HIT); moveThread.start()
+    case s:Summoning => fighter.images.set(THROW_TECHNIQUE); moveThread.start()
+    case e:Effect if this.isInstanceOf[MidAir] => fighter.images.set(USE_TECHNIQUE); moveThread.start()
+    case e:Effect => fighter.images.set(USE_TECHNIQUE); moveThread.start()
+    case _ => technique act
+  }
 
   private def ifNotInterrupted(f: => Unit) = if(fighter.state.isInstanceOf[UsingTechnique]){Thread.sleep(1000/fighter.speed);f}
 

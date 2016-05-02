@@ -66,6 +66,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
 
               /*----draw Image-----------*/
               g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
+              g.drawString(go.state.toString, go.x, go.y-go.height-go.z)
               /*-------------------------*/
             case _ => }
           }

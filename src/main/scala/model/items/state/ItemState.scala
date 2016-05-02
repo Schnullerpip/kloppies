@@ -29,7 +29,7 @@ abstract class ItemState(item:Item) extends State(item) {
       item.x_velocity = 0
       item.y_velocity = 0
       item.z_velocity = 0
-      item.state = new Normal(item)
+      item.state.stop
     }
   }
 
@@ -41,6 +41,6 @@ abstract class ItemState(item:Item) extends State(item) {
     case l:LivePoints if item.vulnerable => item.state = new Hurt(item, go)()
     case _ => //Break(item)
   }
-  override def stop: Unit = {}
+  override def stop: Unit = item.state = new Normal(item)
 
 }

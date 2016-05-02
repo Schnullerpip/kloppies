@@ -21,20 +21,23 @@ class Explosion(val cause:GameObject ) extends Item with Speed{
   override var x: Int = cause.x
   override var y: Int = cause.y
   override var z: Int = cause.z
-  override var full_strength:Int = cause.strength
+  override var full_strength:Int = 5 + cause.strength
   override var speed = 18
 
   intention = Harmful
   tangible = false
   steppable = false
+  moveable = false
+  gravity_affected = false
 
-  override def image = ScaleImage(images.currentImage, strength, strength)
+  override def image = ScaleImage(images.currentImage, 25+strength, 25+strength)
+  var noisy = false
 }
 
 case class Exploding(explosion: Explosion) extends ItemState(explosion) with OneHitWonder{
   override def actOnCollision(go:GameObject): Unit ={
-    if(go != explosion.cause){
-      SoundDistributor.play("small_explosion")
+    if(go != explosion.cause && go.tangible){
+      if(!explosion.noisy){SoundDistributor.play("small_explosion"); explosion.noisy = true}
       super.actOnCollision(go)
     }
   }

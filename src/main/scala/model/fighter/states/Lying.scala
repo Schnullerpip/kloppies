@@ -34,5 +34,5 @@ case class Lying(f:Fighter) extends FighterState(f) with AnimateMe{
   override def moveLeft = moveUp
   override def moveRight = moveUp
   override def defend = moveUp
-  override def levitate = Falling(f)
+  override def levitate = f.state = Falling(f)
 }

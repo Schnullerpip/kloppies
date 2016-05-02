@@ -28,6 +28,7 @@ case class Stage (override var x:Int = -2000,
   override var hp: Int = mass
   steppable = true
   groundContact = true
+  tangible = false
 }
 
 sealed trait StageStyle{
