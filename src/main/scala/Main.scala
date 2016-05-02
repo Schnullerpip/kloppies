@@ -31,6 +31,8 @@ object Main {
     /*Load all the Images*/
     ImageMatrix("images/fighters/fighter_stickfigure.png")
     ImageMatrix("images/items/stone.png", 8, 6, 10, 10)
+    ImageMatrix("images/items/magical/fireMine.png", 8, 6, 20, 10)
+    ImageMatrix("images/items/magical/explosion.png", 1, 15, 100, 100)
     //ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
 
     /*Get the Fighters*/
@@ -42,7 +44,7 @@ object Main {
       centerOnScreen()
       maximize()
     }
-    SoundDistributor.loop("menu_music")
+    SoundDistributor.loop("cool_music")
     frame.contents = new ModeMenu(fighters, frame)
     frame.visible = true
 

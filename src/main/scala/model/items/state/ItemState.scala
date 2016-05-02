@@ -14,8 +14,7 @@ abstract class ItemState(item:Item) extends State(item) {
 
   override def actOnCollision(go: GameObject): Unit = {
     if(item.intention == Harmful && go.tangible){
-      item.state.inflictDamageTo(go, item.full_strength)
-      //item.state = Break(item)
+      item.state.inflictDamageTo(go, item.strength)
     }
     super.actOnCollision(go)
   }

@@ -16,6 +16,7 @@ object SoundDistributor {
   private val sounds = Map(
     "fight_music" -> createClip("fight_music"),
     "menu_music" -> createClip("menu_music"),
+    "cool_music" -> createClip("cool_music"),
 
 
     "small_punch" -> createClip("small_punch"),

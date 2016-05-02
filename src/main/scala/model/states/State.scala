@@ -8,8 +8,6 @@ import main.scala.model.GameObject
  */
 abstract class State(val go:GameObject) {
   def actOnCollision(g:GameObject) = {
-    //if(g.groundContact && go.state.isInstanceOf[MidAir] && go.z_velocity < 0)
-    //  go.state.landing(g)
     if (go.steppable && go.collidable && go.groundContact) {
       g.groundContact = true
       if (g.state.isInstanceOf[MidAir] && g.z_velocity < 0 && go.groundContact)

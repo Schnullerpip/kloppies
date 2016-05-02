@@ -36,7 +36,7 @@ case class Fighter (var name:String,
                     override var y:Int = 1,
                     override var z:Int = 0
                ) extends GameObject with LivePoints with Speed with Mana{
-  override var hp:Int = fighter_hp*10
+  override var hp:Int = fighter_hp*100
   override var mana:Int = fighter_mana *10
   override var full_strength:Int = fighter_strength
   override var speed:Int = fighter_speed

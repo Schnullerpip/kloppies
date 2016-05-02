@@ -5,7 +5,7 @@ import java.io.File
 import main.scala.dao.db4o.DB4O
 import main.scala.model.ImageMatrix
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.techniques.fire.ThrowFireball
+import main.scala.model.fighter.states.techniques.fire.{DropFireMine, ThrowFireball}
 import main.scala.model.fighter.states.techniques.shock.SpeedPlus
 import main.scala.model.fighter.states.techniques.wind.SummonWind
 import main.scala.dao.DEFAULT_DATABASE_NAME
@@ -36,6 +36,7 @@ object db4oInsertTestFighters extends App {
   fighters(1).newTechnique(SpeedPlus(fighters(1)), "defenddownjump")
   fighters(1).newTechnique(StoneThrow(fighters(1)), "defenddefenddefend")
   fighters(1).newTechnique(RockThrow(fighters(1)), "defenddefenddown")
+  fighters(1).newTechnique(DropFireMine(fighters(1)), "defenddefendjump")
 
   fighters foreach{dao store}
   dao close

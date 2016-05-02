@@ -9,6 +9,7 @@ import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.Techniques
 import main.scala.model.items.normal.{Rock, RockHurt, RockMoving}
 import main.scala.model.states.MidAir
+import main.scala.util.sound.SoundDistributor
 
 import scala.util.Random
 
@@ -26,7 +27,7 @@ class RockThrow(c:Fighter) extends StoneThrow(c){
       override def run(): Unit = {
         var stones = Seq[Rock]()
         for(o <- 0 until 7) {
-          val stone = new Rock(caster.x + {if(caster.looksLeft)-caster.width else caster.width}, caster.y, caster.z+caster.height/2) {
+          val stone = new Rock(caster.x + {if(caster.looksLeft)-caster.width else caster.width}, caster.y, 0/*caster.z+caster.height/2*/) {
             looksLeft = caster.looksLeft
             x_velocity = 13*caster.directionValue
             y_velocity = 3*randomBlur(1)
@@ -40,10 +41,12 @@ class RockThrow(c:Fighter) extends StoneThrow(c){
             }
           }
           caster.notifyObservers(stone)
+          SoundDistributor.play("crumble")
           stones = stone +: stones
           Thread.sleep(300)
         }
         Thread.sleep(5000)
+        stones = stones.reverse
         while(stones nonEmpty){
           Thread.sleep(1000)
           stones.head.state = new RockHurt(stones.head, null)(stones.head.hp)

@@ -47,11 +47,11 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
 
   private def checkKeyBuffer(key:Char, f:Fighter, Else: => Unit) = {
     val fighter_state = f.state.asInstanceOf[FighterState]
-    val combination = kBuffer(key)
+    val combination = kBuffer(key).replaceAll("right", "direction").replaceAll("left", "direction")
     var found = false
     var combi = ""
     f.techniques.keySet.foreach{
-      case k if combination.contains(k) =>
+      case k if combination.contains(k.replaceAll("right", "direction").replaceAll("left", "direction")) =>
         found = true
         combi = k
       case _ =>

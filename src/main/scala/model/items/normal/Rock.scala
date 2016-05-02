@@ -17,7 +17,7 @@ class Rock(x:Int, y:Int, z:Int ) extends Stone(x, y, z) with Speed{
   width = Rock.rock_width
   height = Rock.rock_height
   length = Rock.rock_length
-  mass = 15
+  mass = 10
   hp = 200
   override def strength = velocity_factor+10
   full_strength = strength
@@ -96,7 +96,6 @@ case class RockBreak(rock:Rock) extends Break(rock){
 
 
 object Rock{
-  //ImageMatrix("images/items/rock.png", 8, 6, 50, 50)
   private val rock_width = 50
   private val rock_height = 50
   ImageMatrix("images/items/rock.png", 8, 6, rock_width, rock_height)
