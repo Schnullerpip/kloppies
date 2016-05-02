@@ -23,6 +23,11 @@ class Explosion(val cause:GameObject ) extends Item with Speed{
   override var z: Int = cause.z
   override var full_strength:Int = 5 + cause.strength
   override var speed = 18
+  looksLeft = cause.looksLeft
+
+  width = 25+strength
+  height = 25+strength
+  length = 10+strength
 
   intention = Harmful
   tangible = false
@@ -30,7 +35,7 @@ class Explosion(val cause:GameObject ) extends Item with Speed{
   moveable = false
   gravity_affected = false
 
-  override def image = ScaleImage(images.currentImage, 25+strength, 25+strength)
+  override def image = ScaleImage(images.currentImage, width, height)
   var noisy = false
 }
 

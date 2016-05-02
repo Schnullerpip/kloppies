@@ -26,7 +26,8 @@ object SoundDistributor {
     "wind" -> createClip("wind"),
     "wind_loop" -> createClip("wind_loop"),
     "zap" -> createClip("zap"),
-    "crumble" -> createClip("crumble")
+    "crumble" -> createClip("crumble"),
+    "beep" -> createClip("beep")
   )
 
   def play(clip:String){

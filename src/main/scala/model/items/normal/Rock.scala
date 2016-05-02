@@ -17,9 +17,9 @@ class Rock(x:Int, y:Int, z:Int ) extends Stone(x, y, z) with Speed{
   width = Rock.rock_width
   height = Rock.rock_height
   length = Rock.rock_length
-  mass = 10
+  mass = width*height
   hp = 200
-  override def strength = velocity_factor+10
+  override def strength = velocity_factor
   full_strength = strength
 }
 
@@ -33,7 +33,7 @@ class RockNormal(val rock:Rock) extends ItemState(rock){
   }
 
   override def actOnCollision(go:GameObject) = {
-    if(rock.moving && rock.velocity_factor > rock.speed )
+    if(rock.moving && rock.velocity_factor > rock.speed && go.tangible)
       SoundDistributor.play("deep_smash")
     super.actOnCollision(go)
   }

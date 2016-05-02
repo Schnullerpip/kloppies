@@ -18,9 +18,10 @@ case class FighterStatusBar(f:Fighter, getter:() => Int, color:Color) extends Co
     g.setColor(Color.GRAY)
     g.fillRect(0, 0, width, 20)
     g.setColor(color)
-    val hp = (width*(getter()/full.toDouble)).toInt
-    g.fillRect(0, 0, hp, 20)
+    val value = (width*(getter()/full.toDouble)).toInt
+    g.fillRect(0, 0, value, 20)
     g.setColor(Color.BLACK)
+    g.drawString(s"${getter()}", width/2-5, 10)
     //println(s"${f.name}\t${getter()}\t$hp")
   }
 }

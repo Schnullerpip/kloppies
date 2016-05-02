@@ -39,15 +39,15 @@ case class FireBall(caster:GameObject) extends Item with Speed{
 
 
 case class FireBallStateBreak(i:FireBall) extends Break(i){
-  SoundDistributor.play("small_explosion")
+  i.caster.notifyObservers(new Explosion(item))
 }
 
-case class FireBallStateNormal(item:FireBall) extends Normal(item) with AnimateMe{
-  item.intention = Harmful
+case class FireBallStateNormal(fireball:FireBall) extends Normal(fireball) with AnimateMe{
+  fireball.intention = Harmful
   override def actOnCollision(go:GameObject) = {
-    if (go != item.caster && go.tangible){
-      super.actOnCollision(go)
-      item.state = FireBallStateBreak(item)
+    if (go != fireball.caster && go.tangible){
+      //super.actOnCollision(go)
+      fireball.state = FireBallStateBreak(fireball)
     }
   }
 }
@@ -58,7 +58,7 @@ case class FireBallStateMove(item:FireBall) extends Move(item) with AnimateMe{
   SoundDistributor.play("throw_fireball")
   override def actOnCollision(go:GameObject) = {
     if (go != item.caster && go.tangible){
-      super.actOnCollision(go)
+      //super.actOnCollision(go)
       item.state = FireBallStateBreak(item)
     }
   }

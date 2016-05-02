@@ -4,8 +4,9 @@ import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.fighter.Fighter
 import main.scala.model.intention.Harmful
 import main.scala.model.items.Item
-import main.scala.model.items.state.Normal
+import main.scala.model.items.state.{Break, Normal}
 import main.scala.model.states.{AnimateMe, MidAir, State}
+import main.scala.util.sound.SoundDistributor
 
 /**
   * Created by julian on 02.05.16.
@@ -24,13 +25,15 @@ class FireMine(val caster:Fighter) extends Item{
   height = FireMine.mine_height
   length = FireMine.mine_length
   intention = Harmful
+  looksLeft = caster.looksLeft
+  SoundDistributor.play("beep")
 }
 
-class FireMineNormal(fireMine:FireMine) extends Normal(fireMine){
+class FireMineNormal(fireMine:FireMine) extends Normal(fireMine) with AnimateMe{
   fireMine.intention = Harmful
   override def inflictDamageTo(gameObject: GameObject, amount:Int): Unit ={
-    fireMine.goKillYourself
     fireMine.caster.notifyObservers(new Explosion(fireMine))
+    fireMine.state = new Break(fireMine)
   }
 
   override def actOnCollision(go:GameObject): Unit ={

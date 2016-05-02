@@ -60,14 +60,18 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
               g.fillOval(go.x, go.y-(go.height*0.1).toInt, go.width, 10)
               /*-------------------*/
 
+              /*----draw Image-----------*/
+              g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
+              /*-------------------------*/
+
               /*---for collision debugging---*/
               //drawCube(g, go, 0.3f)
               /*-----------------------------*/
 
-              /*----draw Image-----------*/
-              g.drawImage(go.image, go.x, go.y-go.height-go.z, null)
-              g.drawString(go.state.toString, go.x, go.y-go.height-go.z)
-              /*-------------------------*/
+              /*--for state debugging*/
+              //g.drawString(go.state.toString, go.x, go.y-go.height-go.z)
+              /*---------------------*/
+
             case _ => }
           }
       } -> BorderPanel.Position.Center
