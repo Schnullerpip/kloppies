@@ -90,6 +90,11 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
   /*---------------------------------------------------------------------*/
 
 
+  val mainPanel = new BorderPanel {
+    layout += gamePanel -> BorderPanel.Position.Center
+  }
+
+
 
   new Frame {
     title = "Fight Kloppies!"
