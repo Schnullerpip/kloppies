@@ -54,7 +54,12 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
   technique match{
     case s:Summoning if this.isInstanceOf[MidAir] => fighter.images.set(RUNNING_HIT); moveThread.start()
     case s:Summoning => fighter.images.set(THROW_TECHNIQUE); moveThread.start()
-    case e:Effect if this.isInstanceOf[MidAir] => fighter.images.set(USE_TECHNIQUE); moveThread.start()
+    case e:Effect if this.isInstanceOf[MidAir] => fighter.images.set(USE_TECHNIQUE)
+      moveThread.start()
+      fighter.z_velocity = fighter.z_velocity match {
+        case ltz if ltz <= 0 => 0
+        case gtz => gtz
+      }
     case e:Effect => fighter.images.set(USE_TECHNIQUE); moveThread.start()
     case _ => technique act
   }
