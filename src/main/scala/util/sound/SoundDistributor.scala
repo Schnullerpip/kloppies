@@ -32,11 +32,12 @@ object SoundDistributor {
 
   def play(clip:String){
     //println("[SoundDistributor] - playing " + clip)
-    val c = sounds(clip)
-    if(!c.isRunning) {
+    /*val c = sounds(clip)
+    if(!c.isActive) {
       c.setFramePosition(0)
       c.start()
-    }
+    }*/
+    createClip(clip).start()
   }
   def loop(clip:String){sounds(clip).loop(Clip.LOOP_CONTINUOUSLY)}
   def stop(clip:String){sounds(clip).stop()}
