@@ -25,6 +25,7 @@ class Rock(x:Int, y:Int, z:Int ) extends Stone(x, y, z) with Speed{
 
 class RockNormal(val rock:Rock) extends ItemState(rock){
   rock.intention = Harmless
+  rock.vulnerable = true
   override def hurtBy(go:GameObject) = {
     if(rock.vulnerable) rock.state = new RockHurt(rock, go)()
   }
@@ -58,7 +59,7 @@ case class RockMoving(r:Rock) extends RockNormal(r) with AnimateMe{
   rock.intention = Harmful
 }
 
-case class RockHurt(rock:Rock, opponent:GameObject)(amount:Int = opponent.strength) extends ItemState(rock){
+case class RockHurt(r:Rock, opponent:GameObject)(amount:Int = opponent.strength) extends RockNormal(r){
   private var contin = true
 
   if(rock.hp - amount <= 0){
@@ -76,11 +77,14 @@ case class RockHurt(rock:Rock, opponent:GameObject)(amount:Int = opponent.streng
         var i = 0
         rock.images.next
         Thread.sleep(sleepTime)
+        rock.vulnerable = false
         while(i < rock.images.cols-2 && contin){
           rock.images.next
           Thread.sleep(sleepTime)
           i += 1
         }
+        rock.vulnerable = true
+        if(contin)rock.state = new RockNormal(rock)
       }
     }).start()
   }
