@@ -4,7 +4,7 @@ import main.scala.model.GameObject
 import main.scala.model.ImageMatrix.LEVITATING
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.{UsingTechnique, Technique}
-import main.scala.model.fighter.states.{Defending, Hurt, FighterState}
+import main.scala.model.fighter.states.FighterState
 import main.scala.model.fighter.states.aggressive.LevitatingAttack
 import main.scala.model.states.{AnimateMe, MidAir}
 
@@ -23,7 +23,6 @@ case class Levitate(f:Fighter) extends FighterState(f) with MidAir with AnimateM
     }
   }
 
-  override def landing(go:GameObject) = {f.state = Landing(f)}
   override def technique(t:Technique) = f.state = new UsingTechnique(f, t) with MidAir
   override def moveUp = {}
   override def moveDown = {}

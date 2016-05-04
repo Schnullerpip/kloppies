@@ -15,7 +15,7 @@ case class Loading(f:Fighter) extends FighterState(f){
   val moveTrhead = new Thread(new Runnable {
     override def run(): Unit = {
       f.images.set(ImageMatrix.LOADING)
-      ifStillLoading{
+      ifStillLoading {
         f.images.next
         ifStillLoading {
           f.images.next
@@ -23,9 +23,9 @@ case class Loading(f:Fighter) extends FighterState(f){
             f.images.next
             //loop the last three images
             var index = 4
-            while(f.state.isInstanceOf[Loading]){
-              for(i <- 4 until 6){
-                ifStillLoading{
+            while (contin) {
+              for (i <- 4 until 6) {
+                ifStillLoading {
                   f.images.set(ImageMatrix.LOADING, i)
                 }
               }
@@ -34,7 +34,8 @@ case class Loading(f:Fighter) extends FighterState(f){
         }
       }
     }
-  }).start()
+  })
+  moveTrhead.start()
 
   override def hit = {}
   override def moveUp = {}
@@ -43,10 +44,11 @@ case class Loading(f:Fighter) extends FighterState(f){
   override def moveRight = {}
   override def jump = {}
   override def stop = {
+    contin = false
+    moveTrhead.stop()
     val max = 1000.0
     val diff = (System.currentTimeMillis - jump_last).toDouble
     val factor = { if(diff > max) max else diff }/max
-    contin = false
     f.state = new Jumping(f, factor)
   }
   override def hurtBy(go:GameObject): Unit ={

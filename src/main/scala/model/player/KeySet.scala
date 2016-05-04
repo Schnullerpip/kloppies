@@ -1,7 +1,7 @@
 package main.scala.model.player
 
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.{FighterState, Running}
+import main.scala.model.fighter.states.{FighterState, Loading, Running}
 
 /**
  * Created by julian on 14.02.16.
@@ -23,7 +23,7 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
       case `right` => right_set = false;  if(left_set)fighter_state.moveLeft    else fighter_state.stopRight
       case `attack` => attack_set = false
       case `defense` => defense_set = false; fighter_state.stop
-      case `jump` => jump_set = false; fighter_state.stop
+      case `jump` => jump_set = false; if(fighter_state.isInstanceOf[Loading]) fighter_state.stop
       case _ =>
     }
   }
