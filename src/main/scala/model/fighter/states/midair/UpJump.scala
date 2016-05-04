@@ -2,6 +2,7 @@ package main.scala.model.fighter.states.midair
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
+import main.scala.model.fighter.states.aggressive.LevitatingAttack
 import main.scala.model.fighter.states.{FighterState, Loading}
 import main.scala.model.fighter.states.techniques.{Technique, UsingTechnique}
 import main.scala.model.states.MidAir
@@ -42,7 +43,11 @@ case class UpJump(f:Fighter) extends FighterState(f) with MidAir{
     }
   }
 
-  override def hit = {}
+  override def hit = {
+    contin = false
+    moveThread.stop()
+    f.state = LevitatingAttack(f)
+  }
   override def hurtBy(go:GameObject) = {
     contin = false
     moveThread.stop()

@@ -17,8 +17,8 @@ class DropFireMine(caster:Fighter) extends Technique(caster) with FireTechnique{
 
   override def act: Unit = {
     caster.notifyObservers(new FireMine(caster))
-    caster.z_velocity += caster.strength
-    caster.x_velocity += caster.strength*{if(caster.looksLeft) 1 else -1}
+    caster.z_velocity += 10
+    caster.x_velocity += 10*{if(caster.looksLeft) 1 else -1}
     caster.state.levitate
   }
 

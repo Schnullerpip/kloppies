@@ -13,6 +13,7 @@ case class Jumping(f:Fighter, fact:Double = 1.0) extends FighterState(f){
   val moveThread = new Thread(new Runnable {
     override def run(): Unit = {
       f.moveable = false
+      /*the jumping strength will be at least half the fighters strength so a noticable jump will be performed even when 'jump' key was pressed almost unnoticeable*/
       val factor = {
         if (fact < 0.5)
           0.5
