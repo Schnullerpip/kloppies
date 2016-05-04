@@ -57,13 +57,11 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
       m.moveY
       /*------------------------*/
 
-
       /*---------preelimination for x and y axis---------*/
       var preelimination: Seq[GameObject] =
         moveables.filter { e => e != m && e.collidingX(m) { e.collidingY(m)(true) } }
       val collision_sequence = for(e <- preelimination) yield e // just copy the preelimination
       /*-------------------------------------------------*/
-
 
       /*--------z movement step by step-------*/
       m.moveZ {
@@ -92,46 +90,6 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
         go.gravity_affect(GRAVITY_CONSTANT)
         if(!go.isInstanceOf[Stage])go.groundContact = false
       }
-    }
-  }
-
-  /**
-    * @param elems a sequence of GameObjects that will be checked for collisions
-    * @return a sequence of tuples, containing ._1 = a gameobject and ._2 = all the colliding gameobjects, where there are no doubles!
-    *         if you want to make sure each gameObject acts its dedicated behaviour when iterating over the returned matrix, then you should
-    *         call both actOnCollision Methods for each found pair
-    * */
-  private def collisionMatrix(elems:Seq[GameObject] = gameMap.elements):Seq[(GameObject, Seq[GameObject])] =
-    collisionMatrixR(Seq(), elems)
-
-  @tailrec
-  private def collisionMatrixR(matrix:Seq[(GameObject, Seq[GameObject])], elems:Seq[GameObject]):Seq[(GameObject, Seq[GameObject])] =
-    if (elems.size > 1) {
-      var collisions = Seq[GameObject]()
-      elems.tail.foreach { e =>
-        if (e.colliding(elems.head)) {
-          collisions = collisions :+ e
-        }
-      }
-      collisionMatrixR(matrix :+ (elems.head, collisions), elems.tail)
-    } else Seq()
-
-
-  private def collisionSequence(gameObject: GameObject, others:Seq[GameObject]):(GameObject, Seq[GameObject]) =
-    (gameObject, others.filter(e => e != gameObject && e.colliding(gameObject)))
-
-  private def hitDetection():Unit = hitDetection(gameMap.elements.filter(_.collidable))
-
-  @tailrec
-  private final def hitDetection(elements:Seq[GameObject]): Unit ={
-    if(elements.size > 1) {
-      elements.tail.foreach { e =>
-        if (e.colliding(elements.head)) {
-          e.state.actOnCollision(elements.head)
-          elements.head.state.actOnCollision(e)
-        }
-      }
-      hitDetection(elements.tail)
     }
   }
 

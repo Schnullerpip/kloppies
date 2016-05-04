@@ -9,6 +9,9 @@ import main.scala.model.states.{AnimateMe, MidAir}
 
 /**
  * Created by julian on 21.02.16.
+  * The status for falling Fighters
+  * If given an opponent it indicates, that the player is falling because he was hit.
+  * In this case the fighter will fly away from his opponent according to its strength
  */
 case class Falling(f:Fighter, opponent:Option[GameObject] = None) extends FighterState(f) with MidAir with AnimateMe {
   f.moveable = false
