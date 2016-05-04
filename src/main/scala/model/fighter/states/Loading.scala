@@ -53,7 +53,6 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
   override def hit = {
     contin = false
     moveTrhead.stop()
-    f.state
     f.state = f.state match {
       case ma:MidAir => LevitatingAttack(f, (factor*f.full_strength).toInt)
       case _ => StandardAttack(f, (factor*f.full_strength).toInt)
