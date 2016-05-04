@@ -9,7 +9,7 @@ import main.scala.model.ImageMatrix.LEVITATING_HIT
 /**
  * Created by julian on 19.02.16.
  */
-case class LevitatingAttack(f:Fighter) extends FighterState(f) with MidAir {
+case class LevitatingAttack(f:Fighter, strength_bonus:Int = 0) extends FighterState(f) with MidAir {
   f.images.set(LEVITATING_HIT)
   new Thread(new Runnable {
     override def run(): Unit = {
@@ -25,10 +25,15 @@ case class LevitatingAttack(f:Fighter) extends FighterState(f) with MidAir {
               ifAggressive {
                 f.images.next
                 ifAggressive {
+                  val str = f.full_strength
+                  f.full_strength += strength_bonus
                   f.intention = main.scala.model.intention.Harmful
+                  println(f.full_strength)
+                  println(strength_bonus)
                   f.images.next
                   Thread.sleep(1000 / f.speed)
                   f.intention = main.scala.model.intention.Harmless
+                  f.full_strength = str
                 }
               }
             }

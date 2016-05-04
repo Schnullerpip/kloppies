@@ -2,7 +2,7 @@ package main.scala.model.fighter.states.midair
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.FighterState
+import main.scala.model.fighter.states.{FighterState, Loading}
 import main.scala.model.fighter.states.techniques.{Technique, UsingTechnique}
 import main.scala.model.states.MidAir
 
@@ -48,6 +48,11 @@ case class UpJump(f:Fighter) extends FighterState(f) with MidAir{
     moveThread.stop()
     super.hurtBy(go)
   }
+  override def jump = {if(f.moveable){
+    contin = false
+    moveThread.stop()
+    f.state = new Loading(f) with MidAir
+  }}
   override def technique(t:Technique) = f.state = new UsingTechnique(f, t) with MidAir
   override def moveUp = {}
   override def moveDown = {}
