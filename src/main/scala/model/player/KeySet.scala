@@ -10,7 +10,8 @@ import main.scala.model.fighter.states.{FighterState, Running}
 case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
                   right:Char = 'd', attack:Char = 'f', defense:Char = 'q',
                   jump:Char = 'e'){
-  var up_set, down_set, left_set, right_set, attack_set, defense_set, jump_set = false
+  var (up_set, up_last), (down_set, down_last), (left_set, left_last), (right_set, right_last),
+      (attack_set, attack_last), (defense_set, defense_last), (jump_set, jump_last) = (false, 0l)
   private val kBuffer = new KeyCombination()
 
   def released(key: Char, f: Fighter) = {
@@ -21,12 +22,8 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
       case `left` => left_set = false;    if(right_set)fighter_state.moveRight  else fighter_state.stopLeft
       case `right` => right_set = false;  if(left_set)fighter_state.moveLeft    else fighter_state.stopRight
       case `attack` => attack_set = false
-        //if(!up_set)fighter_state.stopUp
-        //if(!down_set)fighter_state.stopDown
-        //if(!left_set)fighter_state.stopLeft
-        //if(!right_set)fighter_state.stopRight
       case `defense` => defense_set = false; fighter_state.stop
-      case `jump` => jump_set = false; //fighter_state.jump
+      case `jump` => jump_set = false; fighter_state.stop
       case _ =>
     }
   }

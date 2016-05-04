@@ -8,8 +8,14 @@ import main.scala.model.fighter.states.FighterState
 /**
  * Created by julian on 14.02.16.
  */
-case class Jumping(f:Fighter) extends FighterState(f){
+case class Jumping(f:Fighter, fact:Double = 1.0) extends FighterState(f){
   f.images.set(JUMPING)
+  val factor = {
+    if (fact < 0.5)
+      0.5
+    else fact
+  }
+
 
   val movethread = new Thread(new Runnable {
     override def run(): Unit = {
@@ -17,6 +23,7 @@ case class Jumping(f:Fighter) extends FighterState(f){
       ifStillJumping{
         f.images.next
         ifStillJumping{
+          f.z_velocity = (f.fighter_strength*factor).toInt
           f.images.next
           ifStillJumping{
             f.images.next
@@ -26,7 +33,6 @@ case class Jumping(f:Fighter) extends FighterState(f){
                 f.images.next
                 ifStillJumping{
                   f.images.next
-                  f.z_velocity = f.fighter_strength
                   f.state = Levitate(f)
                 }
               }

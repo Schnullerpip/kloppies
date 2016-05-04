@@ -53,7 +53,7 @@ object ImageMatrix{
 
   /*rows even numbers are for the left direction*/
   /*FOR FIGHTERS*/
-  val FIGHTER_ROWS = 30
+  val FIGHTER_ROWS = 32
   val FIGHTER_COLS = 7
   val FIGHTER_WIDTH = 40
   val FIGHTER_HEIGHT = 50
@@ -62,17 +62,18 @@ object ImageMatrix{
   val STANDING_HIT = 2
   val RUNNING = 4
   val RUNNING_HIT = 6
-  val JUMPING = 8
-  val LEVITATING = 10
-  val LEVITATING_HIT = 12
-  val LANDING = 14
-  val FALLING = 16
-  val HIT_THE_GROUND = 18
-  val LYING = 20
-  val OUCH = 22
-  val THROW_TECHNIQUE = 24
-  val USE_TECHNIQUE = 26
-  val DEFENDING = 28
+  val LOADING = 8
+  val JUMPING = 10
+  val LEVITATING = 12
+  val LEVITATING_HIT = 14
+  val LANDING = 16
+  val FALLING = 18
+  val HIT_THE_GROUND = 20
+  val LYING = 22
+  val OUCH = 24
+  val THROW_TECHNIQUE = 26
+  val USE_TECHNIQUE = 28
+  val DEFENDING = 30
 
   /*FOR ITEMS*/
   val ITEM_ROWS = 6

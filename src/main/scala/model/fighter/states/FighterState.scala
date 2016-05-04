@@ -56,7 +56,7 @@ abstract class FighterState(f:Fighter) extends State(f){
   def moveDown = ifMoveable(f.y_velocity = f.speed)
   def moveLeft = ifMoveable(f.x_velocity = -1 * f.speed)
   def moveRight =ifMoveable(f.x_velocity = f.speed)
-  def jump = ifMoveable(f.state = Jumping(f))
+  def jump = ifMoveable(f.state = Loading(f))
 
   def stopUp = ifMoveable(f.y_velocity = 0)
   def stopDown = ifMoveable(stopUp)
