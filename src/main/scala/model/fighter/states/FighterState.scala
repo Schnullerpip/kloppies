@@ -40,10 +40,15 @@ abstract class FighterState(f:Fighter) extends State(f){
   }
   override def hurtBy(go:GameObject):Unit =
     if(f.vulnerable){
-      f.state = if(go.strength < f.mass*2)
-        Hurt(f, go)()
-      else
-        Falling(f, Some(go))
+      if(go.strength >= f.mass) {
+        f.state = if (go.strength < f.mass * 2)
+          Hurt(f, go)()
+        else
+          Falling(f, Some(go))
+      } else {
+        //if the opponents strength is not even above the fighters mass, it will damage him, but not make him tumble
+        f.takeDamage(go.strength)
+      }
     }
 
   override def stop = {stopUp; stopLeft}

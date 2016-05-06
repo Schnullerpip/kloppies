@@ -12,7 +12,7 @@ trait Moveable extends Position with Size{
    * */
   var moveable = true
 
-  def moving = x_velocity != 0 || y_velocity != 0
+  def moving = x_velocity != 0 || y_velocity != 0 || z_velocity != 0
   def velocity_factor =
     x_velocity * {if(x_velocity < 0)-1 else 1} +
     y_velocity * {if(y_velocity < 0)-1 else 1} +

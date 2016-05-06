@@ -51,8 +51,7 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
   moveTrhead.start()
 
   override def hit = {
-    contin = false
-    moveTrhead.stop()
+    stop
     f.state = f.state match {
       case ma:MidAir => LevitatingAttack(f, (factor*f.full_strength).toInt)
       case _ => StandardAttack(f, (factor*f.full_strength).toInt)
@@ -62,10 +61,20 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
   override def moveDown = {}
   override def moveLeft = {}
   override def moveRight = {}
-  override def jump = {}
+  override def jump = {
+    stop
+    f.state match {
+      case ma:MidAir => f.state = Levitate(f)
+      case _ =>
+        f.state = new Jumping(f, factor)
+    }
+  }
+  override def defend = {
+    stop
+    super.defend
+  }
   override def landing(go:GameObject) = {
-    contin = false
-    moveTrhead.stop()
+    stop
     f.state = new Loading(f, false, jump_last){
       f.z_velocity = 0
     }
@@ -73,14 +82,8 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
   override def stop = {
     contin = false
     moveTrhead.stop()
-    f.state match {
-      case ma:MidAir => f.state = Levitate(f)
-      case _ =>
-        f.state = new Jumping(f, factor)
-    }
   }
   override def hurtBy(go:GameObject): Unit ={
-    contin = false
     super.hurtBy(go)
   }
 

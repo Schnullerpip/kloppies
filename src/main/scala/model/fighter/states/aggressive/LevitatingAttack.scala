@@ -28,8 +28,6 @@ case class LevitatingAttack(f:Fighter, strength_bonus:Int = 0) extends FighterSt
                   val str = f.full_strength
                   f.full_strength += strength_bonus
                   f.intention = main.scala.model.intention.Harmful
-                  println(f.full_strength)
-                  println(strength_bonus)
                   f.images.next
                   Thread.sleep(1000 / f.speed)
                   f.intention = main.scala.model.intention.Harmless

@@ -1,7 +1,7 @@
 package main.scala.model.player
 
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.{FighterState, Loading, Running}
+import main.scala.model.fighter.states.{Defending, FighterState, Loading, Running}
 
 /**
  * Created by julian on 14.02.16.
@@ -22,8 +22,8 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
       case `left` => left_set = false;    if(right_set)fighter_state.moveRight  else fighter_state.stopLeft
       case `right` => right_set = false;  if(left_set)fighter_state.moveLeft    else fighter_state.stopRight
       case `attack` => attack_set = false
-      case `defense` => defense_set = false; fighter_state.stop
-      case `jump` => jump_set = false; if(fighter_state.isInstanceOf[Loading]) fighter_state.stop
+      case `defense` => defense_set = false; if(fighter_state.isInstanceOf[Defending])fighter_state.stop
+      case `jump` => jump_set = false; if(fighter_state.isInstanceOf[Loading]) fighter_state.jump
       case _ =>
     }
   }
@@ -37,7 +37,7 @@ case class KeySet(up:Char = 'w', down:Char = 's', left:Char = 'a',
       case `right` => right_set = true; checkKeyBuffer(key, f, fighter_state.moveRight)
       case `attack` => attack_set = true; checkKeyBuffer(key, f, fighter_state.hit)
       case `defense` => if (!defense_set) checkKeyBuffer(key, f, {fighter_state.defend; defense_set = true})
-      case `jump` => jump_set = true; checkKeyBuffer(key, f, fighter_state.jump)
+      case `jump` => checkKeyBuffer(key, f, {if(!jump_set)fighter_state.jump});jump_set = true
       case _ =>
     }
   }
