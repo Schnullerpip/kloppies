@@ -26,7 +26,7 @@ trait Mass extends Moveable{
         z += velocity
         f
       }
-    } else {
+    } else if(!blocked.up) {
       z += z_velocity
       f
     }

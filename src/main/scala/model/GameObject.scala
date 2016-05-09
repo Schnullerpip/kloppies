@@ -27,7 +27,7 @@ trait GameObject extends Mass with Direction with Strength with LivePoints with 
 
   def colliding(o:GameObject):Boolean = {
     if((x >= o.x && x <= o.x + o.width) || ( x <= o.x && x + width >= o.x)) {
-      if ((y >= o.y && y <= o.y + o.width) || (y <= o.y && y + width >= o.y)) {
+      if ((y >= o.y && y <= o.y + o.length) || (y <= o.y && y + length >= o.y)) {
         if ((z >= o.z && z <= o.z + o.height) || (z <= o.z && z + height >= o.z)) {
           return true
         }

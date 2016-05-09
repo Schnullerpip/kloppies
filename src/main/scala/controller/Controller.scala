@@ -52,10 +52,6 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
     var go_collision_matrix:Seq[(GameObject, Seq[GameObject])] = Seq()
     //println(moveables.sortBy(m => m.z + m.height).map(m => m.z+m.height))
     moveables.sortBy(m => m.z+m.height).foreach { m => //sorting to assure groundnearest objects are considered first
-      /*---x and y movement-----*/
-      m.moveX
-      m.moveY
-      /*------------------------*/
 
       /*---------preelimination for x and y axis---------*/
       var preelimination: Seq[GameObject] =
@@ -76,6 +72,13 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
           (m.z >= o.z && m.z <= o.z + o.height) || (m.z <= o.z && m.z + m.height >= o.z)
         })
       /*--------------------------------------*/
+
+      /*---x and y movement-----*/
+      m.moveX
+      m.moveY
+      m.blocked.unblock
+      /*------------------------*/
+
     }
     go_collision_matrix
   }

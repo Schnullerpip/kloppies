@@ -5,7 +5,7 @@ package main.scala.model
  * Representation of a size. anything that is shown on the map must have a specific size
  */
 trait Size {
-  var width = 40
-  var height = 50
-  var length = 10
+  var width   = 40 // x--------->
+  var height  = 50 // z--------->
+  var length  = 10 // y--------->
 }

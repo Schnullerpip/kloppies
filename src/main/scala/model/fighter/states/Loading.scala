@@ -57,10 +57,30 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
       case _ => StandardAttack(f, (factor*f.full_strength).toInt)
     }
   }
-  override def moveUp = {}
-  override def moveDown = {}
-  override def moveLeft = {}
-  override def moveRight = {}
+  override def moveUp = {tmp_speed_plus; super.moveUp}
+  override def moveDown = {tmp_speed_plus; super.moveDown}
+  override def moveLeft = {tmp_speed_plus; super.moveLeft}
+  override def moveRight = {tmp_speed_plus; super.moveRight}
+
+  private def tmp_speed_plus = {
+    stop
+    f.speed += (f.strength * factor).toInt/2
+    f.state = Running(f)
+    new Thread(new Runnable {
+      override def run(): Unit = {
+        val diff = f.fighter_speed - f.speed
+        for(i <- 0 until 10){
+          Thread.sleep(50)
+          f.speed -= (diff*0.1).toInt
+        }
+        f.speed = f.fighter_speed
+      }
+    }).start()
+  }
+
+
+
+
   override def jump = {
     stop
     f.state match {
@@ -84,6 +104,7 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
     moveTrhead.stop()
   }
   override def hurtBy(go:GameObject): Unit ={
+    stop
     super.hurtBy(go)
   }
 
