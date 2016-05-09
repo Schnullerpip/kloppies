@@ -23,7 +23,7 @@ case class Jumping(f:Fighter, fact:Double = 1.0) extends FighterState(f){
       ifStillJumping {
         f.images.next
         ifStillJumping {
-          f.z_velocity = (f.strength * factor).toInt
+          f.z_velocity = (2*f.strength * factor).toInt
           f.state = UpJump(f)
         }
       }

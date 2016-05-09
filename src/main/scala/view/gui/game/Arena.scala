@@ -97,11 +97,13 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
 
 
   new Frame {
+    peer.setUndecorated(true)
     title = "Fight Kloppies!"
     centerOnScreen()
     contents = gamePanel
     maximize()
     visible = true
+
     override def closeOperation(): Unit ={
       SoundDistributor.stop("fight_music")
       timer.stop()

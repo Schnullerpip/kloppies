@@ -24,12 +24,16 @@ object db4oInsertTestFighters extends App {
 
   val dao = new DB4O
   val fighters = Seq(
-    Fighter("julian", "fighter_stickfigure.png", fighter_speed = 5, fighter_strength = 5, fighter_mana = 10, fighter_hp = 10, fighter_mass = 10),
-    Fighter("kiki", "fighter_stickfigure.png", fighter_speed = 10, fighter_strength = 25, fighter_mana = 100)
+    Fighter("julian", "fighter_stickfigure.png", fighter_speed = 10, fighter_strength = 10, fighter_mana = 100, fighter_mass = 11),
+    Fighter("kiki", "fighter_stickfigure.png", fighter_speed = 10, fighter_strength = 10, fighter_mana = 100, fighter_mass = 11)
   )
 
   fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
   fighters.head.newTechnique(StoneRain(fighters.head), "defenddefenddefend")
+  fighters.head.newTechnique(SummonWind(fighters.head), "defenddirectionjump")
+  fighters.head.newTechnique(ThrowFireball(fighters.head), "defenddirectionattack")
+  fighters.head.newTechnique(RockThrow(fighters.head), "defenddefenddown")
+  fighters.head.newTechnique(DropFireMine(fighters.head), "defenddefendjump")
 
   fighters(1).newTechnique(SummonWind(fighters(1)), "defenddirectionjump")
   fighters(1).newTechnique(ThrowFireball(fighters(1)), "defenddirectionattack")
