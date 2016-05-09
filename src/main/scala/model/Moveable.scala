@@ -29,6 +29,7 @@ trait Moveable extends Position with Size{
       y += y_velocity
   }
 
+  @deprecated
   def move{
     x += x_velocity
     y += y_velocity

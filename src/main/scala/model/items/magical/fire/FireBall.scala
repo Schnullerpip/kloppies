@@ -18,7 +18,7 @@ case class FireBall(caster:GameObject) extends Item with Speed{
   override var hp: Int = 1
   override var x: Int = caster.x + (caster.width * {if (caster.looksLeft) -1 else 1})
   override var y: Int = caster.y
-  override var z: Int = caster.z
+  override var z: Int = caster.z+1
   gravity_affected = false
   width = 50
   height = 50
@@ -29,11 +29,10 @@ case class FireBall(caster:GameObject) extends Item with Speed{
   val MAX_RANGE = 4000
   var range = 0
 
-  override def move = {
-    super.move
+  override def moveX = {
+    super.moveX
     range += x_velocity*{if(x_velocity < 0)-1 else 1}
-    if(range >= MAX_RANGE)
-      goKillYourself
+    if(range >= MAX_RANGE) goKillYourself
   }
 }
 
