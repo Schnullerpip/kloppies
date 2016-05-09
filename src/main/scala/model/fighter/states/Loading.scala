@@ -2,7 +2,7 @@ package main.scala.model.fighter.states
 
 import main.scala.model.{GameObject, ImageMatrix}
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.aggressive.{LevitatingAttack, StandardAttack}
+import main.scala.model.fighter.states.aggressive.{LevitatingAttack, RunningAttack, StandardAttack}
 import main.scala.model.fighter.states.midair.{Jumping, Levitate}
 import main.scala.model.states.MidAir
 
@@ -54,7 +54,7 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
     stop
     f.state = f.state match {
       case ma:MidAir => LevitatingAttack(f, (factor*f.full_strength).toInt)
-      case _ => StandardAttack(f, (factor*f.full_strength).toInt)
+      case _ => RunningAttack(f, (factor*f.full_strength).toInt)
     }
   }
   override def moveUp = {tmp_speed_plus; super.moveUp}
