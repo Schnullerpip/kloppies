@@ -103,9 +103,9 @@ case class Loading(f:Fighter, kneelDown:Boolean = true, jump_last:Long = System.
     contin = false
     moveTrhead.stop()
   }
-  override def hurtBy(go:GameObject): Unit ={
+  override def hurtBy(g:GameObject)(amount:Int = g.strength): Unit ={
     stop
-    super.hurtBy(go)
+    super.hurtBy(g)(amount)
   }
 
   private def factor = {

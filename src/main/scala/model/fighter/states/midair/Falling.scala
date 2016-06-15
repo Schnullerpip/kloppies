@@ -13,13 +13,13 @@ import main.scala.model.states.{AnimateMe, MidAir}
   * If given an opponent it indicates, that the player is falling because he was hit.
   * In this case the fighter will fly away from his opponent according to its strength
  */
-case class Falling(f:Fighter, opponent:Option[GameObject] = None) extends FighterState(f) with MidAir with AnimateMe {
+case class Falling(f:Fighter, opponent:Option[GameObject] = None)(amount:Option[Int] = {if(opponent isDefined)Some(opponent.get.strength) else None}) extends FighterState(f) with MidAir with AnimateMe {
   f.moveable = false
   f.images.set(FALLING)
-  f.z_velocity = {if(opponent isDefined) opponent.get.strength else 0}
-  f.x_velocity = {if(opponent isDefined) opponent.get.strength * {if(opponent.get.looksLeft) -1 else 1} else 0}
-  val height = f.z/2 + {if(opponent isDefined) opponent.get.strength else 0}
-  f.takeDamage(if(opponent isDefined)opponent.get.strength else 0)
+  f.z_velocity = amount.getOrElse(0)/2
+  f.x_velocity = amount.getOrElse(0)/2 * {if(opponent isDefined)opponent.get.directionValue else 1}
+  val height = f.z/2 + amount.getOrElse(0)
+  f.takeDamage(amount.getOrElse(0))
   f.vulnerable = false
 
   val recover_thread = new Thread(new Runnable {
@@ -33,7 +33,7 @@ case class Falling(f:Fighter, opponent:Option[GameObject] = None) extends Fighte
 
   override def actOnCollision(go:GameObject) = {}
   override def landing(go:GameObject) = {f.state = HitTheGround(f, height)}
-  override def hurtBy(gameObject: GameObject) = f.state = Falling(f, Some(gameObject))
+  override def hurtBy(gameObject: GameObject)(amount:Int = gameObject.strength) = f.state = Falling(f, Some(gameObject))()
 
   override def moveUp     = if(f.moveable)f.state = Levitate(f)
   override def moveDown   = moveUp

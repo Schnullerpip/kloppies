@@ -26,8 +26,8 @@ class Rock(x:Int, y:Int, z:Int ) extends Stone(x, y, z) with Speed{
 class RockNormal(val rock:Rock) extends ItemState(rock){
   rock.intention = Harmless
   rock.vulnerable = true
-  override def hurtBy(go:GameObject) = {
-    if(rock.vulnerable) rock.state = new RockHurt(rock, go)()
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {
+    if(rock.vulnerable) rock.state = new RockHurt(rock, g)(amount)
   }
   override def levitate = {
     rock.state = new RockNormal(rock) with MidAir{ rock.intention = Harmful }
@@ -40,7 +40,7 @@ class RockNormal(val rock:Rock) extends ItemState(rock){
   }
   override def landing(go:GameObject) = {
     //TODO create shards on Ground
-    go.state.hurtBy(rock)
+    go.state.hurtBy(rock)()
     SoundDistributor.play("deep_smash")
     val velocity = rock.z_velocity * {if(rock.z_velocity < 0 ) -1 else 1}
     if(velocity > rock.mass){
@@ -88,9 +88,9 @@ case class RockHurt(r:Rock, opponent:GameObject)(amount:Int = opponent.strength)
       }
     }).start()
   }
-  override def hurtBy(go:GameObject) = {
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {
     contin = false
-    rock.state = new RockHurt(rock, go)()
+    rock.state = new RockHurt(rock, g)(amount)
   }
 }
 

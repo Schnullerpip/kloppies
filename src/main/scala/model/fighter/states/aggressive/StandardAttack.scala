@@ -45,7 +45,7 @@ case class StandardAttack(f:Fighter, strength_bonus:Int = 0) extends FighterStat
 
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[StandardAttack]) {Thread.sleep(1000/f.speed/2);b}
 
-  override def hurtBy(go:GameObject) = {moveThread.stop(); super.hurtBy(go)}
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {if(amount >= f.mass)moveThread.stop(); super.hurtBy(g)(amount)}
   override def hit = {}
 
   override def stop = {

@@ -18,9 +18,9 @@ case class Defending(f:Fighter) extends FighterState(f){
   private val sleeptime = 1000/f.speed
 
   override def hit = f.state = if(this.isInstanceOf[MidAir])LevitatingAttack(f) else StandardAttack(f)
-  override def hurtBy(go:GameObject):Unit = {
-    f.looksLeft = !go.looksLeft
-    if(reflexes && go.strength < f.mass){
+  override def hurtBy(g:GameObject)(amount:Int = g.strength):Unit = {
+    f.looksLeft = !g.looksLeft
+    if(reflexes && g.strength < f.mass){
       if (dodge) {
         new Thread(new Runnable {
     override def run(): Unit = {
@@ -67,7 +67,7 @@ case class Defending(f:Fighter) extends FighterState(f){
   }).start()
       }
     } else {
-      super.hurtBy(go)
+      super.hurtBy(go)()
     }
   }
 

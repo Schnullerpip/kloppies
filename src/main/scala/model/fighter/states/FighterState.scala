@@ -2,8 +2,8 @@ package main.scala.model.fighter.states
 
 import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.midair.{Falling, Jumping, Landing, Levitate}
-import main.scala.model.fighter.states.techniques.{Effect, Summoning, Technique, UsingTechnique}
+import main.scala.model.fighter.states.midair.{Falling, Landing, Levitate}
+import main.scala.model.fighter.states.techniques.{Technique, UsingTechnique}
 import main.scala.model.intention.{Harmful, Harmless}
 import main.scala.model.states.{MidAir, State}
 import main.scala.util.sound.SoundDistributor
@@ -30,24 +30,25 @@ abstract class FighterState(f:Fighter) extends State(f){
   def technique(technique: Technique) =ifMoveable{
     if(f.mana >= technique.manaUse)
       f.state = UsingTechnique(f, technique)
+      f.state.init
   }
 
   override def inflictDamageTo(gameObject: GameObject, amount:Int = f.fighter_strength) = {
-        if(f.intention == Harmful) {
-          gameObject.state.hurtBy(f)
-          f.intention = Harmless
-        }
+    if(f.intention == Harmful) {
+      gameObject.state.hurtBy(f)(amount)
+      f.intention = Harmless
+    }
   }
-  override def hurtBy(go:GameObject):Unit =
+  override def hurtBy(g:GameObject)(amount:Int=g.strength):Unit =
     if(f.vulnerable){
-      if(go.strength >= f.mass) {
-        f.state = if (go.strength < f.mass * 2)
-          Hurt(f, go)()
+      if(amount >= f.mass) {
+        f.state = if (amount < f.mass * 2)
+          Hurt(f, g)(amount)
         else
-          Falling(f, Some(go))
+          Falling(f, Some(g))(Some(amount))
       } else {
         //if the opponents strength is not even above the fighters mass, it will damage him, but not make him tumble
-        f.takeDamage(go.strength)
+        f.takeDamage(amount)
       }
     }
 

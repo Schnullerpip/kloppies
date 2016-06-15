@@ -25,11 +25,10 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
   fighter.moveable = false
   fighter.vulnerable = true
 
-  val toRemove = this
-  val moveThread = new Thread(new Runnable {
-    override def run(): Unit = {
-      ifNotInterrupted{
-        fighter.images.next
+  override def init = {
+    val toRemove = this
+    val moveThread = new Thread(new Runnable {
+      override def run(): Unit = {
         ifNotInterrupted{
           fighter.images.next
           ifNotInterrupted{
@@ -40,34 +39,37 @@ case class UsingTechnique(fighter:Fighter, technique: Technique) extends Fighter
                 fighter.images.next
                 ifNotInterrupted{
                   fighter.images.next
-                  Thread.sleep(1000/fighter.speed)
-                  technique act
+                  ifNotInterrupted{
+                    fighter.images.next
+                    Thread.sleep(1000/fighter.speed)
+                    technique act
+                  }
                 }
               }
             }
           }
         }
-      }
-      if(fighter.state == toRemove) {
-        toRemove match {
-          case m: MidAir => fighter.state = Levitate(fighter)
-          case _ => fighter.state = Normal(fighter)
+        if(fighter.state == toRemove) {
+          toRemove match {
+            case m: MidAir => fighter.state = Levitate(fighter)
+            case _ => fighter.state = Normal(fighter)
+          }
         }
       }
-    }
-  })
+    })
 
-  technique match{
-    case s:Summoning if this.isInstanceOf[MidAir] => fighter.images.set(RUNNING_HIT); moveThread.start()
-    case s:Summoning => fighter.images.set(THROW_TECHNIQUE); moveThread.start()
-    case e:Effect if this.isInstanceOf[MidAir] => fighter.images.set(USE_TECHNIQUE)
-      fighter.z_velocity = fighter.z_velocity match {
-        case ltz if ltz <= 0 => 0
-        case gtz => gtz
-      }
-      moveThread.start()
-    case e:Effect => fighter.images.set(USE_TECHNIQUE); moveThread.start()
-    case _ => technique act
+    technique match{
+      case s:Summoning if this.isInstanceOf[MidAir] => fighter.images.set(RUNNING_HIT); moveThread.start()
+      case s:Summoning => fighter.images.set(THROW_TECHNIQUE); moveThread.start()
+      case e:Effect if this.isInstanceOf[MidAir] => fighter.images.set(USE_TECHNIQUE)
+        fighter.z_velocity = fighter.z_velocity match {
+          case ltz if ltz <= 0 => 0
+          case gtz => gtz
+        }
+        moveThread.start()
+      case e:Effect => fighter.images.set(USE_TECHNIQUE); moveThread.start()
+      case _ => technique act
+    }
   }
 
   private def ifNotInterrupted(f: => Unit) = if(fighter.state.isInstanceOf[UsingTechnique]){Thread.sleep(1000/fighter.speed);f}

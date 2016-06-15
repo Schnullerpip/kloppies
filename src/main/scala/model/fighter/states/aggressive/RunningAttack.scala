@@ -1,7 +1,8 @@
 package main.scala.model.fighter.states.aggressive
 
+import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
-import main.scala.model.fighter.states.{Normal, Running, FighterState}
+import main.scala.model.fighter.states.{FighterState, Normal, Running}
 import main.scala.model.ImageMatrix.RUNNING_HIT
 
 /**
@@ -9,7 +10,7 @@ import main.scala.model.ImageMatrix.RUNNING_HIT
  */
 case class RunningAttack(f:Fighter, strength_bonus:Int = 0) extends FighterState(f) {
     f.images.set(RUNNING_HIT)
-    new Thread(new Runnable {
+    val moveThread = new Thread(new Runnable {
       override def run(): Unit = {
         //f.moveable = false
         ifAggressive {
@@ -38,9 +39,11 @@ case class RunningAttack(f:Fighter, strength_bonus:Int = 0) extends FighterState
         }
         f.state = if(f.moving)Running(f)else Normal(f)
       }
-    }).start()
+    })
+  moveThread.start()
 
   private def ifAggressive(b: => Unit) = if(f.state.isInstanceOf[RunningAttack]) {Thread.sleep(1000/f.speed/2);b}
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {if(amount >= f.mass)moveThread.stop(); super.hurtBy(g)(amount)}
 
   override def hit      = {}
 }

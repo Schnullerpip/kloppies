@@ -4,7 +4,7 @@ import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.techniques.earth.{RockThrow, StoneRain, StoneThrow}
 import main.scala.model.fighter.states.techniques.fire.{DropFireMine, ThrowFireball}
 import main.scala.model.fighter.states.techniques.shock.SpeedPlus
-import main.scala.model.fighter.states.techniques.wind.SummonWind
+import main.scala.model.fighter.states.techniques.wind.{AerrowStrike, SummonWind}
 
 /**
  * Created by julian on 22.02.16.
@@ -22,6 +22,7 @@ object Techniques {
       case "DropFireMine" => DropFireMine(f)
 
       case "SummonWind" =>  SummonWind(f)
+      case "AerrowStrike" => AerrowStrike(f)
 
       case "SpeedPlus" => SpeedPlus(f)
 
@@ -37,6 +38,6 @@ object TechniqueLists {
   val fireTechniques = Seq("ThrowFireball", "DropFireMine")
   val waterTechniques = Seq()
   val earthTechniques = Seq("StoneRain", "StoneThrow", "RockThrow")
-  val windTechniques = Seq("SummonWind")
+  val windTechniques = Seq("SummonWind", "AerrowStrike")
   val shockTechniques = Seq("SpeedPlus")
 }

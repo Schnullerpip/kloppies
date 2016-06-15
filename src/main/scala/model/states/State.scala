@@ -29,11 +29,16 @@ abstract class State(val go:GameObject) {
      }
     }
   }
-  def inflictDamageTo(go:GameObject, amount:Int)
-  def hurtBy(go:GameObject)
+  def inflictDamageTo(g:GameObject, amount:Int)
+  def hurtBy(g:GameObject)(amount:Int = g.strength)
   def stop
-  def landing(go:GameObject)
+  def landing(g:GameObject)
   def levitate
+  /**
+    * method that should be called with a state to do the actual stuff - else closure might happen
+    * and state changes inside a states constructor have no effect
+    * */
+  def init = {}
 
   override def toString = this.getClass.getSimpleName
 }

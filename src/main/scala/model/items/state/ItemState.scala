@@ -34,11 +34,11 @@ abstract class ItemState(item:Item) extends State(item) {
   }
 
   override def inflictDamageTo(go:GameObject, amount:Int)={
-    go.state.hurtBy(item)
+    go.state.hurtBy(item)(amount)
   }
 
-  override def hurtBy(go:GameObject) = item match {
-    case l:LivePoints if item.vulnerable => item.state = new Hurt(item, go)()
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = item match {
+    case l:LivePoints if item.vulnerable => item.state = new Hurt(item, g)(amount)
     case _ => //Break(item)
   }
   override def stop: Unit = item.state = new Normal(item)

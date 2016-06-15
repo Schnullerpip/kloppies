@@ -17,9 +17,9 @@ case class Levitate(f:Fighter) extends FighterState(f) with MidAir with AnimateM
 
   override def hit: Unit = f.state = LevitatingAttack(f)
 
-  override def hurtBy(go:GameObject) = {
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {
     if (f.vulnerable) {
-      f.state = Falling(f, Some(go))
+      f.state = Falling(f, Some(g))(Some(amount))
     }
   }
 
@@ -30,5 +30,6 @@ case class Levitate(f:Fighter) extends FighterState(f) with MidAir with AnimateM
   override def moveRight =if(f.moveable) f.x_velocity = f.fighter_strength/2
   override def jump = {if(f.moveable){
     f.state = new Loading(f) with MidAir
+    f.state.init
   }}
 }

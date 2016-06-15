@@ -43,5 +43,5 @@ override def inflictDamageTo(go:GameObject, amount:Int) = {
     if(go.mass > 0)
       go.x += amount/go.mass * {if(item.looksLeft) -1 else 1}
   }
-  override def hurtBy(go:GameObject) = {}
+  override def hurtBy(g:GameObject)(amount:Int=g.strength) = {}
 }

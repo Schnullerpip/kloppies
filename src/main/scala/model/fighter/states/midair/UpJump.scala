@@ -48,17 +48,20 @@ case class UpJump(f:Fighter) extends FighterState(f) with MidAir{
     moveThread.stop()
     f.state = LevitatingAttack(f)
   }
-  override def hurtBy(go:GameObject) = {
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {
     contin = false
     moveThread.stop()
-    super.hurtBy(go)
+    super.hurtBy(g)(amount)
   }
   override def jump = {if(f.moveable){
     contin = false
     moveThread.stop()
     f.state = new Loading(f) with MidAir
   }}
-  override def technique(t:Technique) = f.state = new UsingTechnique(f, t) with MidAir
+  override def technique(t:Technique) = {
+    f.state = new UsingTechnique(f, t) with MidAir
+    f.state.init
+  }
   override def moveUp = {}
   override def moveDown = {}
   override def moveLeft = if(f.moveable)f.x_velocity = -1 * f.fighter_strength/2

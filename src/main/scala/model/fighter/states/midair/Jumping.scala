@@ -39,9 +39,9 @@ case class Jumping(f:Fighter, fact:Double = 1.0) extends FighterState(f){
   }
 
   override def hit = {}
-  override def hurtBy(go:GameObject) = {
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {
     contin = false
     moveThread.stop()
-    super.hurtBy(go)
+    super.hurtBy(g)(amount)
   }
 }

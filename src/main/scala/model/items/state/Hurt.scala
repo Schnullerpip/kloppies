@@ -36,8 +36,8 @@ class Hurt(item:Item, go:GameObject)(amount:Int = go.strength) extends ItemState
     }).start()
   }
 
-  override def hurtBy(go:GameObject) = {
+  override def hurtBy(g:GameObject)(amount:Int = g.strength) = {
     contin = false
-    item.state = new Hurt(item, go)()
+    item.state = new Hurt(item, g)()
   }
 }
