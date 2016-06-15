@@ -37,7 +37,7 @@ class FireMineNormal(fireMine:FireMine) extends Normal(fireMine) with AnimateMe{
   }
 
   override def actOnCollision(go:GameObject): Unit ={
-    if(go != fireMine.caster && go.tangible){
+    if(go != fireMine.caster && fireMine.intention == Harmful){
       super.actOnCollision(go)
     }
   }

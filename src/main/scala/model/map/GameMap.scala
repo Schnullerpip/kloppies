@@ -14,7 +14,7 @@ import main.scala.util.Observer
 case class GameMap(backGround: BufferedImage){
 
   /*TODO this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
-  var elements:Seq[GameObject] = Seq(Stage(), Rock(200, 300, 1000))
+  var elements:Seq[GameObject] = Seq(Stage(), Rock(200, 300, 1000), Rock(200, 300, 1100),Rock(200, 300, 1200),Rock(200, 300, 1300))
   var observers:Seq[Observer] = Seq()
 
   def apply(observer: Observer) = {

@@ -19,7 +19,7 @@ case class SpeedPlus( f:Fighter) extends Technique(f) with Effect with ShockTech
   override var speed = 10
 
   override def act: Unit = {
-    f.notifyObservers(ElectricSpark(f.x, f.y, f.z))
+    f.notifyObservers(ElectricSpark(f.x, f.y+1, f.z))
     new Thread(new Runnable {
       override def run(): Unit = {
         f.speed += speed

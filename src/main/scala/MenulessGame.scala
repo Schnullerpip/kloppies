@@ -28,6 +28,7 @@ object MenulessGame {
       ImageMatrix("images/items/stone.png", 8, 6, 10, 10)
       ImageMatrix("images/items/magical/fireMine.png", 8, 6, 20, 10)
       ImageMatrix("images/items/magical/explosion.png", 1, 15, 100, 100)
+      ImageMatrix("images/items/dustyLeave.png", 2, 5, 50, 50)
       //ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
 
       /*Get the Fighters*/

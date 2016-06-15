@@ -41,7 +41,7 @@ abstract class FighterState(f:Fighter) extends State(f){
   }
   override def hurtBy(g:GameObject)(amount:Int=g.strength):Unit =
     if(f.vulnerable){
-      if(amount >= f.mass) {
+      if(amount >= f.mass/2) {
         f.state = if (amount < f.mass * 2)
           Hurt(f, g)(amount)
         else
