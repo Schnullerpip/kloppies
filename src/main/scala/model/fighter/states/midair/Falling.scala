@@ -18,8 +18,8 @@ case class Falling(f:Fighter, opponent:Option[GameObject] = None) extends Fighte
   f.images.set(FALLING)
   f.z_velocity = {if(opponent isDefined) opponent.get.strength else 0}
   f.x_velocity = {if(opponent isDefined) opponent.get.strength * {if(opponent.get.looksLeft) -1 else 1} else 0}
-  val height = f.z/2 + {if(opponent isDefined) opponent.get.full_strength else 0}
-  f.takeDamage(if(opponent isDefined)opponent.get.full_strength else 0)
+  val height = f.z/2 + {if(opponent isDefined) opponent.get.strength else 0}
+  f.takeDamage(if(opponent isDefined)opponent.get.strength else 0)
   f.vulnerable = false
 
   val recover_thread = new Thread(new Runnable {

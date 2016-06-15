@@ -20,7 +20,7 @@ class Rock(x:Int, y:Int, z:Int ) extends Stone(x, y, z) with Speed{
   mass = width*height
   hp = 200
   override def strength = velocity_factor
-  full_strength = strength
+  full_strength = mass
 }
 
 class RockNormal(val rock:Rock) extends ItemState(rock){
