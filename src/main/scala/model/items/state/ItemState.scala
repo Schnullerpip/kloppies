@@ -22,8 +22,13 @@ abstract class ItemState(item:Item) extends State(item) {
   override def levitate = item.state = new Normal(item) with MidAir
 
   override def landing(go:GameObject) = {
-    SoundDistributor.play("deep_smash")
-    if(item.velocity_factor > item.mass){
+    if(item.x+item.width/2 > go.x+go.width){ //Schwerpunkt ist außerhalb der Landefläche, deshalb sollte item wegspringen
+      item.x_velocity -= item.z_velocity/4
+      item.z_velocity = -1
+    }else if(item.x+item.width/2 < go.x){
+      item.x_velocity += item.z_velocity/4
+      item.z_velocity = -1
+    }else if(item.velocity_factor > item.mass){ //item is falling too heavily and therefore flies up once more
       item.z_velocity = -1*item.z_velocity/2
     }else{
       item.x_velocity = 0

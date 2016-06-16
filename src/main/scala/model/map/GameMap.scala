@@ -16,7 +16,7 @@ import scala.util.Random
 case class GameMap(backGround: BufferedImage){
 
   /*TODO this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
-  var elements:Seq[GameObject] = Seq(Stage()/*, Rock(200, 300, 1000), Rock(200, 300, 1100),Rock(200, 300, 1200),Rock(200, 300, 1300)*/)
+  var elements:Seq[GameObject] = Seq(Stage(), Rock(190, 300, 0), Rock(260,300, 0), Rock(225, 300, 1200))
   private val r = new Random()
   for(i <- 0 until 16){
     elements = DustParticle(r.nextInt(1000), r.nextInt(800), 0) +: elements

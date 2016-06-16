@@ -16,6 +16,7 @@ trait GameObject extends Mass with Direction with Strength with LivePoints with 
   var state:State
   var collidable = true
   var tangible = true
+  var drawsShadow = true
 
   def image = images.currentImage
 

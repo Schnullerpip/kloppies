@@ -30,7 +30,7 @@ class RockNormal(val rock:Rock) extends ItemState(rock){
     if(rock.vulnerable) rock.state = new RockHurt(rock, g)(amount)
   }
   override def levitate = {
-    rock.state = new RockNormal(rock) with MidAir{ rock.intention = Harmful }
+    rock.state = new RockMoving(rock) with MidAir{ rock.intention = Harmful }
   }
 
   override def actOnCollision(go:GameObject) = {
@@ -42,6 +42,7 @@ class RockNormal(val rock:Rock) extends ItemState(rock){
     //TODO create shards on Ground
     go.state.hurtBy(rock)()
     SoundDistributor.play("deep_smash")
+    /*
     val velocity = rock.z_velocity * {if(rock.z_velocity < 0 ) -1 else 1}
     if(velocity > rock.mass){
       rock.z_velocity = velocity/2
@@ -50,8 +51,10 @@ class RockNormal(val rock:Rock) extends ItemState(rock){
       rock.y_velocity = 0
       rock.z_velocity = 0
       rock.state = new RockNormal(rock)
-    }
+    }*/
+    super.landing(go)
   }
+  override def stop= rock.state = new RockNormal(rock)
 }
 
 case class RockMoving(r:Rock) extends RockNormal(r) with AnimateMe{
