@@ -100,9 +100,9 @@ case class RockBreak(rock:Rock) extends Break(rock){
 
 
 object Rock{
-  private val rock_width = 50
-  private val rock_height = 50
-  ImageMatrix("images/items/rock.png", 8, 6, rock_width, rock_height)
+  val rock_width = 50
+  val rock_height = 50
+  //ImageMatrix("images/items/rock.png", 8, 6, rock_width, rock_height)
   private val rock_length = 10
   def apply(x:Int, y:Int, z:Int) = new Rock(x, y, z)
 }

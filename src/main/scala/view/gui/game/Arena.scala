@@ -57,7 +57,7 @@ case class Arena(controller:Controller, timer:javax.swing.Timer) extends Observe
 
               /*----draw shadow----*/
               g.setColor(new Color(0,0,0,0.30f))
-              g.fillOval(go.x, go.y-(go.height*0.1).toInt, go.width, 10)
+              g.fillOval(go.x, go.y-(go.height*0.1).toInt, go.width, go.width/3)
               /*-------------------*/
 
               /*----draw Image-----------*/

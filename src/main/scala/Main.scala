@@ -12,6 +12,7 @@ import main.scala.model.map.{GameMap, Stage}
 import main.scala.model.fighter.Fighter
 import main.scala.model.player.{KeySet, Player}
 import main.scala.controller.GAME_SPEED
+import main.scala.model.items.normal.Rock
 import main.scala.util.sound.SoundDistributor
 import main.scala.view.gui.game.Arena
 import main.scala.view.gui.preparation.modemenu.ModeMenu
@@ -34,6 +35,8 @@ object Main {
     ImageMatrix("images/items/magical/fireMine.png", 8, 6, 20, 10)
     ImageMatrix("images/items/magical/explosion.png", 1, 15, 100, 100)
     ImageMatrix("images/items/dustyLeave.png", 2, 5, 50, 50)
+    ImageMatrix("images/items/dustParticle.png", 1, 1, 5, 5)
+    ImageMatrix("images/items/rock.png", 8, 6, Rock.rock_width, Rock.rock_height)
     //ImageMatrix("images/items/magical/fireball.png", 6, 6, 50, 50)
 
     /*Get the Fighters*/

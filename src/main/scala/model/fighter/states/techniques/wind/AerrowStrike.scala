@@ -39,7 +39,7 @@ private case class Fighter_Aerrow_Strike_Attack_State(f:Fighter) extends Fighter
   f.z_velocity = 0
   f.gravity_affected = false
   f.images.set(ImageMatrix.RUNNING_HIT, 3)
-  f.x_velocity += 30 * f.directionValue
+  f.x_velocity += (f.x_velocity + 40) * f.directionValue
   f.notifyObservers(new DustyLeave(f.x, f.y+1, f.z, f.looksLeft))
   override def actOnCollision(go:GameObject): Unit ={
     if(go.vulnerable && go.tangible && go.collidable)

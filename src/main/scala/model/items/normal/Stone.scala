@@ -15,7 +15,7 @@ class Stone(override var x:Int, override var y:Int, override var z:Int) extends 
   override var state: State = new StoneNormal(this)
   override var mass: Int = 5
   override var hp: Int = mass
-  override var full_strength: Int = 1
+  override var full_strength: Int = mass
   width = 10
   height = 10
   length = 5

@@ -29,7 +29,3 @@ class DustyLeave( override var x:Int,
   override var full_strength: Int = 0
   override var mass: Int = 1
 }
-
-object DustyLeave{
-  println("müsste erledigt sein - DustyLeave")
-}

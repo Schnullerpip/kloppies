@@ -13,8 +13,8 @@ abstract class State(val go:GameObject) {
   def actOnCollision(g:GameObject) = {
 
     if(go.steppable && go.collidable){
-      var blocking_it = false
        /*make sure opposing object will be blocked for movement*/
+      var blocking_it = false
       if(go.z+go.height > g.z+g.height/3){
         if(go.x < g.x) {g.blocked.left = true; blocking_it = true}
         else if(go.x > g.x) {g.blocked.right = true; blocking_it = true}
@@ -22,11 +22,11 @@ abstract class State(val go:GameObject) {
         else if(go.y > g.y) {g.blocked.forth = true; blocking_it = true}
         if(go.z > g.z) {g.blocked.up = true; blocking_it = true}
       }
-     if(go.groundContact && !blocking_it) {
-       g.groundContact = true
-       if (g.state.isInstanceOf[MidAir] && g.z_velocity < 0 && go.groundContact)
-         g.state.landing(go)
-     }
+      if(go.groundContact && !blocking_it) {
+        g.groundContact = true
+        if (g.state.isInstanceOf[MidAir] && g.z_velocity <= 0)
+          g.state.landing(go)
+      }
     }
   }
   def inflictDamageTo(g:GameObject, amount:Int)

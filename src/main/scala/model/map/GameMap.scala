@@ -4,8 +4,10 @@ import java.awt.image.BufferedImage
 
 import main.scala.model.{GameObject, Mass, Moveable}
 import main.scala.model.fighter.Fighter
-import main.scala.model.items.normal.Rock
+import main.scala.model.items.normal.{DustParticle, Rock}
 import main.scala.util.Observer
+
+import scala.util.Random
 
 /**
  * Created by julian on 14.02.16.
@@ -14,7 +16,12 @@ import main.scala.util.Observer
 case class GameMap(backGround: BufferedImage){
 
   /*TODO this sequence might be vulnerable to parallel execution!! probably need to synchronize it*/
-  var elements:Seq[GameObject] = Seq(Stage(), Rock(200, 300, 1000), Rock(200, 300, 1100),Rock(200, 300, 1200),Rock(200, 300, 1300))
+  var elements:Seq[GameObject] = Seq(Stage()/*, Rock(200, 300, 1000), Rock(200, 300, 1100),Rock(200, 300, 1200),Rock(200, 300, 1300)*/)
+  private val r = new Random()
+  for(i <- 0 until 16){
+    elements = DustParticle(r.nextInt(1000), r.nextInt(800), 0) +: elements
+  }
+
   var observers:Seq[Observer] = Seq()
 
   def apply(observer: Observer) = {
