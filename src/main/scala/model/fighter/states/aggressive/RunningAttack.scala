@@ -4,6 +4,7 @@ import main.scala.model.GameObject
 import main.scala.model.fighter.Fighter
 import main.scala.model.fighter.states.{FighterState, Normal, Running}
 import main.scala.model.ImageMatrix.RUNNING_HIT
+import main.scala.util.sound.SoundDistributor
 
 /**
  * Created by julian on 19.02.16.
@@ -19,6 +20,7 @@ case class RunningAttack(f:Fighter, strength_bonus:Int = 0) extends FighterState
             f.images.next
             ifAggressive {
               f.images.next
+              SoundDistributor.play("hit_woosh")
               ifAggressive {
                 f.images.next
                 ifAggressive {
