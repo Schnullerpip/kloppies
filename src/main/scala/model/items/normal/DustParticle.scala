@@ -39,7 +39,7 @@ case class DustParticle(override var x:Int,
   }
 }
 
-private case class DustStatus(d:DustParticle) extends ItemState(d){
+protected case class DustStatus(d:DustParticle) extends ItemState(d){
   override def hurtBy(g:GameObject)(amount:Int = g.strength): Unit ={
     d.z_velocity += amount
     d.x_velocity += amount * g.directionValue

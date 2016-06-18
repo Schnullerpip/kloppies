@@ -25,8 +25,8 @@ case class Controller(players:Seq[Player], gameMap:GameMap) extends Observable w
   }}
 
   def init ={
-    players.foreach { p =>
-      animators = QueueAnimator(p.fighter, gameMap.elements) +: animators
+    gameMap.elements.foreach { e =>
+      animators = QueueAnimator(e, gameMap.elements) +: animators
     }
   }
 

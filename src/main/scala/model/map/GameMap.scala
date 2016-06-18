@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage
 
 import main.scala.model.{GameObject, Mass, Moveable}
 import main.scala.model.fighter.Fighter
-import main.scala.model.items.normal.{DustParticle, Rock}
+import main.scala.model.items.normal.{DustParticle, Leaf, Rock}
 import main.scala.util.Observer
 
 import scala.util.Random
@@ -20,6 +20,10 @@ case class GameMap(backGround: BufferedImage){
   private val r = new Random()
   for(i <- 0 until 16){
     elements = DustParticle(r.nextInt(1000), r.nextInt(800), 0) +: elements
+  }
+  for(i <- 0 until 16){
+    val nl =  new Leaf(r.nextInt(1000), r.nextInt(800), 0)
+    elements = nl +: elements
   }
 
   var observers:Seq[Observer] = Seq()

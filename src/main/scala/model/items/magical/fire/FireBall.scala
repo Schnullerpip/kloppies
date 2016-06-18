@@ -14,7 +14,7 @@ import main.scala.util.sound.SoundDistributor
 case class FireBall(caster:GameObject) extends Item with Speed{
   override var full_strength: Int = 10
   override var speed: Int = 15
-  override var mass: Int = 1
+  override var mass: Int = 5
   override var hp: Int = 1
   override var x: Int = caster.x + (caster.width * {if (caster.looksLeft) -1 else 1})
   override var y: Int = caster.y
@@ -43,9 +43,10 @@ case class FireBallStateBreak(i:FireBall) extends Break(i){
 
 case class FireBallStateNormal(fireball:FireBall) extends Normal(fireball) with AnimateMe{
   fireball.intention = Harmful
-  override def actOnCollision(go:GameObject) = {
-    if (go != fireball.caster && go.tangible){
-      //super.actOnCollision(go)
+  override def actOnCollision(g:GameObject) = {
+    if (g != fireball.caster && g.tangible){
+      super.actOnCollision(g)
+    if(g.mass >= fireball.mass)
       fireball.state = FireBallStateBreak(fireball)
     }
   }
@@ -55,9 +56,10 @@ case class FireBallStateMove(item:FireBall) extends Move(item) with AnimateMe{
   item.intention = Harmful
   item.x_velocity += item.speed * {if(item.caster.looksLeft) -1 else 1}
   SoundDistributor.play("throw_fireball")
-  override def actOnCollision(go:GameObject) = {
-    if (go != item.caster && go.tangible){
-      //super.actOnCollision(go)
+  override def actOnCollision(g:GameObject) = {
+    if (g != item.caster && g.tangible){
+      super.actOnCollision(g)
+    if(g.mass >= item.mass)
       item.state = FireBallStateBreak(item)
     }
   }

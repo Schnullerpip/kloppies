@@ -20,8 +20,8 @@ case class MagicalWind(caster:Fighter) extends Item{
   height = 2000
   length = 2000
   override var x: Int = caster.x-width/2
-  override var y: Int = caster.y-width/2
-  override var z: Int = caster.z-width/2
+  override var y: Int = caster.y-length/2
+  override var z: Int = caster.z-height/2
   override var state:State = WindState(this)
   tangible = false
   looksLeft = caster.looksLeft
@@ -41,7 +41,7 @@ case class WindState(item:Item) extends ItemState(item){
 
 override def inflictDamageTo(go:GameObject, amount:Int) = {
     if(go.mass > 0)
-      go.x += amount/go.mass * {if(item.looksLeft) -1 else 1}
+      go.x += amount/go.mass * item.directionValue
   }
   override def hurtBy(g:GameObject)(amount:Int=g.strength) = {}
 }
