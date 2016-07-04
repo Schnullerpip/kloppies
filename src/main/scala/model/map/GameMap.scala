@@ -21,7 +21,7 @@ case class GameMap(backGround: BufferedImage){
   for(i <- 0 until 16){
     elements = DustParticle(r.nextInt(1000), r.nextInt(800), 0) +: elements
   }
-  for(i <- 0 until 16){
+  for(i <- 0 until 1){
     val nl =  new Leaf(r.nextInt(1000), r.nextInt(800), 0)
     elements = nl +: elements
   }

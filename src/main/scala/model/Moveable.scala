@@ -52,6 +52,12 @@ trait Moveable extends Position with Size{
       down = false
     }
   }
+
+  def extrinsicMove(x_factor:Int = 0, y_factor:Int = 0, z_factor:Int=0): Unit ={
+    x += x_factor
+    y += y_factor
+    z += z_factor
+  }
 }
 
 

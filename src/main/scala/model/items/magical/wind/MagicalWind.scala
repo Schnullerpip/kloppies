@@ -14,7 +14,7 @@ import main.scala.util.sound.SoundDistributor
 case class MagicalWind(caster:Fighter) extends Item{
   override var images: ImageMatrix = null
   override var mass: Int = 0
-  override var full_strength: Int = 10
+  override var full_strength: Int = 15
   override var hp: Int = 1
   width = 2000
   height = 2000
@@ -41,7 +41,7 @@ case class WindState(item:Item) extends ItemState(item){
 
 override def inflictDamageTo(go:GameObject, amount:Int) = {
     if(go.mass > 0)
-      go.x += amount/go.mass * item.directionValue
+      go.extrinsicMove(amount/go.mass*item.directionValue)
   }
   override def hurtBy(g:GameObject)(amount:Int=g.strength) = {}
 }

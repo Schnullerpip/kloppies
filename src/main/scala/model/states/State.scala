@@ -7,11 +7,10 @@ import main.scala.model.GameObject
  * Superclass for all States
  */
 abstract class State(val go:GameObject) {
-
   /**
-    * The most basic actOnCollision definition is to act as an obstacle (in case the object is steppable)*/
+    * The most basic actOnCollision definition is to act as an obstacle (in case the object is steppable, which almost every object should be)
+    * */
   def actOnCollision(g:GameObject) = {
-
     if(go.steppable && go.collidable){
        /*make sure opposing object will be blocked for movement*/
       var blocking_it = false
